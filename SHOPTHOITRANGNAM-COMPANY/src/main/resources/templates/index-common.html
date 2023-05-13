@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop thời trang nam - Vai trò người dùng</title>
+    <link rel="stylesheet" th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
+	<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
+	<script th:src="@{https://kit.fontawesome.com/66c7a31f42.js}" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container-cst">
+            <div class="box">
+                <h3>Xác nhận vai trò của bạn đối với trang web</h3>
+                <div class="option-container">
+                    <a class="btn" href="/customer-login"><i class="fa-solid fa-cart-shopping"></i> Tôi là người mua</a>
+                    <a class="btn" href="/company/login"><i class="fa-solid fa-user"></i> Tôi là người bán</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

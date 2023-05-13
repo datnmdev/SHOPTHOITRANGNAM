@@ -1,8 +1,10 @@
 package com.ptithcm.shopthoitrangnam.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.ptithcm.shopthoitrangnam.enumeration.AccountActivation;
 import com.ptithcm.shopthoitrangnam.enumeration.AccountStatus;
+import com.ptithcm.shopthoitrangnam.enumeration.Role;
 
 public class SecurityUserDetails implements UserDetails {
 	private static final long serialVersionUID = -5636277443715161381L;
@@ -27,6 +30,7 @@ public class SecurityUserDetails implements UserDetails {
 	public SecurityUserDetails(Account account) {
 		this.username = account.getUsername();
 		this.password = account.getPassword();
+		this.salt = account.getSalt();
 		this.creationTime = account.getCreationTime();
 		this.accountActivation = account.getAccountActivation();
 		this.status = account.getStatus();
@@ -43,7 +47,7 @@ public class SecurityUserDetails implements UserDetails {
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return password + salt;
+		return password;
 	}
 	
 	@Override
@@ -54,9 +58,11 @@ public class SecurityUserDetails implements UserDetails {
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		grantedAuthorities.add(new SimpleGrantedAuthority(accountType.getAccountTypeCode()));
-		return grantedAuthorities;
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		for (Role role : Role.values()) {
+			authorities.add(new SimpleGrantedAuthority(role.getCode()));
+		}
+		return authorities;
 	}
 	
 	@Override
@@ -80,6 +86,14 @@ public class SecurityUserDetails implements UserDetails {
 //	Getter and setter methods
 	public Date getCreationTime() {
 		return creationTime;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 	public void setCreationTime(Date creationTime) {

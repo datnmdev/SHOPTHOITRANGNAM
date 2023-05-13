@@ -9,6 +9,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "SANPHAM")
@@ -17,6 +19,8 @@ public class Product {
 	@Column(name = "MASP")
 	private String productCode;
 	
+	@NotBlank(message = "(*) Tên sản phẩm không được bỏ trống")
+	@Size(max = 200, message = "Tên sản phẩm chỉ tối đa 200 kí tự")
 	@Column(name = "TENSANPHAM")
 	private String productName;
 	

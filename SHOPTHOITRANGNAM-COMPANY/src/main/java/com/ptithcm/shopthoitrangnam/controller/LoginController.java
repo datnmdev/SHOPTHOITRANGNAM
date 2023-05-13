@@ -9,4 +9,9 @@ public class LoginController {
 	public String index() {
 		return "index.html";
 	}
+	
+	@GetMapping("/owner/dashboard")
+	public String ownerHome() {
+		return "owner-dashboard.html";
+	}
 }

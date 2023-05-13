@@ -1,0 +1,214 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 0.875rem;
+}
+
+:root {
+    --primary-color: #f54a0b;
+}
+
+.active {
+    color: var(--primary-color) !important;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#header {
+    background-color: #000;
+    color: #fff;
+    width: 320px;
+    padding: 16px 0;
+    height: 100vh;
+}
+
+#header nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 32px);
+}
+
+#header .total-revenue-card {
+    width: 220px;
+    height: 280px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    
+}
+
+#header .total-revenue-card .rotate-1 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 8px solid transparent;
+    border-top: 4px solid #3498db;
+    border-bottom: 4px solid #3498db;
+    border-radius: 50%;
+    animation: rotate-1 2s ease-in infinite;
+}
+
+#header .total-revenue-card .rotate-2 {
+    width: 85%;
+    height: 85%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    border: 8px solid transparent;
+    border-top: 4px solid #3498db;
+    border-bottom: 4px solid #3498db;
+    border-radius: 50%;
+    animation: rotate-2 1s ease-in infinite;
+}
+
+#header .total-revenue-card .rotate-3 {
+    width: 70%;
+    height: 70%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    border: 8px solid transparent;
+    border-top: 4px solid #3498db;
+    border-bottom: 4px solid #3498db;
+    border-radius: 50%;
+    animation: rotate-2 0.5s ease-in infinite;
+}
+
+#header .total-revenue-card .total-revenue-card__content {
+    width: 65%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    background-image: radial-gradient(circle, rgb(174, 0, 255), rgb(0, 255, 170));
+    border-radius: 50%;
+    animation: radial 4s ease-out 0.5s infinite;
+}
+
+#header .total-revenue-card__content .total-revenue-card__content_number {
+    font-family: cursive;
+    font-size: 2rem;
+}
+
+#header .total-revenue-card__content .total-revenue-card__content_unit {
+    font-size: 1.2rem;
+    margin-top: -8px;
+    font-weight: 500;
+    font-family: cursive;
+}
+
+#header .category {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin-top: 32px;
+    padding-left: 16px;
+    overflow-y: auto;
+}
+
+#header .category::-webkit-scrollbar {
+    width: 6px;
+}
+
+#header .category::-webkit-scrollbar-track {
+    width: #111111;
+}
+
+#header .category::-webkit-scrollbar-thumb {
+    background-color: #7a7272;
+    border-radius: 2px;
+}
+
+#header .category a {
+    display: block;
+    padding: 8px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+#header .category a:hover {
+    color: var(--primary-color);
+}
+
+#header .category a i {
+    font-size: 1.4rem;
+    margin-right: 8px;
+}
+
+#content {
+    flex: 1;
+    width: 100%;
+    height: 100vh;
+    background-color: #463f3f;
+    padding: 16px;
+    overflow: auto;
+}
+
+/* Animation */
+@keyframes rotate-1 {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes rotate-2 {
+    from {
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(450deg);
+    }
+}
+
+@keyframes rotate-3 {
+    from {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(405deg);
+    }
+}
+
+@keyframes radial {
+    0% {
+        background-image: radial-gradient(circle, rgb(174, 0, 255), rgb(0, 255, 170));
+    }
+    20% {
+        background-image: radial-gradient(circle, rgb(0, 255, 170), rgb(0, 204, 255));
+    }
+    40% {
+        background-image: radial-gradient(circle, rgb(0, 204, 255), rgb(0, 132, 255));
+    }
+    60% {
+        background-image: radial-gradient(circle, rgb(0, 132, 255), rgb(47, 0, 255));
+    }
+    80% {
+        background-image: radial-gradient(circle, rgb(47, 0, 255), rgb(132, 0, 255));
+    }
+    100% {
+    }
+}

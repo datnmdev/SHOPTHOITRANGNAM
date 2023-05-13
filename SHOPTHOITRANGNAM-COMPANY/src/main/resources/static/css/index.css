@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.active i.show-password {
+    display: block;
+}
+
+.active i.hide-password {
+    display: none;
+}
+
+html {
+    font-size: 0.875rem;
+}
+
+:root {
+    --primary-color: #f54a0b;
+}
+
+.wrapper {
+    
+}
+
+.wrapper .container-cst {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../img/login-register/thuong-hieu-thoi-trang-Giorgio-Armani.jpg');
+    background-position: center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper .section {
+    padding: 40px;
+    height: 100vh;
+}
+
+.wrapper .section-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    color: #fff;
+}
+
+.wrapper .section-left .shop-name {
+    font-size: 2.5rem;
+}
+
+.typewriter::after {
+    content: "|";
+    color: #fff;
+    font-size: 2rem;
+    animation: blink 0.7s infinite;
+}
+
+.wrapper .section-left .page-decription {
+    font-size: 1.2rem;
+    font-weight: 500;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.wrapper .section-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper .section-right .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 360px;
+    /* height: 400px; */
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.wrapper .box .box-heading {
+    font-size: 1.4rem;
+}
+
+.wrapper .box form {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper .box form input {
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #575454;
+}
+
+.wrapper .box form label[for="password"] {
+    position: relative;
+}
+
+.wrapper .box form label[for="password"] i {
+    position: absolute;
+    right: 4px;
+    top: 6px;
+    padding: 4px;
+    font-size: 1.4rem;
+    opacity: 0.6;
+}
+
+i.show-password {
+    display: none;
+    cursor: pointer;
+}
+
+i.hide-password {
+    display: block;
+    cursor: pointer;
+}
+
+.wrapper .box form input#password {
+    padding-right: 36px;
+}
+
+.wrapper .box form button {
+    border: none;
+    outline: none;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.wrapper .box form button:hover {
+    opacity: 0.8;
+}
+
+.wrapper .box .forgot-password {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.wrapper .box .forgot-password a {
+    text-decoration: none;
+    color: #575454;
+}
+
+.wrapper .box .forgot-password:hover a {
+    text-decoration: underline;
+}
+
+/* Animation */
+@keyframes blink {
+    50% { 
+        opacity: 0; 
+    }
+}

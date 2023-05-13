@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop thời trang nam - Quản lý sản phẩm</title>
+	<link rel="stylesheet" th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
+	<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
+	<script th:src="@{https://kit.fontawesome.com/66c7a31f42.js}" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/owner-dashboard.css}">
+</head>
+<body>
+    <div class="wrapper">
+        <div id="header">
+            <nav>
+                <div class="total-revenue-card">
+                    <span class="rotate-1"></span>
+                    <span class="rotate-2"></span>
+                    <span class="rotate-3"></span>
+                    <div class="total-revenue-card__content">
+                        <span class="total-revenue-card__content_number">10999</span>
+                        <span class="total-revenue-card__content_unit">USD</span>
+                    </div>
+                </div>
+                <ul class="category">
+                    <li class="category-item">
+                        <a class="active" href=""><i class="fa-solid fa-flask"></i>Bảng điều khiển</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-note-sticky"></i>Quản lý đơn đặt hàng</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-book-open"></i>Quản lý danh mục sản phẩm</a>
+                    </li>
+                    <li class="category-item">
+                        <a href="/owner/product-manage"><i class="fa-sharp fa-solid fa-box"></i>Quản lý sản phẩm</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-user-group"></i>Quản lý nhân viên</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-truck-field-un"></i>Quản lý nhà cung cấp</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-note-sticky"></i>Quản lý đơn vị vận chuyển</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-warehouse"></i>Quản lý kho</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-key"></i>Quản lý tài khoản</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-tags"></i>Quản lý khuyến mãi</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div id="content">
+           
+        </div>
+    </div>
+</body>
+</html>
