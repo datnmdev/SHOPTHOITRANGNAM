@@ -61,14 +61,12 @@ html {
 
 #header .total-revenue-card {
     width: 220px;
-    height: 280px;
+    height: 220px;
     border-radius: 50%;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    
 }
 
 #header .total-revenue-card .rotate-1 {
@@ -139,6 +137,7 @@ html {
 }
 
 #header .category {
+    flex: 1;
     list-style-type: none;
     padding: 0;
     width: 100%;
@@ -160,7 +159,8 @@ html {
     border-radius: 2px;
 }
 
-#header .category a {
+#header .category a, 
+#header .category #product-manage-btn {
     display: block;
     padding: 8px;
     text-decoration: none;
@@ -168,13 +168,39 @@ html {
     color: #fff;
 }
 
-#header .category a:hover {
+#header .category a:hover, 
+#header .category #product-manage-btn:hover {
     color: var(--primary-color);
 }
 
-#header .category a i {
+#header .category a i, 
+#header .category #product-manage-btn i {
     font-size: 1.4rem;
     margin-right: 8px;
+}
+
+#header .category #product-manage-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+#header .category #product-manage-btn.active span:nth-child(2) i {
+    transform: rotateX(-90%);
+}
+
+#header .category .category-item__children {
+    list-style-type: none;
+    padding-left: 24px;
+    overflow: hidden;
+}
+
+#header .category-item__children a span {
+    width: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #content {
@@ -383,7 +409,9 @@ html {
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
+    padding: 0 24px;
     margin-bottom: 32px;
+    text-align: center;
 }
 
 /* Animation */

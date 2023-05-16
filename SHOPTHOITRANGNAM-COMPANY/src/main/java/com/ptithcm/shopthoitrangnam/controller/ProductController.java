@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ptithcm.shopthoitrangnam.dto.ProductDto;
 import com.ptithcm.shopthoitrangnam.entity.Product;
@@ -32,24 +33,46 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
-	@GetMapping("/owner/product-manage")
-	public String productManagePage(Model model) {
+	@GetMapping("/owner/products")
+	public String productsPage(Model model, RedirectAttributes redirectAttributes) {
 		List<Product> products = productService.findAll();
 		model.addAttribute("products", products);
+		model.addAttribute("pageNumber", 0);
+		Boolean isDeletedProduct = (Boolean) redirectAttributes.getFlashAttributes().get("isDeletedProduct");
+		if (isDeletedProduct != null) {
+			model.addAttribute("isDeletedProduct", isDeletedProduct);
+		}
+		return "owner-product-manage.html";
+	}
+	
+	@GetMapping(value = "/owner/products", params = "search")
+	public String searchProduct(Model model, @RequestParam("search") String search) {
+		if (search.isEmpty()) {
+			return "redirect:/owner/products";
+		}
+		
+		String pattern = "%" + search.replaceAll(" ", "%") + "%";
+		List<Product> productsByCategory = productService.findByProductCategoryCodeUsingRegex(pattern);
+		List<Product> productsByName = productService.findByProductNameUsingRegex(pattern);
+		Set<Product> products = new LinkedHashSet<>(productsByCategory);
+		products.addAll(productsByName);
+		
+		model.addAttribute("products", products);
+		model.addAttribute("isSearched", true);
+		model.addAttribute("search", search);
 		model.addAttribute("pageNumber", 0);
 		return "owner-product-manage.html";
 	}
 	
-	@GetMapping("/owner/product-manage/create-product")
+	@PostMapping(value = "/owner/products", params = "create-page")
 	public String createProductPage(Model model) {
 		List<ProductCategory> productCategories = productCategoryService.findAll();
 		model.addAttribute("productCategories", productCategories);
 		model.addAttribute("productDto", new ProductDto());
-		model.addAttribute("hasError", true);
 		return "owner-create-product.html";
 	}
 	
-	@PostMapping("/owner/product-manage/create-product")
+	@PostMapping(value = "/owner/products", params = "create")
 	public String createProduct(@Valid @ModelAttribute(name = "productDto") ProductDto productDto, BindingResult bindingResult, Model model) {
 		List<ProductCategory> productCategories = productCategoryService.findAll();
 		model.addAttribute("productCategories", productCategories);
@@ -63,19 +86,19 @@ public class ProductController {
 		return "owner-create-product.html";
 	}
 	
-	@GetMapping(value = "/owner/product-manage/update-product/{product-code}")
-	public String updateProductPage(Model model, @PathVariable(name = "product-code") String productCode) {
+	@PostMapping(value = "/owner/products/{productCode}", params = "update-page")
+	public String updateProductPage(Model model, @PathVariable(name = "productCode") String productCode) {
 		List<ProductCategory> productCategories = productCategoryService.findAll();
 		ProductDto productDto = ProductMapper.toProductDto(productService.findByProductCode(productCode).get());
 		model.addAttribute("productCategories", productCategories);
 		model.addAttribute("productDto", productDto);
 		model.addAttribute("productCode", productCode);
-		model.addAttribute("hasError", true);
 		return "owner-update-product.html";
 	}
 	
-	@PostMapping("/owner/product-manage/update-product/{product-code}")
-	public String updateProduct(@Valid @ModelAttribute(name = "productDto") ProductDto productDto, BindingResult bindingResult, @PathVariable(name = "product-code") String productCode, Model model) {
+	@PostMapping(value = "/owner/products/{productCode}", params = "update")
+	public String updateProduct(@Valid @ModelAttribute(name = "productDto") ProductDto productDto, 
+			BindingResult bindingResult, @PathVariable(name = "productCode") String productCode, Model model) {
 		List<ProductCategory> productCategories = productCategoryService.findAll();
 		model.addAttribute("productCategories", productCategories);
 		model.addAttribute("productCode", productCode);
@@ -89,24 +112,19 @@ public class ProductController {
 		return "owner-update-product.html";
 	}
 	
-	@GetMapping(value = "/owner/product-manage/delete-product/{product-code}")
-	public String deleteProduct(Model model, @PathVariable(name = "product-code") String productCode) {
-		productService.deleteByProductCode(productCode);
-		return "redirect:/owner/product-manage";
-	}
-	
-	@GetMapping(value = "/owner/product-manage", params = "search")
-	public String searchProduct(@RequestParam(name = "search", defaultValue = "", required = false) String searchKey, Model model) {
-		List<Product> productsByCategory = productService.findByProductCategoryCodeUsingRegex(searchKey.replace(' ', '%'));
-		List<Product> productsByName = productService.findByProductNameUsingRegex(searchKey.replace(' ', '%'));
-		Set<Product> products = new LinkedHashSet<>(productsByCategory);
-		products.addAll(productsByName);
+	@PostMapping(value = "/owner/products/{productCode}", params = "delete")
+	public String deleteProduct(@PathVariable(name = "productCode") String productCode, RedirectAttributes redirectAttributes) {
+		if (!productService.findByProductCode(productCode).get().getProductDetails().isEmpty()) {
+			redirectAttributes.addFlashAttribute("isDeletedProduct", false);
+			return "redirect:/owner/products"; 
+		}
 		
-		model.addAttribute("products", products);
-		return "owner-product-manage.html";
+		productService.deleteByProductCode(productCode);
+		redirectAttributes.addFlashAttribute("isDeletedProduct", true);
+		return "redirect:/owner/products";
 	}
 	
-	@GetMapping(value = "/owner/product-manage", params = "page-number")
+	@GetMapping(value = "/owner/products", params = "page-number")
 	public String productPageNumber(@RequestParam("page-number") int pageNumber, Model model) {
 		List<Product> products = productService.findAll();
 		model.addAttribute("products", products);
@@ -114,7 +132,7 @@ public class ProductController {
 		return "owner-product-manage.html";
 	}
 	
-	@GetMapping("/owner/product-manage/products")
+	@GetMapping(value = "/owner/products", params = "export")
 	@ResponseBody
 	public List<Product> getProducts() {
 		List<Product> products = productService.findAll();

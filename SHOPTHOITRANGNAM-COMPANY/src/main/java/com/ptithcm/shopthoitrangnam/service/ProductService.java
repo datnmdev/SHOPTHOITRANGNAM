@@ -8,15 +8,16 @@ import org.springframework.data.domain.Pageable;
 
 import com.ptithcm.shopthoitrangnam.dto.ProductDto;
 import com.ptithcm.shopthoitrangnam.entity.Product;
+import com.ptithcm.shopthoitrangnam.entity.ProductCategory;
 
 public interface ProductService {
 	public String getProductCode(String productTypeCode);
 	
 	public List<Product> findAll();
 	
-	public Page<Product> findAll(Pageable pageble);
-	
 	public Optional<Product> findByProductCode(String productCode);
+	
+	public List<Product> findByProductCategory(ProductCategory productCategory);
 	
 	public List<Product> findByProductNameUsingRegex(String productName);
 	

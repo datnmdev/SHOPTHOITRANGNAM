@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
 	<link rel="stylesheet" th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
 	<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
-	<script th:src="@{https://kit.fontawesome.com/66c7a31f42.js}" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.min.css}">
     <link rel="stylesheet" th:href="@{/css/owner-product-manage.css}">
     <script th:src="@{/js/owner-product-manage.js}"></script>
 </head>
@@ -33,10 +33,42 @@
                         <a href=""><i class="fa-solid fa-note-sticky"></i>Quản lý đơn đặt hàng</a>
                     </li>
                     <li class="category-item">
-                        <a href=""><i class="fa-solid fa-book-open"></i>Quản lý danh mục sản phẩm</a>
-                    </li>
-                    <li class="category-item">
-                        <a class="active" href=""><i class="fa-sharp fa-solid fa-box"></i>Quản lý sản phẩm</a>
+                        <div id="product-manage-btn" class="active">
+                            <span><i class="fa-sharp fa-solid fa-box"></i>Quản lý sản phẩm</span>
+                            <span><i class="fa-solid fa-angle-down"></i></span>
+                        </div>
+                        <ul class="category-item__children">
+                            <li class="category-item__children__item">
+                                <a class="active" href="/owner/products">
+                                    <span><i class="fa-brands fa-product-hunt"></i></span>
+                                    Sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/sizes">
+                                    <span><i class="fa-solid fa-sitemap"></i></span>
+                                    Kích thước sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/colors">
+                                    <span><i class="fa-solid fa-droplet"></i></span>
+                                    Màu sắc sắc sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/product-categories">
+                                    <span><i class="fa-solid fa-book-open"></i></span>
+                                    Loại sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="">
+                                    <span><i class="fa-solid fa-asterisk"></i></span>
+                                    Chi tiết sản phẩm
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="category-item">
                         <a href=""><i class="fa-solid fa-user-group"></i>Quản lý nhân viên</a>
@@ -70,38 +102,37 @@
                         <span class="forward-btn" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i></span>
                         <span class="back-btn" onclick="history.forward()"><i class="fa-solid fa-arrow-right"></i></span>
                     </div>
-                    <form id="product-search-form" method="get">
+                    <form action="/owner/products" id="product-search-form">
                         <label for="product-search">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="search" id="product-search" placeholder="Nhập mã hoặc tên sản phẩm muốn tìm kiếm...">
+                            <input th:name="search" type="search" th:value="${search}" id="product-search" placeholder="Nhập mã hoặc tên sản phẩm muốn tìm kiếm...">
                         </label>
                     </form>
                 </div>
                 <div class="orther-option-function">
-                    <div class="filter">
-                        <i class="fa-solid fa-filter"></i>
-                        Lọc
-                    </div>
-                    <div class="sort">
-                        <i class="fa-solid fa-arrow-up-short-wide"></i>
-                        Sắp xếp
-                    </div>
                     <a id="export" class="export">
-                        <i class="fa-solid fa-file-export"></i>
-                        Xuất file
+                        <div class="orther-option-function-btn">
+                            <i class="fa-solid fa-file-export"></i>
+                            Xuất file
+                        </div>
                     </a>
                 </div>
             </div>
 
             <div class="product-container">
                 <div class="product-header">
-                    <h3>Danh sách sản phẩm</h3>
-                    <button class="add-product-btn" onclick="location.assign('/owner/product-manage/create-product')">
-                        <i class="fa-solid fa-plus"></i>
-                        Thêm sản phẩm
-                    </button>
+                    <h3 th:if="${isSearched == null}">Danh sách sản phẩm</h3>
+                    <h3 th:if="${isSearched != null && isSearched && !products.isEmpty()}" th:text="${'Kết quả tìm kiếm với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
+                    <h3 th:if="${isSearched != null && isSearched && products.isEmpty()}" th:text="${'Không tìm thấy sản phẩm nào với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
+                    <form action="/owner/products" method="post">
+                        <input hidden type="text" th:name="create-page">
+                        <button class="add-product-btn">
+                            <i class="fa-solid fa-plus"></i>
+                            Thêm sản phẩm
+                        </button>
+                    </form>
                 </div>
-                <table class="product-table">
+                <table th:unless="${products.isEmpty()}" class="product-table">
                     <thead>
                         <th>Mã sản phẩm</th>
                         <th>Tên sản phẩm</th>
@@ -120,8 +151,14 @@
                             </td>
                             <td>
                                 <div class="orther-action">
-                                    <button th:attr="product-code=${products[i].getProductCode()}" class="update-product-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button th:attr="product-code=${products[i].getProductCode()}" class="delete-product-btn"><i class="fa-solid fa-trash-can"></i></button>
+                                    <form th:action="@{/owner/products/{productCode}(productCode=${products[i].getProductCode()})}" method="post">
+                                        <input hidden type="text" th:name="update-page">
+                                        <button class="update-product-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    </form>
+                                    <form th:action="@{/owner/products/{productCode}(productCode=${products[i].getProductCode()})}" method="post">
+                                        <input hidden type="text" th:name="delete">
+                                        <button class="delete-product-btn"><i class="fa-solid fa-trash-can"></i></button>
+                                    </form>
                                     <button class="orther-option-btn"><i class="fa-solid fa-ellipsis"></i></i></button>
                                 </div>
                             </td>
@@ -137,7 +174,7 @@
                         <th:block th:if="${productsSize > 20}">
                             <ul id="pagination" class="pagination" th:attr="current-page-number=${pageNumber+1}, page-count=${pageCount}">
                                 <li id="pagination-previous" th:if="${productsSize <= 20}" class="page-number-item page-active">
-                                    <a href="/owner/product-manage?page-number=1">1</a>
+                                    <a href="/owner/products?page-number=1">1</a>
                                 </li>
                                 <li th:if="${productsSize > 20}" id="pagination-previous" class="page-number-item">
                                     <a><i class="fa-solid fa-chevron-left"></i></a>
@@ -145,7 +182,7 @@
                                 <a th:if="${pageNumber+1 >= 3}" th:text="..."></a>
                                 <th:block th:each="i : ${#numbers.sequence((pageNumber+1) % 2 != 0 ? (pageCount == pageNumber+1 ? pageCount-2 : pageNumber+1) : pageNumber, (pageNumber+1) % 2 != 0 ? (pageCount == pageNumber+1 ? pageCount : pageNumber+3) : pageNumber+2)}">
                                     <li th:if="${i <= pageCount}" th:classappend="${i == pageNumber+1 ? 'page-active' : ''}" class="page-number-item">
-                                        <a th:text="${i}" th:href="@{/owner/product-manage(page-number=${i})}"></a>
+                                        <a th:text="${i}" th:href="@{/owner/products(page-number=${i})}"></a>
                                     </li>
                                 </th:block>
                                 <a th:if="${((pageCount - (pageNumber + 1)) > 3) || (pageCount % 2 == 0 && pageCount > 3 && (pageCount - (pageNumber + 1)) <= 2)}" th:text="..."></a>
@@ -166,8 +203,8 @@
                                     <input type="submit" value="Đến">
                                 </div>
                                 <div>
-                                    <button id="first-page-btn">Đến đầu trang</button>
-                                    <button id="last-page-btn">Đến cuối trang</button>
+                                    <button type="button" id="first-page-btn">Đến đầu trang</button>
+                                    <button type="button" id="last-page-btn">Đến cuối trang</button>
                                 </div>
                             </form>
                         </div>
@@ -176,15 +213,29 @@
             </div>
         </div>
 
-        <!-- Message success box -->
-        <div th:classappend="${hasError!= null && !hasError ? 'show' : ''}" id="message-wrapper" class="message-wrapper">
+        <!-- Message delete success box -->
+        <div th:classappend="${isDeletedProduct != null && isDeletedProduct ? 'show' : ''}" id="success-message-wrapper" class="message-wrapper">
             <div class="overlay">
                 <div class="message-box">
                     <div class="check-container">
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <div class="message">
-                        Cập nhật thông tin sản phẩm thành công!
+                        Xóa sản phẩm thành công!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message delete failure box -->
+        <div th:classappend="${isDeletedProduct != null && !isDeletedProduct ? 'show' : ''}" id="failure-message-wrapper" class="message-wrapper">
+            <div class="overlay">
+                <div class="message-box">
+                    <div class="check-container">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="message">
+                        Thông tin sản phẩm này có ảnh hưởng đến dữ liệu khác. Không thể xóa!
                     </div>
                 </div>
             </div>

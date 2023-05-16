@@ -1,41 +1,25 @@
 $(document).ready(function () {
-    $('#product-search-form').on('submit', function (e) {
-        e.preventDefault();
-        var inputValue = $('#product-search').val()
-        window.location.assign('/owner/product-manage?search=' + inputValue)
-    })
-
-    $('.update-product-btn').click(function (e) {
-        var productCode = $(this).attr('product-code')
-        location.href = "/owner/product-manage/update-product/" + productCode
-    })
-
-    $('.delete-product-btn').click(function (e) {
-        var productCode = $(this).attr('product-code')
-        location.href = "/owner/product-manage/delete-product/" + productCode
-    })
-
     $('#pagination-previous').click(function (e) { 
         e.preventDefault()
         var currentPageNumber = Number.parseInt($('#pagination').attr('current-page-number'))
         var pageCount = Number.parseInt($('#pagination').attr('page-count'))
-        location.assign('/owner/product-manage?page-number=' + (currentPageNumber - 1 == 0 ? pageCount : currentPageNumber - 1))        
+        location.assign('/owner/products?page-number=' + (currentPageNumber - 1 == 0 ? pageCount : currentPageNumber - 1))        
     });
 
     $('#pagination-next').click(function (e) {
         e.preventDefault()
         var currentPageNumber = Number.parseInt($('#pagination').attr('current-page-number'))
         var pageCount = Number.parseInt($('#pagination').attr('page-count'))
-        location.assign('/owner/product-manage?page-number=' + (currentPageNumber + 1 > pageCount ? 1 : currentPageNumber + 1))        
+        location.assign('/owner/products?page-number=' + (currentPageNumber + 1 > pageCount ? 1 : currentPageNumber + 1))        
     });
 
-    $('#message-wrapper').click(function () {
+    $('.message-wrapper').click(function () {
         if ($(this).hasClass('show')) {
             $(this).removeClass('show');
         }
     })
     
-    fetch("/owner/product-manage/products", {method: "GET"})
+    fetch("/owner/products?export", {method: "GET"})
         .then(response => response.json())
         .then(data => {
             var convertedProductData = [["Mã sản phẩm", "Tên sản phẩm", "Mô tả", "Loại sản phẩm", "Trạng thái"]]
@@ -71,15 +55,27 @@ $(document).ready(function () {
     $("form#goto-page-form").submit(function(e) {
         e.preventDefault()
         var pageNumber = $("input[name='page-number'").val()
-        location.assign("/owner/product-manage?page-number=" + pageNumber)
+        location.assign("/owner/products?page-number=" + pageNumber)
     })
 
     $("#first-page-btn").click(function() {
-        location.assign("/owner/product-manage?page-number=" + 1)
+        location.assign("/owner/products?page-number=" + 1)
     })
 
     $("#last-page-btn").click(function() {
         var pageCount = Number.parseInt($('#pagination').attr('page-count'))
-        location.assign("/owner/product-manage?page-number=" + pageCount)
+        location.assign("/owner/products?page-number=" + (isNaN(pageCount) ? 1 : pageCount))
+    })
+
+    $('#header .category #product-manage-btn').click(function() {
+        $("#product-manage-btn ~ .category-item__children").slideToggle('slow', function() {
+            if ($(this).is(":visible")) {
+                $("#product-manage-btn span:nth-child(2) i").removeClass('fa-solid fa-angle-right');
+                $("#product-manage-btn span:nth-child(2) i").addClass('fa-solid fa-angle-down');
+            } else {
+                $("#product-manage-btn span:nth-child(2) i").removeClass('fa-solid fa-angle-down');
+                $("#product-manage-btn span:nth-child(2) i").addClass('fa-solid fa-angle-right');
+            }
+        });
     })
 });

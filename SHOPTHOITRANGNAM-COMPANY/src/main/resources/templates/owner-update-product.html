@@ -7,7 +7,7 @@
     <title>Shop thời trang nam - Cập nhật sản phẩm</title>
 	<link rel="stylesheet" th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
 	<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
-	<script th:src="@{https://kit.fontawesome.com/66c7a31f42.js}" crossorigin="anonymous"></script>
+	<link rel="stylesheet" th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.min.css}">
     <link rel="stylesheet" th:href="@{/css/owner-update-product.css}">
     <script th:src="@{/js/owner-update-product.js}"></script>
 </head>
@@ -32,10 +32,42 @@
                         <a href=""><i class="fa-solid fa-note-sticky"></i>Quản lý đơn đặt hàng</a>
                     </li>
                     <li class="category-item">
-                        <a href=""><i class="fa-solid fa-book-open"></i>Quản lý danh mục sản phẩm</a>
-                    </li>
-                    <li class="category-item">
-                        <a class="active" href=""><i class="fa-sharp fa-solid fa-box"></i>Quản lý sản phẩm</a>
+                        <div id="product-manage-btn" class="active">
+                            <span><i class="fa-sharp fa-solid fa-box"></i>Quản lý sản phẩm</span>
+                            <span><i class="fa-solid fa-angle-down"></i></span>
+                        </div>
+                        <ul class="category-item__children">
+                            <li class="category-item__children__item">
+                                <a class="active" href="/owner/products">
+                                    <span><i class="fa-brands fa-product-hunt"></i></span>
+                                    Sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/sizes">
+                                    <span><i class="fa-solid fa-sitemap"></i></span>
+                                    Kích thước sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/colors">
+                                    <span><i class="fa-solid fa-droplet"></i></span>
+                                    Màu sắc sắc sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/product-categories">
+                                    <span><i class="fa-solid fa-book-open"></i></span>
+                                    Loại sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="">
+                                    <span><i class="fa-solid fa-asterisk"></i></span>
+                                    Chi tiết sản phẩm
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="category-item">
                         <a href=""><i class="fa-solid fa-user-group"></i>Quản lý nhân viên</a>
@@ -71,7 +103,7 @@
                     </div>
                 </div>
                 <div class="orther-option-funtion">
-                    <div class="direction-btn" onclick="location.assign('/owner/product-manage')">
+                    <div class="direction-btn" onclick="location.assign('/owner/products')">
                         <span>Đến trang quản lý sản phẩm</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </div>
@@ -82,7 +114,8 @@
                 <div class="product-header">
                     <h3>Cập nhật sản phẩm</h3>
                 </div>
-                <form th:object="${productDto}" th:action="@{/owner/product-manage/update-product/{productCode}(productCode=${productCode})}" method="post">
+                <form th:object="${productDto}" th:action="@{/owner/products/{productCode}(productCode=${productCode})}" method="post">
+                    <input hidden type="text" th:name="update">
                     <div>
                         <label for="product-code">
                             <div>Mã sản phẩm</div>
@@ -121,7 +154,7 @@
     </div>
 
     <!-- Message success box -->
-    <div th:classappend="${!hasError ? 'show' : ''}" id="message-wrapper" class="message-wrapper">
+    <div th:classappend="${hasError !=null && !hasError ? 'show' : ''}" id="message-wrapper" class="message-wrapper">
         <div class="overlay">
             <div class="message-box">
                 <div class="check-container">

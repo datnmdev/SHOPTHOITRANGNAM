@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ptithcm.shopthoitrangnam.dto.ProductDto;
 import com.ptithcm.shopthoitrangnam.entity.Product;
+import com.ptithcm.shopthoitrangnam.entity.ProductCategory;
 import com.ptithcm.shopthoitrangnam.repository.ProductRepository;
 
 import jakarta.transaction.Transactional;
@@ -33,13 +34,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public Page<Product> findAll(Pageable pageble) {
-		return productRepository.findAll(pageble);
+	public Optional<Product> findByProductCode(String productCode) {
+		return productRepository.findByProductCode(productCode);
 	}
 	
 	@Override
-	public Optional<Product> findByProductCode(String productCode) {
-		return productRepository.findByProductCode(productCode);
+	public List<Product> findByProductCategory(ProductCategory productCategory) {
+		return productRepository.findByProductCategory(productCategory);
 	}
 	
 	@Override
@@ -59,6 +60,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+	@Transactional
 	public void save(ProductDto productDto) {
 		Product product = new Product();
 		product.setProductCode(getProductCode(productDto.getProductCategoryCode()));
@@ -70,6 +72,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+	@Transactional
 	public void save(String productCode, ProductDto productDto) {
 		Product product = new Product();
 		product.setProductCode(productCode);
