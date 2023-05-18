@@ -21,9 +21,6 @@ public class OrderStatus {
 	@OneToMany(mappedBy = "orderStatus")
 	private List<OrderStatusDetail> orderStatusDetails;
 	
-	@OneToMany(mappedBy = "orderStatus")
-	private List<Order> orders;
-
 //	Getter and setter methods
 	public String getOrderStatusCode() {
 		return orderStatusCode;
@@ -47,13 +44,5 @@ public class OrderStatus {
 
 	public void setOrderStatusDetails(List<OrderStatusDetail> orderStatusDetails) {
 		this.orderStatusDetails = orderStatusDetails;
-	}
-
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
 	}
 }

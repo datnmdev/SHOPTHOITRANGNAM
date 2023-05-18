@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop thời trang nam - Cập nhật màu sắc sản phẩm</title>
+    <title>Shop thời trang nam - Cập nhật chi tiết sản phẩm</title>
 	<link rel="stylesheet" th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
 	<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
 	<link rel="stylesheet" th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.min.css}">
-    <link rel="stylesheet" th:href="@{/css/owner-update-color.css}">
-    <script th:src="@{/js/owner-update-color.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/owner-update-product-detail.css}">
+    <script th:src="@{/js/owner-update-product-detail.js}"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -50,7 +50,7 @@
                                 </a>
                             </li>
                             <li class="category-item__children__item">
-                                <a class="active" href="/owner/colors">
+                                <a href="/owner/colors">
                                     <span><i class="fa-solid fa-droplet"></i></span>
                                     Màu sắc sắc sản phẩm
                                 </a>
@@ -62,7 +62,7 @@
                                 </a>
                             </li>
                             <li class="category-item__children__item">
-                                <a href="/owner/product-details">
+                                <a class="active" href="/owner/product-details">
                                     <span><i class="fa-solid fa-asterisk"></i></span>
                                     Chi tiết sản phẩm
                                 </a>
@@ -77,9 +77,6 @@
                     </li>
                     <li class="category-item">
                         <a href=""><i class="fa-solid fa-note-sticky"></i>Quản lý đơn vị vận chuyển</a>
-                    </li>
-                    <li class="category-item">
-                        <a href=""><i class="fa-solid fa-warehouse"></i>Quản lý kho</a>
                     </li>
                     <li class="category-item">
                         <a href=""><i class="fa-solid fa-key"></i>Quản lý tài khoản</a>
@@ -103,8 +100,8 @@
                     </div>
                 </div>
                 <div class="orther-option-funtion">
-                    <div class="direction-btn" onclick="location.assign('/owner/colors')">
-                        <span>Đến trang quản lý màu sắc sản phẩm</span>
+                    <div class="direction-btn" onclick="location.assign('/owner/product-details')">
+                        <span>Đến trang chi tiết sản phẩm</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </div>
                 </div>
@@ -112,23 +109,56 @@
 
             <div class="product-container">
                 <div class="product-header">
-                    <h3>Cập nhật màu sắc sản phẩm</h3>
+                    <h3>Cập nhật chi tiết sản phẩm</h3>
                 </div>
-                <form th:object="${colorDto}" th:action="@{/owner/colors/{colorCode}(colorCode=${colorCode})}" method="post">
+                <form th:object="${productDetailDto}" th:action="@{/owner/product-details/{productDetailId}(productDetailId=${productDetailId})}" method="post" enctype="multipart/form-data">
                     <input hidden type="text" th:name="update">
-                    <div>
-                        <label for="color-code">
-                            <div>Mã màu sắc</div>
-                            <input th:value="${colorCode}" type="text" id="color-code" disabled>
+                    <div th:if="${#fields.hasErrors('primaryKeyError')}" class="primary-key-error">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        <span th:text="${#fields.errors('primaryKeyError')[0]}"></span>
+                    </div>
+                    <div class="first">
+                        <label for="product-code" style="margin-right: 0;">
+                            <div>IDCTSP</div>
+                            <input th:field="*{productDetailId}" type="text" id="product-code" readonly>
                         </label>
                     </div>
-                    <label for="color-name">
-                        <div>Tên màu sắc</div>
-                        <input th:field="*{colorName}" type="text" id="color-name">
-                        <div th:if="${#fields.hasErrors('colorName')}" th:errors="*{colorName}" class="error-message"></div>
-                    </label>
+                    <div class="first">
+                        <label for="product-code">
+                            <div>Mã sản phẩm</div>
+                            <input th:field="*{productCode}" type="text" id="product-code" readonly>
+                        </label>
+    
+                        <label for="size-code">
+                            <div>Mã kích thước</div>
+                            <input th:field="*{sizeCode}" type="text" id="size-code" readonly>
+                        </label>
+                    </div>
+                    <div class="first">
+                        <label for="color-code">
+                            <div>Mã màu sắc</div>
+                            <input th:field="*{colorCode}" type="text" id="color-code" readonly>
+                        </label>
+    
+                        <label for="quantity">
+                            <div>Số lượng tồn</div>
+                            <input th:field="*{quantity}" type="text" id="quantity" readonly>
+                        </label>
+                    </div>
+                    <div class="product-image">
+                        <div>Hình ảnh</div>
+                        <div class="image-chooser">
+                            <img th:src="${productDetailDto.getImage()}" alt="Shop thời trang nam">
+                            <label for="product-image-btn">
+                                <input id="product-image-btn" name="productDetailImage" type="file" accept="image/jpeg, image/png, image/webp, image/jpg, image/jfif">
+                                <input id="product-image-path" hidden th:field="*{image}" type="text">
+                                Chọn ảnh
+                            </label>
+                        </div>
+                        <div th:if="${#fields.hasErrors('image')}" th:text="${#fields.errors('image')[0]}" class="error-message"></div>
+                    </div>
                     <div>
-                        <button type="submit"><i class="fa-solid fa-pen-to-square"></i> Cập nhật màu sắc</button>
+                        <button type="submit"><i class="fa-solid fa-pen-to-square"></i> Cập nhật chi tiết sản phẩm</button>
                     </div>
                 </form>
             </div>
@@ -143,7 +173,7 @@
                     <i class="fa-solid fa-circle-check"></i>
                 </div>
                 <div class="message">
-                    Cập nhật thông tin màu sắc sản phẩm thành công!
+                    Cập nhật chi tiết sản phẩm thành công!
                 </div>
             </div>
         </div>

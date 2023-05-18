@@ -42,6 +42,9 @@ public class ProductDetail {
 	@Column(name = "SOLUONG")
 	private Integer quantity;
 	
+	@Column(name = "HINHANH")
+	private String image;
+	
 	@OneToMany(mappedBy = "productDetail")
 	private List<ShoppingCart> shoppingCarts;
 	
@@ -52,16 +55,16 @@ public class ProductDetail {
 	private List<SellingPrice> sellingPrices;
 	
 	@OneToMany(mappedBy = "productDetail")
-	private List<DeliveryNoteDetail> deliveryNoteDetails;
-	
-	@OneToMany(mappedBy = "productDetail")
-	private List<BillDetail> billDetails;
-	
-	@OneToMany(mappedBy = "productDetail")
 	private List<SupplyDetail> supplyDetails;
 	
 	@OneToMany(mappedBy = "productDetail")
 	private List<DiscountDetail> discountDetails;
+	
+	@OneToMany(mappedBy = "productDetail")
+	private List<PurchaseNoteDetail> purchaseNoteDetails;
+	
+	@OneToMany(mappedBy = "productDetail")
+	private List<PurchaseOrderDetail> purchaseOrderDetails;
 
 //	Getter and setter methods
 	public Integer getProductDetailId() {
@@ -112,6 +115,14 @@ public class ProductDetail {
 		this.quantity = quantity;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public List<ShoppingCart> getShoppingCarts() {
 		return shoppingCarts;
 	}
@@ -136,22 +147,6 @@ public class ProductDetail {
 		this.sellingPrices = sellingPrices;
 	}
 
-	public List<DeliveryNoteDetail> getDeliveryNoteDetails() {
-		return deliveryNoteDetails;
-	}
-
-	public void setDeliveryNoteDetails(List<DeliveryNoteDetail> deliveryNoteDetails) {
-		this.deliveryNoteDetails = deliveryNoteDetails;
-	}
-
-	public List<BillDetail> getBillDetails() {
-		return billDetails;
-	}
-
-	public void setBillDetails(List<BillDetail> billDetails) {
-		this.billDetails = billDetails;
-	}
-
 	public List<SupplyDetail> getSupplyDetails() {
 		return supplyDetails;
 	}
@@ -166,5 +161,21 @@ public class ProductDetail {
 
 	public void setDiscountDetails(List<DiscountDetail> discountDetails) {
 		this.discountDetails = discountDetails;
+	}
+
+	public List<PurchaseNoteDetail> getPurchaseNoteDetails() {
+		return purchaseNoteDetails;
+	}
+
+	public void setPurchaseNoteDetails(List<PurchaseNoteDetail> purchaseNoteDetails) {
+		this.purchaseNoteDetails = purchaseNoteDetails;
+	}
+
+	public List<PurchaseOrderDetail> getPurchaseOrderDetails() {
+		return purchaseOrderDetails;
+	}
+
+	public void setPurchaseOrderDetails(List<PurchaseOrderDetail> purchaseOrderDetails) {
+		this.purchaseOrderDetails = purchaseOrderDetails;
 	}
 }

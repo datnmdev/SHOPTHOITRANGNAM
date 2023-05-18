@@ -49,12 +49,6 @@ public class Account {
 	@JoinColumn(name = "MALOAITK")
 	private AccountType accountType;
 	
-//	@OneToOne(mappedBy = "account")
-//	private Customer customer;
-//	
-//	@OneToOne(mappedBy = "account")
-//	private Employee employee;
-
 //	Getter and setter methods
 	public String getUsername() {
 		return username;
@@ -111,20 +105,4 @@ public class Account {
 	public void setAccountType(AccountType accountType) {
 		this.accountType = accountType;
 	}
-	
-//	public Customer getCustomer() {
-//		return customer;
-//	}
-//
-//	public void setCustomer(Customer customer) {
-//		this.customer = customer;
-//	}
-//
-//	public Employee getEmployee() {
-//		return employee;
-//	}
-//
-//	public void setEmployee(Employee employee) {
-//		this.employee = employee;
-//	}
 }

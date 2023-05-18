@@ -37,12 +37,12 @@ public class PurchaseNote {
 	@JoinColumn(name = "MANV")
 	private Employee employee;
 	
-	@ManyToOne
-	@JoinColumn(name = "MAKHO")
-	private WareHouse wareHouse;
-	
 	@OneToMany(mappedBy = "purchaseNote")
 	private List<PurchaseNoteDetail> purchaseNoteDetails;
+	
+	@ManyToOne
+	@JoinColumn(name = "MANCC")
+	private Supplier supplier;
 
 //	Getter and setter methods
 	public String getPurchaseNoteCode() {
@@ -85,19 +85,19 @@ public class PurchaseNote {
 		this.employee = employee;
 	}
 
-	public WareHouse getWareHouse() {
-		return wareHouse;
-	}
-
-	public void setWareHouse(WareHouse wareHouse) {
-		this.wareHouse = wareHouse;
-	}
-
 	public List<PurchaseNoteDetail> getPurchaseNoteDetails() {
 		return purchaseNoteDetails;
 	}
 
 	public void setPurchaseNoteDetails(List<PurchaseNoteDetail> purchaseNoteDetails) {
 		this.purchaseNoteDetails = purchaseNoteDetails;
+	}
+
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
 	}
 }
