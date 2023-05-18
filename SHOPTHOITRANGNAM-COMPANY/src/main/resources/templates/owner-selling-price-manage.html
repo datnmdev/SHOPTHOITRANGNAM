@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop thời trang nam - Quản lý danh mục sản phẩm</title>
+    <title>Shop thời trang nam - Cập nhật giá sản phẩm</title>
     <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
 	<link rel="stylesheet" th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
 	<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
     <link rel="stylesheet" th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.min.css}">
-    <link rel="stylesheet" th:href="@{/css/owner-product-category-manage.css}">
-    <script th:src="@{/js/owner-product-category-manage.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/owner-selling-price-manage.css}">
+    <script th:src="@{/js/owner-selling-price-manage.js}"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -57,7 +57,7 @@
                                 </a>
                             </li>
                             <li class="category-item__children__item">
-                                <a class="active" href="/owner/product-categories">
+                                <a href="/owner/product-categories">
                                     <span><i class="fa-solid fa-book-open"></i></span>
                                     Loại sản phẩm
                                 </a>
@@ -69,7 +69,7 @@
                                 </a>
                             </li>
                             <li class="category-item__children__item">
-                                <a href="/owner/selling-prices">
+                                <a class="active" href="/owner/selling-prices">
                                     <span><i class="fa-solid fa-money-bill-wave"></i></span>
                                     Cập nhật giá sản phẩm
                                 </a>
@@ -81,12 +81,6 @@
                     </li>
                     <li class="category-item">
                         <a href=""><i class="fa-solid fa-truck-field-un"></i>Quản lý nhà cung cấp</a>
-                    </li>
-                    <li class="category-item">
-                        <a href=""><i class="fa-solid fa-note-sticky"></i>Quản lý đơn vị vận chuyển</a>
-                    </li>
-                    <li class="category-item">
-                        <a href=""><i class="fa-solid fa-warehouse"></i>Quản lý kho</a>
                     </li>
                     <li class="category-item">
                         <a href=""><i class="fa-solid fa-key"></i>Quản lý tài khoản</a>
@@ -108,10 +102,10 @@
                         <span class="forward-btn" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i></span>
                         <span class="back-btn" onclick="history.forward()"><i class="fa-solid fa-arrow-right"></i></span>
                     </div>
-                    <form action="/owner/product-categories" id="product-search-form">
+                    <form th:if="${productDetailId == null}" action="/owner/selling-prices" id="product-search-form">
                         <label for="product-search">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input th:name="search" type="search" th:value="${search}" id="product-search" placeholder="Nhập mã hoặc tên kích thước sản phẩm muốn tìm kiếm...">
+                            <input th:name="search" type="search" th:value="${search}" id="product-search" placeholder="Nhập id lịch sử cập nhật giá sản phẩm muốn tìm kiếm...">
                         </label>
                     </form>
                 </div>
@@ -127,34 +121,39 @@
 
             <div class="product-container">
                 <div class="product-header">
-                    <h3 th:if="${isSearched == null}">Danh sách danh mục sản phẩm</h3>
-                    <h3 th:if="${isSearched != null && isSearched && !productCategories.isEmpty()}" th:text="${'Kết quả tìm kiếm danh mục sản phẩm với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
-                    <h3 th:if="${isSearched != null && isSearched && productCategories.isEmpty()}" th:text="${'Không tìm thấy danh mục sản phẩm nào với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
-                    <form action="/owner/product-categories" method="post">
+                    <h3 th:if="${productDetailId != null}" th:text="${'Lịch sử cập nhật giá của sản phẩm có id là ' + productDetailId}"></h3>
+                    <h3 th:if="${productDetailId == null && isSearched == null}">Lịch sử cập nhật giá sản phẩm</h3>
+                    <h3 th:if="${productDetailId == null && isSearched != null && isSearched && !sizes.isEmpty()}" th:text="${'Kết quả tìm kiếm thông tin cập nhật giá sản phẩm với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
+                    <h3 th:if="${productDetailId == null && isSearched != null && isSearched && sizes.isEmpty()}" th:text="${'Không tìm thấy thông tin cập nhật giá sản phẩm nào với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
+                    <form action="/owner/selling-prices" method="post">
                         <input hidden type="text" th:name="create-page">
+                        <input th:if="${productDetailId != null}" type="hidden" th:value="${productDetailId}" th:name="product-detail-id">
                         <button class="add-product-btn">
                             <i class="fa-solid fa-plus"></i>
-                            Thêm danh mục sản phẩm
+                            Thêm cập nhật giá sản phẩm
                         </button>
                     </form>
                 </div>
-                <table th:unless="${productCategories.isEmpty()}" class="product-table">
+                <table th:unless="${sellingPrices.isEmpty()}" class="product-table">
                     <thead>
-                        <th>Mã loại sản phẩm</th>
-                        <th>Tên loại sản phẩm</th>
-                        <th>Thao tác khác</th>
+                        <th>ID</th>
+                        <th>Giá</th>
+                        <th>Thời điểm áp dụng</th>
+                        <th>IDCTSP</th>
                     </thead>
-                    <tbody th:each="i : ${#numbers.sequence(pageNumber * 20, ((pageNumber + 1) * 20) <= productCategories.size() ? (pageNumber + 1) * 20 - 1 : productCategories.size() - 1)}">
+                    <tbody th:each="i : ${#numbers.sequence(pageNumber * 20, ((pageNumber + 1) * 20) <= sellingPrices.size() ? (pageNumber + 1) * 20 - 1 : sellingPrices.size() - 1)}">
                         <tr>
-                            <td th:text="${productCategories[i].getProductCategoryCode()}"></td>
-                            <td th:text="${productCategories[i].getProductCategoryName()}"></td>
+                            <td th:text="${sellingPrices[i].getSellingPriceId()}"></td>
+                            <td th:text="${'&#x20AB; ' + #numbers.formatDecimal(sellingPrices[i].getPrice(), 1, 'COMMA', 0,'POINT')}"></td>
+                            <td th:text="${sellingPrices[i].getEffectiveTime()}"></td>
+                            <td th:text="${sellingPrices[i].getProductDetail().getProductDetailId()}"></td>
                             <td>
                                 <div class="orther-action">
-                                    <form th:action="@{/owner/product-categories/{productCategoryCode}(productCategoryCode=${productCategories[i].getProductCategoryCode()})}" method="post">
+                                    <form th:action="@{/owner/selling-prices/{sellingPriceId}(sellingPriceId=${sellingPrices[i].getSellingPriceId()})}" method="post">
                                         <input hidden type="text" th:name="update-page">
                                         <button class="update-product-btn"><i class="fa-solid fa-pen-to-square"></i></button>
                                     </form>
-                                    <form th:action="@{/owner/product-categories/{productCategoryCode}(productCategoryCode=${productCategories[i].getProductCategoryCode()})}" method="post">
+                                    <form th:action="@{/owner/selling-prices/{sellingPriceId}(sellingPriceId=${sellingPrices[i].getSellingPriceId()})}" method="post">
                                         <input hidden type="text" th:name="delete">
                                         <button class="delete-product-btn"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
@@ -163,28 +162,28 @@
                         </tr>
                     </tbody>
                 </table>
-                <div th:with="productCategoriesSize=${productCategories.size()}" class="product-footer">
-                    <th:block th:with="pageCount=${productCategoriesSize % 20 == 0 ? productCategoriesSize / 20 : productCategoriesSize / 20 + 1}">
+                <div th:with="sellingPricesSize=${sellingPrices.size()}" class="product-footer">
+                    <th:block th:with="pageCount=${sellingPricesSize % 20 == 0 ? sellingPricesSize / 20 : sellingPricesSize / 20 + 1}">
                         <div class="total-product">
-                            <span>Tổng số danh mục sản phẩm:</span>
-                            <span th:text="${productCategoriesSize}" class="total-product-number"></span>
+                            <span>Tổng số lần cập nhật giá sản phẩm:</span>
+                            <span th:text="${sellingPricesSize}" class="total-product-number"></span>
                         </div>
-                        <th:block th:if="${productCategoriesSize > 20}">
+                        <th:block th:if="${sellingPricesSize > 20}">
                             <ul id="pagination" class="pagination" th:attr="current-page-number=${pageNumber+1}, page-count=${pageCount}">
-                                <li id="pagination-previous" th:if="${productCategoriesSize <= 20}" class="page-number-item page-active">
-                                    <a href="/owner/product-categories?page-number=1">1</a>
+                                <li id="pagination-previous" th:if="${sellingPricesSize <= 20}" class="page-number-item page-active">
+                                    <a href="/owner/selling-prices?page-number=1">1</a>
                                 </li>
-                                <li th:if="${productCategoriesSize > 20}" id="pagination-previous" class="page-number-item">
+                                <li th:if="${sellingPricesSize > 20}" id="pagination-previous" class="page-number-item">
                                     <a><i class="fa-solid fa-chevron-left"></i></a>
                                 </li>
                                 <a th:if="${pageNumber+1 >= 3}" th:text="..."></a>
                                 <th:block th:each="i : ${#numbers.sequence((pageNumber+1) % 2 != 0 ? (pageCount == pageNumber+1 ? pageCount-2 : pageNumber+1) : pageNumber, (pageNumber+1) % 2 != 0 ? (pageCount == pageNumber+1 ? pageCount : pageNumber+3) : pageNumber+2)}">
                                     <li th:if="${i <= pageCount}" th:classappend="${i == pageNumber+1 ? 'page-active' : ''}" class="page-number-item">
-                                        <a th:text="${i}" th:href="@{/owner/product-categories(page-number=${i})}"></a>
+                                        <a th:text="${i}" th:href="@{/owner/selling-prices(page-number=${i})}"></a>
                                     </li>
                                 </th:block>
                                 <a th:if="${((pageCount - (pageNumber + 1)) > 3) || (pageCount % 2 == 0 && pageCount > 3 && (pageCount - (pageNumber + 1)) <= 2)}" th:text="..."></a>
-                                <li th:if="${productCategoriesSize > 20}" id="pagination-next" class="page-number-item">
+                                <li th:if="${sellingPricesSize > 20}" id="pagination-next" class="page-number-item">
                                     <a><i class="fa-solid fa-chevron-right"></i></a>
                                 </li>
                             </ul>
@@ -212,28 +211,28 @@
         </div>
 
         <!-- Message delete success box -->
-        <div th:classappend="${isDeletedProductCategory != null && isDeletedProductCategory ? 'show' : ''}" id="success-message-wrapper" class="message-wrapper">
+        <div th:classappend="${isDeletedSellingPrice != null && isDeletedSellingPrice ? 'show' : ''}" id="success-message-wrapper" class="message-wrapper">
             <div class="overlay">
                 <div class="message-box">
                     <div class="check-container">
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <div class="message">
-                        Xóa danh mục sản phẩm thành công!
+                        Xóa giá sản phẩm thành công!
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Message delete failure box -->
-        <div th:classappend="${isDeletedProductCategory != null && !isDeletedProductCategory ? 'show' : ''}" id="failure-message-wrapper" class="message-wrapper">
+        <div th:classappend="${isDeletedSellingPrice != null && !isDeletedSellingPrice ? 'show' : ''}" id="failure-message-wrapper" class="message-wrapper">
             <div class="overlay">
                 <div class="message-box">
                     <div class="check-container">
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <div class="message">
-                        Thông tin danh mục sản phẩm này có ảnh hưởng đến dữ liệu khác. Không thể xóa!
+                        Thông tin giá sản phẩm này có ảnh hưởng đến dữ liệu khác. Không thể xóa!
                     </div>
                 </div>
             </div>

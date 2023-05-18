@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ptithcm.shopthoitrangnam.dto.ProductDetailDto;
+import com.ptithcm.shopthoitrangnam.dto.SellingPriceDto;
 import com.ptithcm.shopthoitrangnam.entity.Color;
 import com.ptithcm.shopthoitrangnam.entity.Product;
 import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
@@ -112,6 +113,32 @@ public class ProductDetailController {
 		model.addAttribute("search", search);
 		model.addAttribute("pageNumber", 0);
 		return "owner-product-detail-manage.html";
+	}
+	
+	@GetMapping(value = "/owner/product-details", params = "product-code")
+	public String filterProductDetail(Model model, @RequestParam("product-code") String productCode) {
+		List<ProductDetail> productDetails = productService.findByProductCode(productCode).get().getProductDetails();
+		model.addAttribute("productDetails", productDetails);
+		model.addAttribute("productCode", productCode);
+		model.addAttribute("pageNumber", 0);
+		return "owner-product-detail-manage.html";
+	}
+	
+	@PostMapping(value = "/owner/product-details", params = {"product-code", "create-page"})
+	public String filterAndCreateProductDetailPage(Model model, @RequestParam("product-code") String productCode) {
+		List<Size> sizes = sizeService.findAll();
+		List<Color> colors = colorService.findAll();
+		
+		model.addAttribute("sizes", sizes);
+		model.addAttribute("colors", colors);
+		
+		ProductDetailDto productDetailDto = new ProductDetailDto();
+		productDetailDto.setProductCode(productCode);
+		productDetailDto.setQuantity(0);
+		productDetailDto.setImage("/img/products/default.jpg");
+		model.addAttribute("productDetailDto", productDetailDto);
+		model.addAttribute("productCode", productCode);
+		return "owner-create-product-detail.html";
 	}
 	
 	@PostMapping(value = "/owner/product-details", params = "create-page")

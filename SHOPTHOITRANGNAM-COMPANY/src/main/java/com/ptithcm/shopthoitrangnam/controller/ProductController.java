@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ptithcm.shopthoitrangnam.dto.ProductDto;
+import com.ptithcm.shopthoitrangnam.dto.SellingPriceDto;
 import com.ptithcm.shopthoitrangnam.entity.Product;
 import com.ptithcm.shopthoitrangnam.entity.ProductCategory;
+import com.ptithcm.shopthoitrangnam.entity.SellingPrice;
 import com.ptithcm.shopthoitrangnam.mapper.ProductMapper;
 import com.ptithcm.shopthoitrangnam.service.ProductCategoryService;
 import com.ptithcm.shopthoitrangnam.service.ProductService;

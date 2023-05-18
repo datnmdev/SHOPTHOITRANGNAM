@@ -67,6 +67,12 @@
                                     Chi tiết sản phẩm
                                 </a>
                             </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/selling-prices">
+                                    <span><i class="fa-solid fa-money-bill-wave"></i></span>
+                                    Cập nhật giá sản phẩm
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="category-item">
@@ -121,13 +127,18 @@
                         <span th:text="${#fields.errors('primaryKeyError')[0]}"></span>
                     </div>
                     <div class="first">
-                        <label for="product-code">
+                        <label th:if="${productCode == null}" for="product-code">
                             <div>Mã sản phẩm</div>
                             <select th:field="*{productCode}" id="product-code">
                                 <th:block th:each="product, iterStatus : ${products}">
                                     <option th:value="${product.getProductCode()}" th:text="${product.getProductCode()}" th:selected="${iterStatus.index == 1}"></option>
                                 </th:block>
                             </select>
+                        </label>
+
+                        <label th:if="${productCode != null}" for="product-code">
+                            <div>Mã sản phẩm</div>
+                            <input th:field="*{productCode}" type="text" id="product-code" readonly>
                         </label>
     
                         <label for="size-code">

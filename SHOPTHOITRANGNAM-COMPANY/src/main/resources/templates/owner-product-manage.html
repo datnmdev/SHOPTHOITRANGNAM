@@ -68,6 +68,12 @@
                                     Chi tiết sản phẩm
                                 </a>
                             </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/selling-prices">
+                                    <span><i class="fa-solid fa-money-bill-wave"></i></span>
+                                    Cập nhật giá sản phẩm
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="category-item">
@@ -75,12 +81,6 @@
                     </li>
                     <li class="category-item">
                         <a href=""><i class="fa-solid fa-truck-field-un"></i>Quản lý nhà cung cấp</a>
-                    </li>
-                    <li class="category-item">
-                        <a href=""><i class="fa-solid fa-note-sticky"></i>Quản lý đơn vị vận chuyển</a>
-                    </li>
-                    <li class="category-item">
-                        <a href=""><i class="fa-solid fa-warehouse"></i>Quản lý kho</a>
                     </li>
                     <li class="category-item">
                         <a href=""><i class="fa-solid fa-key"></i>Quản lý tài khoản</a>
@@ -159,7 +159,12 @@
                                         <input hidden type="text" th:name="delete">
                                         <button class="delete-product-btn"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
-                                    <button class="orther-option-btn"><i class="fa-solid fa-ellipsis"></i></i></button>
+                                    <div class="orther-option-section">
+                                        <button class="orther-option-btn"><i class="fa-solid fa-ellipsis"></i></i></button>
+                                        <ul class="orther-option-box">
+                                            <li class="orther-option-item"><a th:href="@{/owner/product-details(product-code=${products[i].getProductCode()})}">Xem chi tiết</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

@@ -7,6 +7,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -19,14 +21,14 @@ import jakarta.persistence.TemporalType;
 public class SellingPrice {
 	@Id
 	@Column(name = "ID")
-	private Long sellingPriceId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer sellingPriceId;
 	
 	@Column(name = "GIA", columnDefinition = "money")
 	private BigDecimal price;
 	
 	@Column(name = "THOIDIEMAPDUNG")
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date effectiveTime;
 	
 	@ManyToOne
@@ -34,11 +36,11 @@ public class SellingPrice {
 	private ProductDetail productDetail;
 
 //	Getter and setter methods
-	public Long getSellingPriceId() {
+	public Integer getSellingPriceId() {
 		return sellingPriceId;
 	}
 
-	public void setSellingPriceId(Long sellingPriceId) {
+	public void setSellingPriceId(Integer sellingPriceId) {
 		this.sellingPriceId = sellingPriceId;
 	}
 

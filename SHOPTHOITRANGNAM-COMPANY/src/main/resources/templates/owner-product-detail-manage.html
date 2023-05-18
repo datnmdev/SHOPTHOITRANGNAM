@@ -68,6 +68,12 @@
                                     Chi tiết sản phẩm
                                 </a>
                             </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/selling-prices">
+                                    <span><i class="fa-solid fa-money-bill-wave"></i></span>
+                                    Cập nhật giá sản phẩm
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="category-item">
@@ -121,11 +127,13 @@
 
             <div class="product-container">
                 <div class="product-header">
-                    <h3 th:if="${isSearched == null}">Danh sách chi tiết sản phẩm</h3>
-                    <h3 th:if="${isSearched != null && isSearched && !productDetails.isEmpty()}" th:text="${'Kết quả tìm kiếm với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
-                    <h3 th:if="${isSearched != null && isSearched && productDetails.isEmpty()}" th:text="${'Không tìm thấy sản phẩm nào với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
+                    <h3 th:if="${productCode != null}" th:text="${'Danh sách chi tiết sản phẩm có mã sản phẩm là ' + productCode}"></h3>
+                    <h3 th:if="${productCode == null && isSearched == null}">Danh sách chi tiết sản phẩm</h3>
+                    <h3 th:if="${productCode == null && isSearched != null && isSearched && !productDetails.isEmpty()}" th:text="${'Kết quả tìm kiếm với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
+                    <h3 th:if="${productCode == null && isSearched != null && isSearched && productDetails.isEmpty()}" th:text="${'Không tìm thấy sản phẩm nào với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
                     <form action="/owner/product-details" method="post">
                         <input hidden type="text" th:name="create-page">
+                        <input th:if="${productCode != null}" type="hidden" th:value="${productCode}" th:name="product-code">
                         <button class="add-product-btn">
                             <i class="fa-solid fa-plus"></i>
                             Thêm chi tiết sản phẩm
@@ -163,7 +171,12 @@
                                         <input hidden type="text" th:name="delete">
                                         <button class="delete-product-btn"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
-                                    <button class="orther-option-btn"><i class="fa-solid fa-ellipsis"></i></i></button>
+                                    <div class="orther-option-section">
+                                        <button class="orther-option-btn"><i class="fa-solid fa-ellipsis"></i></i></button>
+                                        <ul class="orther-option-box">
+                                            <li class="orther-option-item"><a th:href="@{/owner/selling-prices(product-detail-id=${productDetails[i].getProductDetailId()})}">Cập nhật giá</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

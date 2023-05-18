@@ -79,4 +79,9 @@ $(document).ready(function () {
             }
         });
     })
+
+    $(".orther-option-btn").click(function() {
+        var displayValue =  $(this).siblings(".orther-option-box").css("display")
+        $(this).siblings(".orther-option-box").css("display", displayValue == "block" ? "none" : "block")
+    })
 });

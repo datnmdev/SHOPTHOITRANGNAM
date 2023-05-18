@@ -67,6 +67,12 @@
                                     Chi tiết sản phẩm
                                 </a>
                             </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/selling-prices">
+                                    <span><i class="fa-solid fa-money-bill-wave"></i></span>
+                                    Cập nhật giá sản phẩm
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="category-item">
@@ -116,12 +122,10 @@
                 </div>
                 <form th:object="${colorDto}" th:action="@{/owner/colors/{colorCode}(colorCode=${colorCode})}" method="post">
                     <input hidden type="text" th:name="update">
-                    <div>
-                        <label for="color-code">
-                            <div>Mã màu sắc</div>
-                            <input th:value="${colorCode}" type="text" id="color-code" disabled>
-                        </label>
-                    </div>
+                    <label for="color-code">
+                        <div>Mã màu sắc</div>
+                        <input th:value="${colorCode}" type="text" id="color-code" readonly>
+                    </label>
                     <label for="color-name">
                         <div>Tên màu sắc</div>
                         <input th:field="*{colorName}" type="text" id="color-name">

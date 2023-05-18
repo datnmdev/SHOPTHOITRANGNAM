@@ -67,6 +67,12 @@
                                     Chi tiết sản phẩm
                                 </a>
                             </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/selling-prices">
+                                    <span><i class="fa-solid fa-money-bill-wave"></i></span>
+                                    Cập nhật giá sản phẩm
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="category-item">
@@ -116,12 +122,10 @@
                 </div>
                 <form th:object="${sizeDto}" th:action="@{/owner/sizes/{sizeCode}(sizeCode=${sizeCode})}" method="post">
                     <input hidden type="text" th:name="update">
-                    <div>
-                        <label for="size-code">
-                            <div>Mã kích thước</div>
-                            <input th:value="${sizeCode}" type="text" id="size-code" readonly>
-                        </label>
-                    </div>
+                    <label for="size-code">
+                        <div>Mã kích thước</div>
+                        <input th:value="${sizeCode}" type="text" id="size-code" readonly>
+                    </label>
                     <label for="size-name">
                         <div>Tên kích thước</div>
                         <input th:field="*{sizeName}" type="text" id="size-name">

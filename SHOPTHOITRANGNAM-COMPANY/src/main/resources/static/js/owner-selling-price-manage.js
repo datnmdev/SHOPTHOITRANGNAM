@@ -3,14 +3,14 @@ $(document).ready(function () {
         e.preventDefault()
         var currentPageNumber = Number.parseInt($('#pagination').attr('current-page-number'))
         var pageCount = Number.parseInt($('#pagination').attr('page-count'))
-        location.assign('/owner/products?page-number=' + (currentPageNumber - 1 == 0 ? pageCount : currentPageNumber - 1))        
+        location.assign('/owner/selling-prices?page-number=' + (currentPageNumber - 1 == 0 ? pageCount : currentPageNumber - 1))        
     });
 
     $('#pagination-next').click(function (e) {
         e.preventDefault()
         var currentPageNumber = Number.parseInt($('#pagination').attr('current-page-number'))
         var pageCount = Number.parseInt($('#pagination').attr('page-count'))
-        location.assign('/owner/products?page-number=' + (currentPageNumber + 1 > pageCount ? 1 : currentPageNumber + 1))        
+        location.assign('/owner/selling-prices?page-number=' + (currentPageNumber + 1 > pageCount ? 1 : currentPageNumber + 1))        
     });
 
     $('.message-wrapper').click(function () {
@@ -19,29 +19,28 @@ $(document).ready(function () {
         }
     })
     
-    fetch("/owner/products?export", {method: "GET"})
+    fetch("/owner/selling-prices?export", {method: "GET"})
         .then(response => response.json())
         .then(data => {
-            var convertedProductData = [["Mã sản phẩm", "Tên sản phẩm", "Mô tả", "Loại sản phẩm", "Trạng thái"]]
-            data.forEach(productData => {
-                let product = []
-                product.push(productData.productCode)
-                product.push(productData.productName)
-                product.push(productData.description)
-                product.push(productData.productCategory.productCategoryName)
-                product.push(productData.productDetails.length == 0 ? "Hết hàng" : "Còn hàng")
+            var convertedSellingPriceData = [["ID", "Giá", "Thời điểm áp dụng", "IDCTSP"]]
+            data.forEach(sellingPriceData => {
+                let sellingPrice = []
+                sellingPrice.push(sellingPriceData.sellingPriceId)
+                sellingPrice.push(sellingPriceData.price)
+                sellingPrice.push(sellingPriceData.effectiveTime)
+                sellingPrice.push(sellingPriceData.productDetailId)
 
-                convertedProductData.push(product)
+                convertedSellingPriceData.push(sellingPrice)
             })
 
             const workbook = new ExcelJS.Workbook();
-            const worksheet = workbook.addWorksheet('Danh sách sản phẩm');
-            worksheet.addRows(convertedProductData);
+            const worksheet = workbook.addWorksheet('Lịch sử cập nhật giá sản phẩm');
+            worksheet.addRows(convertedSellingPriceData);
             workbook.xlsx.writeBuffer().then(buffer => {
                 const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                 const url = URL.createObjectURL(blob);
                 $('#export').attr('href', url);
-                $('#export').attr('download', 'danh_sách_sản_phẩm.xlsx')
+                $('#export').attr('download', 'lịch_sử_cập_giá_sản_phẩm.xlsx')
                 $('#export').click()
             })
         })
@@ -55,16 +54,16 @@ $(document).ready(function () {
     $("form#goto-page-form").submit(function(e) {
         e.preventDefault()
         var pageNumber = $("input[name='page-number'").val()
-        location.assign("/owner/products?page-number=" + pageNumber)
+        location.assign("/owner/selling-prices?page-number=" + pageNumber)
     })
 
     $("#first-page-btn").click(function() {
-        location.assign("/owner/products?page-number=" + 1)
+        location.assign("/owner/selling-prices?page-number=" + 1)
     })
 
     $("#last-page-btn").click(function() {
         var pageCount = Number.parseInt($('#pagination').attr('page-count'))
-        location.assign("/owner/products?page-number=" + (isNaN(pageCount) ? 1 : pageCount))
+        location.assign("/owner/selling-prices?page-number=" + (isNaN(pageCount) ? 1 : pageCount))
     })
 
     $('#header .category #product-manage-btn').click(function() {
@@ -77,10 +76,5 @@ $(document).ready(function () {
                 $("#product-manage-btn span:nth-child(2) i").addClass('fa-solid fa-angle-right');
             }
         });
-    })
-
-    $(".orther-option-btn").click(function() {
-        var displayValue =  $(this).siblings(".orther-option-box").css("display")
-        $(this).siblings(".orther-option-box").css("display", displayValue == "block" ? "none" : "block")
     })
 });

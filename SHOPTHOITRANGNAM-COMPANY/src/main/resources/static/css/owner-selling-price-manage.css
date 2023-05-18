@@ -810,51 +810,6 @@ html {
     text-align: center;
 }
 
-#content .orther-option-section {
-    position: relative;
-}
-
-#content .orther-option-section .orther-option-box {
-    position: absolute;
-    right: -16px;
-    top: 34px;
-    background-color: #111111;
-    z-index: 1;
-    width: 140px;
-    list-style-type: none;
-    padding: 0;
-    text-align: left;
-    border-radius: 8px;
-    animation: scale-in 0.2s ease-in;
-    display: none;
-}
-
-#content .orther-option-section .orther-option-box::before {
-    content: "";
-    display: block;
-    border-left: 8px solid transparent;
-    border-top: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid #000;
-    position: absolute;
-    top: -15px;
-    right: 20px;
-}
-
-#content .orther-option-box .orther-option-item {
-    padding: 8px 16px;
-}
-
-#content .orther-option-item a {
-    display: block;
-    text-decoration: none;
-    color: #fff;
-}
-
-#content .orther-option-item a:hover {
-    opacity: 0.8;
-}
-
 /* Animation */
 @keyframes rotate-1 {
     from {
