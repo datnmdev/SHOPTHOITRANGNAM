@@ -14,11 +14,9 @@ public interface SizeService {
 	
 	public Optional<Size> findBySizeCode(String sizeCode);
 	
-	@Query(value = "SELECT * FROM KICHTHUOC WHERE MAKICHTHUOC LIKE :pattern", nativeQuery = true)
-	public List<Size> findBySizeCodeUsingRegex(@Param("pattern") String pattern);
+	public List<Size> findBySizeCodeUsingRegex(String pattern);
 	
-	@Query(value = "SELECT * FROM KICHTHUOC WHERE TENKICHTHUOC LIKE :pattern", nativeQuery = true)
-	public List<Size> findBySizeNameUsingRegex(@Param("pattern") String pattern);
+	public List<Size> findBySizeNameUsingRegex(String pattern);
 	
 	public void deleteBySizeCode(String sizeCode);
 	

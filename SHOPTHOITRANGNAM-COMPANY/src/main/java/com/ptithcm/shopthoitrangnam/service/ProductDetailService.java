@@ -17,14 +17,11 @@ public interface ProductDetailService {
 	
 	public Optional<ProductDetail> findByProductDetailPK(ProductDetailPK productDetailPK);
 	
-	@Query(value = "SELECT * FROM CHITIETSANPHAM WHERE MASP LIKE :pattern", nativeQuery = true)
-	public List<ProductDetail> findByProductCodeUsingRegex(@Param("pattern") String pattern);
+	public List<ProductDetail> findByProductCodeUsingRegex(String pattern);
 	
-	@Query(value = "SELECT * FROM CHITIETSANPHAM WHERE MAKICHTHUOC LIKE :pattern", nativeQuery = true)
-	public List<ProductDetail> findBySizeCodeUsingRegex(@Param("pattern") String pattern);
+	public List<ProductDetail> findBySizeCodeUsingRegex(String pattern);
 	
-	@Query(value = "SELECT * FROM CHITIETSANPHAM WHERE MAMAUSAC LIKE :pattern", nativeQuery = true)
-	public List<ProductDetail> findByColorCodeUsingRegex(@Param("pattern") String pattern);
+	public List<ProductDetail> findByColorCodeUsingRegex(String pattern);
 	
 	public void deleteByProductDetailId(Integer productDetailId);
 	

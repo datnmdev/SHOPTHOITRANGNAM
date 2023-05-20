@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,10 @@ import jakarta.validation.Valid;
 public class SizeController {
 	@Autowired
 	SizeService sizeService;
+	
+	@Autowired
+	@Qualifier("createColorFormValidator")
+	Validator createSizeFormValidator;
 	
 	@GetMapping("/owner/sizes")
 	public String sizePage(Model model, RedirectAttributes redirectAttributes) {
@@ -67,6 +73,7 @@ public class SizeController {
 	
 	@PostMapping(value = "/owner/sizes", params = "create")
 	public String createSize(@Valid @ModelAttribute(name = "sizeDto") SizeDto sizeDto, BindingResult bindingResult, Model model) {
+		createSizeFormValidator.validate(sizeDto, bindingResult);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("hasError", true);
 			return "owner-create-size.html";
@@ -119,8 +126,8 @@ public class SizeController {
 	
 	@GetMapping(value = "/owner/sizes", params = "export")
 	@ResponseBody
-	public List<Size> getSizes() {
-		List<Size> sizes = sizeService.findAll();
-		return sizes;
+	public List<SizeDto> getSizeDtos() {
+		List<SizeDto> sizeDtos = SizeMapper.toSizeDtos(sizeService.findAll());
+		return sizeDtos;
 	}
 }

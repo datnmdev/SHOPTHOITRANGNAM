@@ -160,7 +160,7 @@ html {
 }
 
 #header .category a, 
-#header .category #product-manage-btn {
+#header .category .product-manage-btn {
     display: block;
     padding: 8px;
     text-decoration: none;
@@ -169,24 +169,24 @@ html {
 }
 
 #header .category a:hover, 
-#header .category #product-manage-btn:hover {
+#header .category .product-manage-btn:hover {
     color: var(--primary-color);
 }
 
 #header .category a i, 
-#header .category #product-manage-btn i {
+#header .category .product-manage-btn i {
     font-size: 1.4rem;
     margin-right: 8px;
 }
 
-#header .category #product-manage-btn {
+#header .category .product-manage-btn {
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
 }
 
-#header .category #product-manage-btn.active span:nth-child(2) i {
+#header .category .product-manage-btn.active span:nth-child(2) i {
     transform: rotateX(-90%);
 }
 

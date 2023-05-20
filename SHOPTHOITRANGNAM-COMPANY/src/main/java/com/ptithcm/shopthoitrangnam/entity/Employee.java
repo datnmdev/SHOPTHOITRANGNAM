@@ -3,8 +3,6 @@ package com.ptithcm.shopthoitrangnam.entity;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.ptithcm.shopthoitrangnam.converter.GenderConverter;
 import com.ptithcm.shopthoitrangnam.converter.JobStatusConverter;
 import com.ptithcm.shopthoitrangnam.enumeration.Gender;
@@ -37,7 +35,6 @@ public class Employee {
 	
 	@Column(name = "NGAYSINH")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dateOfBirth;
 	
 	@Column(name = "GIOITINH")
@@ -52,7 +49,6 @@ public class Employee {
 	
 	@Column(name = "NGAYVAOLAM")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date startDate;
 	
 	@Column(name = "TINHTRANG")

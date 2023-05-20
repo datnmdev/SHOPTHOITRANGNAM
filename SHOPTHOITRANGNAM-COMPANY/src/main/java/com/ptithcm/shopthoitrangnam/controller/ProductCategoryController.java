@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +33,10 @@ public class ProductCategoryController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	@Qualifier("createProductCategoryFormValidator")
+	Validator createProductCategoryFormValidator;
 	
 	@GetMapping("/owner/product-categories")
 	public String productCategoryPage(Model model, RedirectAttributes redirectAttributes) {
@@ -71,6 +77,7 @@ public class ProductCategoryController {
 	
 	@PostMapping(value = "/owner/product-categories", params = "create")
 	public String createProductCategory(@Valid @ModelAttribute(name = "productCategoryDto") ProductCategoryDto productCategoryDto, BindingResult bindingResult, Model model) {
+		createProductCategoryFormValidator.validate(productCategoryDto, bindingResult);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("hasError", true);
 			return "owner-create-product-category.html";

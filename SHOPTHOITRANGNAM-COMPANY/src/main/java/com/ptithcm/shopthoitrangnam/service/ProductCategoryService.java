@@ -14,11 +14,9 @@ public interface ProductCategoryService {
 	
 	public Optional<ProductCategory> findByProductCategoryCode(String productCategoryCode);
 	
-	@Query(value = "SELECT * FROM LOAISANPHAM WHERE MALOAISP LIKE :pattern", nativeQuery = true)
-	public List<ProductCategory> findByProductCategoryCodeUsingRegex(@Param("pattern") String pattern);
+	public List<ProductCategory> findByProductCategoryCodeUsingRegex(String pattern);
 	
-	@Query(value = "SELECT * FROM LOAISANPHAM WHERE MALOAISP LIKE :pattern", nativeQuery = true)
-	public List<ProductCategory> findByProductCategoryNameUsingRegex(@Param("pattern") String pattern);
+	public List<ProductCategory> findByProductCategoryNameUsingRegex(String pattern);
 	
 	public void deleteByProductCategoryCode(String sizeCode);
 	

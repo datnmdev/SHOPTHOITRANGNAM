@@ -16,6 +16,6 @@ public class AccountStatusConverter implements AttributeConverter<AccountStatus,
 	@Override
 	public AccountStatus convertToEntityAttribute(Boolean dbData) {
 		// TODO Auto-generated method stub
-		return dbData ? AccountStatus.BLOCKED : AccountStatus.NORMAL;
+		return dbData ? AccountStatus.NORMAL : AccountStatus.BLOCKED;
 	}
 }

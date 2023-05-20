@@ -1,5 +1,6 @@
 package com.ptithcm.shopthoitrangnam.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ptithcm.shopthoitrangnam.dto.SellingPriceDto;
+import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
 import com.ptithcm.shopthoitrangnam.entity.SellingPrice;
 import com.ptithcm.shopthoitrangnam.repository.SellingPriceRepository;
 
@@ -29,6 +31,11 @@ public class SellingPriceServiceImpl implements SellingPriceService {
 	@Override
 	public Optional<SellingPrice> findBySellingPriceId(Integer sellingPriceId) {
 		return sellingPriceRepository.findBySellingPriceId(sellingPriceId);
+	}
+	
+	@Override
+	public List<SellingPrice> findByProductDetailAndEffectiveTime(ProductDetail productDetail, Date effectiveTime) {
+		return sellingPriceRepository.findByProductDetailAndEffectiveTime(productDetail, effectiveTime);
 	}
 	
 	@Override

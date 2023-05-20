@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,10 @@ import jakarta.validation.Valid;
 public class ColorController {
 	@Autowired
 	ColorService colorService;
+	
+	@Autowired
+	@Qualifier("createColorFormValidator")
+	Validator createColorFormValidator;
 	
 	@GetMapping("/owner/colors")
 	public String colorPage(Model model, RedirectAttributes redirectAttributes) {
@@ -67,6 +73,7 @@ public class ColorController {
 	
 	@PostMapping(value = "/owner/colors", params = "create")
 	public String createColor(@Valid @ModelAttribute(name = "colorDto") ColorDto colorDto, BindingResult bindingResult, Model model) {
+		createColorFormValidator.validate(colorDto, bindingResult);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("hasError", true);
 			return "owner-create-color.html";
@@ -119,8 +126,8 @@ public class ColorController {
 	
 	@GetMapping(value = "/owner/colors", params = "export")
 	@ResponseBody
-	public List<Color> getColors() {
-		List<Color> colors = colorService.findAll();
-		return colors;
+	public List<ColorDto> getColorDtos() {
+		List<ColorDto> colorDtos = ColorMapper.toColorDtos(colorService.findAll());
+		return colorDtos;
 	}
 }

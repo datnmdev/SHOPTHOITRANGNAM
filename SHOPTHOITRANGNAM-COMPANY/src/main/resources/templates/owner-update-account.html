@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop thời trang nam - Cập nhật tài khoản</title>
+	<link rel="stylesheet" th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
+	<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owner-update-account.css}">
+    <script th:src="@{/js/owner-update-account.js}"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="header">
+            <nav>
+                <div class="total-revenue-card">
+                    <span class="rotate-1"></span>
+                    <span class="rotate-2"></span>
+                    <span class="rotate-3"></span>
+                    <div class="total-revenue-card__content">
+                        <span class="total-revenue-card__content_number">10999</span>
+                        <span class="total-revenue-card__content_unit">USD</span>
+                    </div>
+                </div>
+                <ul class="category">
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-flask"></i>Bảng điều khiển</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-note-sticky"></i>Quản lý đơn đặt hàng</a>
+                    </li>
+                    <li class="category-item">
+                        <div class="product-manage-btn">
+                            <span><i class="fa-sharp fa-solid fa-box"></i>Quản lý sản phẩm</span>
+                            <span><i class="fa-solid fa-angle-right"></i></span>
+                        </div>
+                        <ul class="category-item__children" style="display: none;">
+                            <li class="category-item__children__item">
+                                <a href="/owner/products">
+                                    <span><i class="fa-brands fa-product-hunt"></i></span>
+                                    Sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/sizes">
+                                    <span><i class="fa-solid fa-sitemap"></i></span>
+                                    Kích thước sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/colors">
+                                    <span><i class="fa-solid fa-droplet"></i></span>
+                                    Màu sắc sắc sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/product-categories">
+                                    <span><i class="fa-solid fa-book-open"></i></span>
+                                    Loại sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/product-details">
+                                    <span><i class="fa-solid fa-asterisk"></i></span>
+                                    Chi tiết sản phẩm
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/selling-prices">
+                                    <span><i class="fa-solid fa-money-bill-wave"></i></span>
+                                    Cập nhật giá sản phẩm
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="category-item">
+                        <div class="product-manage-btn">
+                            <span><i class="fa-solid fa-user-group"></i>Quản lý nhân viên</span>
+                            <span><i class="fa-solid fa-angle-right"></i></span>
+                        </div>
+                        <ul class="category-item__children" style="display: none;">
+                            <li class="category-item__children__item active">
+                                <a href="/owner/employees">
+                                    <span><i class="fa-solid fa-people-group"></i></span>
+                                    Nhân viên
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/positions">
+                                    <span><i class="fa-solid fa-hat-cowboy"></i></span>
+                                    Chức vụ
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="category-item">
+                        <a href="/owner/suppliers"><i class="fa-solid fa-store"></i> Nhà cung cấp</a>
+                    </li>
+                    <li class="category-item">
+                        <a class="active" href="/owner/accounts"><i class="fa-solid fa-key"></i>Quản lý tài khoản</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-tags"></i>Quản lý khuyến mãi</a>
+                    </li>
+                    <li class="category-item">
+                        <a href=""><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div id="content">
+            <div class="option-funtion">
+                <div class="main-option-function">
+                    <div class="direction">
+                        <span class="forward-btn" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i></span>
+                        <span class="back-btn" onclick="history.forward()"><i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+                <div class="orther-option-funtion">
+                    <div class="direction-btn" onclick="location.assign('/owner/accounts')">
+                        <span>Đến trang quản lý tài khoản</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-container">
+                <div class="product-header">
+                    <h3>Cập nhật tài khoản</h3>
+                </div>
+                <form th:object="${accountDto}" th:action="@{/owner/accounts/{username}(username=*{username})}" method="post">
+                    <input hidden type="text" th:name="update">
+                    <div class="first">
+                        <label for="user-name">
+                            <div>Tên đăng nhập</div>
+                            <input th:field="*{username}" type="text" id="user-name" readonly>
+                        </label>
+
+                        <label for="password">
+                            <div>Mật khẩu</div>
+                            <input th:field="*{password}" type="text" id="password">
+                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></div>
+                        </label>
+                    </div>
+                    <div class="first">
+                        <label for="salt">
+                            <div>Chuỗi salt</div>
+                            <input th:field="*{salt}" type="text" id="last-name">
+                            <div th:if="${#fields.hasErrors('salt')}" th:errors="*{salt}" class="error-message"></div>
+                        </label>
+    
+                        <label for="account-activation">
+                            <div>Đã kích hoạt</div>
+                            <select th:field="*{accountActivation}" id="account-activation">
+                                <option th:value="${true}" th:selected="${accountDto.getAccountActivation()}">true</option>
+                                <option th:value="${false}" th:selected="${!accountDto.getAccountActivation()}">false</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="first">
+                        <label for="status">
+                            <div>Trạng thái</div>
+                            <select th:field="*{status}" id="status">
+                                <option th:value="${true}" th:selected="${accountDto.getStatus()}">Đang hoạt động</option>
+                                <option th:value="${false}" th:selected="${!accountDto.getStatus()}">Đã khóa</option>
+                            </select>
+                        </label>
+    
+                        <label for="account-type">
+                            <div>Loại tài khoản</div>
+                            <select th:field="*{accountTypeCode}" id="account-type">
+                                <th:block th:each="accountType, iterStatus : ${accountTypes}">
+                                    <option th:value="${accountType.getAccountTypeCode()}" th:text="${accountType.getAccountTypeName()}" th:selected="${accountDto.getAccountTypeCode().equals(accountType.getAccountTypeCode())}"></option>
+                                </th:block>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="first">
+                        <label for="creation-time">
+                            <div>Thởi diểm tạo</div>
+                            <input th:field="*{creationTime}" type="datetime-local" id="creation-time" readonly>
+                        </label>
+                    </div>
+                    <div>
+                        <button type="submit"><i class="fa-solid fa-plus"></i> Cập nhật tài khoản</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message success box -->
+    <div th:classappend="${hasError != null && !hasError ? 'show' : ''}" id="message-wrapper" class="message-wrapper">
+        <div class="overlay">
+            <div class="message-box">
+                <div class="check-container">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div class="message">
+                    Cập nhật tài khoản khoản thành công!
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

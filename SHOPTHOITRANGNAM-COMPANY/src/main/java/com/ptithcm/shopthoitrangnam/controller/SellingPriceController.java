@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +35,14 @@ public class SellingPriceController {
 	
 	@Autowired
 	ProductDetailService productDetailService;
+	
+	@Autowired
+	@Qualifier("createSellingPriceFormValidator")
+	Validator createSellingPriceFormValidator;
+	
+	@Autowired
+	@Qualifier("updateSellingPriceFormValidator")
+	Validator updateSellingPriceFormValidator;
 	
 	@GetMapping("/owner/selling-prices")
 	public String sellingPricePage(Model model, RedirectAttributes redirectAttributes) {
@@ -78,7 +88,6 @@ public class SellingPriceController {
 	
 	@PostMapping(value = "/owner/selling-prices", params = {"product-detail-id", "create-page"})
 	public String filterAndCreateSellingPrice(Model model, @RequestParam("product-detail-id") Integer productDetailId) {
-		System.out.println("sdhfjkahdfkjhsdfkja" + productDetailId);
 		SellingPriceDto sellingPriceDto = new SellingPriceDto();
 		sellingPriceDto.setProductDetailId(productDetailId);
 		model.addAttribute("sellingPriceDto", sellingPriceDto);
@@ -98,6 +107,8 @@ public class SellingPriceController {
 	public String createSellingPrice(@Valid @ModelAttribute(name = "sellingPriceDto") SellingPriceDto sellingPriceDto, BindingResult bindingResult, Model model) {
 		List<ProductDetail> productDetails = productDetailService.findAll();
 		model.addAttribute("productDetails", productDetails);
+		
+		createSellingPriceFormValidator.validate(sellingPriceDto, bindingResult);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("hasError", true);
 			return "owner-create-selling-price.html";
@@ -117,6 +128,7 @@ public class SellingPriceController {
 	
 	@PostMapping(value = "/owner/selling-prices/{sellingPriceId}", params = "update")
 	public String updateSellingPrice(@Valid @ModelAttribute(name = "sellingPriceDto") SellingPriceDto sellingPriceDto, BindingResult bindingResult, Model model) {
+		updateSellingPriceFormValidator.validate(sellingPriceDto, bindingResult);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("hasError", true);
 			return "owner-update-selling-price.html";

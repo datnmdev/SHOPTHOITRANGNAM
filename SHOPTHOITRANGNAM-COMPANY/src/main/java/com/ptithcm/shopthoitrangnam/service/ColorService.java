@@ -14,11 +14,9 @@ public interface ColorService {
 	
 	public Optional<Color> findByColorCode(String colorCode);
 	
-	@Query(value = "SELECT * FROM MAUSAC WHERE MAMAUSAC LIKE :pattern", nativeQuery = true)
-	public List<Color> findByColorCodeUsingRegex(@Param("pattern") String pattern);
+	public List<Color> findByColorCodeUsingRegex(String pattern);
 	
-	@Query(value = "SELECT * FROM MAUSAC WHERE TENMAUSAC LIKE :pattern", nativeQuery = true)
-	public List<Color> findByColorNameUsingRegex(@Param("pattern") String pattern);
+	public List<Color> findByColorNameUsingRegex(String pattern);
 	
 	public void deleteByColorCode(String colorCode);
 	

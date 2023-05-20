@@ -28,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ptithcm.shopthoitrangnam.dto.ProductDetailDto;
-import com.ptithcm.shopthoitrangnam.dto.SellingPriceDto;
 import com.ptithcm.shopthoitrangnam.entity.Color;
 import com.ptithcm.shopthoitrangnam.entity.Product;
 import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
@@ -70,6 +69,9 @@ public class ProductDetailController {
 	
 	@Value("${multipart.saveProductDetailImagePath}")
 	private String saveProductDetailImagePath;
+	
+	@Value("${image.productDefaultImage}")
+	private String productDefaultImage;
 	
 	@GetMapping("/owner/product-details")
 	public String productDetailPage(Model model, RedirectAttributes redirectAttributes) {
@@ -153,7 +155,7 @@ public class ProductDetailController {
 		
 		ProductDetailDto productDetailDto = new ProductDetailDto();
 		productDetailDto.setQuantity(0);
-		productDetailDto.setImage("/img/products/default.jpg");
+		productDetailDto.setImage(productDefaultImage);
 		model.addAttribute("productDetailDto", productDetailDto);
 		return "owner-create-product-detail.html";
 	}
@@ -172,7 +174,7 @@ public class ProductDetailController {
 		createProductDetailFormValidator.validate(productDetailDto, bindingResult);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("hasError", true);
-			productDetailDto.setImage("/img/products/default.jpg");
+			productDetailDto.setImage(productDefaultImage);
 			return "owner-create-product-detail.html";
 		}
 		
@@ -187,7 +189,7 @@ public class ProductDetailController {
 			productDetailDto.setImage("/img/products/" + newFileName);
 		}
 		productDetailService.insert(productDetailDto);
-		productDetailDto.setImage("/img/products/default.jpg");
+		productDetailDto.setImage(productDefaultImage);
 		return "owner-create-product-detail.html";
 	}
 	
