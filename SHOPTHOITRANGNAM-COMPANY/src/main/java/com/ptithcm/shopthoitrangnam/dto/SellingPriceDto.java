@@ -19,7 +19,7 @@ public class SellingPriceDto {
 	
 	@NotNull(message = "(*) Trường này không được bỏ trống")
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	@Future(message = "Thời điểm áp dụng giá phải là mốc thời gian trong tương lai")
+	@Future(message = "(*) Thời điểm áp dụng giá phải là mốc thời gian trong tương lai")
 	private Date effectiveTime;
 	
 	private Integer productDetailId;

@@ -3,8 +3,6 @@ package com.ptithcm.shopthoitrangnam.entity;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.ptithcm.shopthoitrangnam.converter.GenderConverter;
 import com.ptithcm.shopthoitrangnam.converter.JobStatusConverter;
 import com.ptithcm.shopthoitrangnam.enumeration.Gender;
@@ -37,7 +35,6 @@ public class Employee {
 	
 	@Column(name = "NGAYSINH")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dateOfBirth;
 	
 	@Column(name = "GIOITINH")
@@ -52,12 +49,14 @@ public class Employee {
 	
 	@Column(name = "NGAYVAOLAM")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date startDate;
 	
 	@Column(name = "TINHTRANG")
 	@Convert(converter = JobStatusConverter.class)
 	private JobStatus jobStatus;
+	
+	@Column(name = "HINHANH")
+	private String image;
 	
 	@ManyToOne
 	@JoinColumn(name = "MACHUCVU")
@@ -67,17 +66,17 @@ public class Employee {
 	@JoinColumn(name = "TENDANGNHAP", nullable = true)
 	private Account account;
 	
-	@OneToOne(mappedBy = "employee")
-	private WareHouse wareHouse;
-	
 	@OneToMany(mappedBy = "employee")
 	private List<PurchaseNote> purchaseNotes;
 	
 	@OneToMany(mappedBy = "employee")
+	private List<DeliveryNote> creatorDeliveryNotes;
+	
+	@OneToMany(mappedBy = "deliveryStaff")
 	private List<DeliveryNote> deliveryNotes;
 	
 	@OneToMany(mappedBy = "employee")
-	private List<Bill> bills;
+	private List<OrderPreparationDetail> orderPreparationDetails;
 
 //	Getter and setter methods
 	public String getEmployeeCode() {
@@ -152,6 +151,14 @@ public class Employee {
 		this.jobStatus = jobStatus;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public Position getPosition() {
 		return position;
 	}
@@ -168,20 +175,20 @@ public class Employee {
 		this.account = account;
 	}
 
-	public WareHouse getWareHouse() {
-		return wareHouse;
-	}
-
-	public void setWareHouse(WareHouse wareHouse) {
-		this.wareHouse = wareHouse;
-	}
-
 	public List<PurchaseNote> getPurchaseNotes() {
 		return purchaseNotes;
 	}
 
 	public void setPurchaseNotes(List<PurchaseNote> purchaseNotes) {
 		this.purchaseNotes = purchaseNotes;
+	}
+
+	public List<DeliveryNote> getCreatorDeliveryNotes() {
+		return creatorDeliveryNotes;
+	}
+
+	public void setCreatorDeliveryNotes(List<DeliveryNote> creatorDeliveryNotes) {
+		this.creatorDeliveryNotes = creatorDeliveryNotes;
 	}
 
 	public List<DeliveryNote> getDeliveryNotes() {
@@ -192,11 +199,11 @@ public class Employee {
 		this.deliveryNotes = deliveryNotes;
 	}
 
-	public List<Bill> getBills() {
-		return bills;
+	public List<OrderPreparationDetail> getOrderPreparationDetails() {
+		return orderPreparationDetails;
 	}
 
-	public void setBills(List<Bill> bills) {
-		this.bills = bills;
+	public void setOrderPreparationDetails(List<OrderPreparationDetail> orderPreparationDetails) {
+		this.orderPreparationDetails = orderPreparationDetails;
 	}
 }

@@ -3,9 +3,6 @@ package com.ptithcm.shopthoitrangnam.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
 import com.ptithcm.shopthoitrangnam.dto.ProductDetailDto;
 import com.ptithcm.shopthoitrangnam.embeddable.ProductDetailPK;
 import com.ptithcm.shopthoitrangnam.entity.ProductDetail;

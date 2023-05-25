@@ -41,8 +41,8 @@ public class PurchaseNote {
 	private List<PurchaseNoteDetail> purchaseNoteDetails;
 	
 	@ManyToOne
-	@JoinColumn(name = "MANCC")
-	private Supplier supplier;
+	@JoinColumn(name = "MAPHIEUDAT")
+	private PurchaseOrder purchaseOrder;
 
 //	Getter and setter methods
 	public String getPurchaseNoteCode() {
@@ -93,11 +93,11 @@ public class PurchaseNote {
 		this.purchaseNoteDetails = purchaseNoteDetails;
 	}
 
-	public Supplier getSupplier() {
-		return supplier;
+	public PurchaseOrder getPurchaseOrder() {
+		return purchaseOrder;
 	}
 
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
+	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+		this.purchaseOrder = purchaseOrder;
 	}
 }

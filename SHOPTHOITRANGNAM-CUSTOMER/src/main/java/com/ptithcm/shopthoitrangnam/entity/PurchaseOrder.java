@@ -8,6 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -33,6 +35,10 @@ public class PurchaseOrder {
 	
 	@OneToMany(mappedBy = "purchaseOrder")
 	private List<PurchaseOrderDetail> purchaseOrderDetails;
+	
+	@ManyToOne
+	@JoinColumn(name = "MANCC")
+	private Supplier supplier;
 
 //	Getter and setter methods
 	public String getPurchaseOrderCode() {
@@ -73,5 +79,13 @@ public class PurchaseOrder {
 
 	public void setPurchaseOrderDetails(List<PurchaseOrderDetail> purchaseOrderDetails) {
 		this.purchaseOrderDetails = purchaseOrderDetails;
+	}
+
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
 	}
 }

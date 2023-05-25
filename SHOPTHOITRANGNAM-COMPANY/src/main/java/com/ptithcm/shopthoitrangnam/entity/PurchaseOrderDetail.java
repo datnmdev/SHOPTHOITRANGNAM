@@ -26,6 +26,7 @@ public class PurchaseOrderDetail {
 	@Column(name = "SOLUONG")
 	private Integer quantity;
 	
+	
 //	Getter and setter methods
 	public PurchaseOrderDetailPK getPurchaseOrderDetailPK() {
 		return purchaseOrderDetailPK;

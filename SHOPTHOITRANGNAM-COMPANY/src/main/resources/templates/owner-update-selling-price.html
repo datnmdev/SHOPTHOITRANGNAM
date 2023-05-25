@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop thời trang nam - Cập nhật kích thước sản phẩm</title>
+    <title>Shop thời trang nam - Cập nhật giá bán sản phẩm</title>
 	<link rel="stylesheet" th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
 	<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
 	<link rel="stylesheet" th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.min.css}">
@@ -102,10 +102,33 @@
                         <a href="/owner/accounts"><i class="fa-solid fa-key"></i>Quản lý tài khoản</a>
                     </li>
                     <li class="category-item">
-                        <a href=""><i class="fa-solid fa-tags"></i>Quản lý khuyến mãi</a>
+                        <div class="product-manage-btn">
+                            <span><i class="fa-solid fa-tags"></i>Quản lý khuyến mãi</span>
+                            <span><i class="fa-solid fa-angle-right"></i></span>
+                        </div>
+                        <ul class="category-item__children" style="display: none;">
+                            <li class="category-item__children__item">
+                                <a href="/owner/flash-sales">
+                                    <span><i class="fa-solid fa-tag"></i></span>
+                                    Flash sale
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/sale-off">
+                                    <span><i class="fa-solid fa-tag"></i></span>
+                                    Sale off
+                                </a>
+                            </li>
+                            <li class="category-item__children__item">
+                                <a href="/owner/flat-rate-sales">
+                                    <span><i class="fa-solid fa-tag"></i></span>
+                                   Sale đồng giá
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="category-item">
-                        <a href=""><i class="fa-solid fa-gear"></i>Cài đặt</a>
+                        <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a>
                     </li>
                 </ul>
             </nav>

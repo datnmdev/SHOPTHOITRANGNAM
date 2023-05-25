@@ -20,12 +20,12 @@ public class PurchaseNoteDetail {
 	private PurchaseNote purchaseNote;
 	
 	@ManyToOne
-	@JoinColumn(name = "IDCTCC", referencedColumnName = "IDCTCC", insertable=false, updatable=false)
-	private SupplyDetail supplyDetail;
+	@JoinColumn(name = "IDCTSP", referencedColumnName = "IDCTSP", insertable=false, updatable=false)
+	private ProductDetail productDetail;
 	
 	@Column(name = "SOLUONG")
 	private Integer quantity;
-
+	
 //	Getter and setter methods
 	public PurchaseNoteDetailPK getPurchaseNoteDetailPK() {
 		return purchaseNoteDetailPK;
@@ -43,12 +43,12 @@ public class PurchaseNoteDetail {
 		this.purchaseNote = purchaseNote;
 	}
 
-	public SupplyDetail getSupplyDetail() {
-		return supplyDetail;
+	public ProductDetail getProductDetail() {
+		return productDetail;
 	}
 
-	public void setSupplyDetail(SupplyDetail supplyDetail) {
-		this.supplyDetail = supplyDetail;
+	public void setProductDetail(ProductDetail productDetail) {
+		this.productDetail = productDetail;
 	}
 
 	public Integer getQuantity() {

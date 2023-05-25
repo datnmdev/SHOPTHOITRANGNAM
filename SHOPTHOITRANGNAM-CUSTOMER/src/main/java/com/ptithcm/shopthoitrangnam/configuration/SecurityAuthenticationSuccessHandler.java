@@ -2,11 +2,12 @@ package com.ptithcm.shopthoitrangnam.configuration;
 
 import java.io.IOException;
 
-import org.apache.catalina.authenticator.SavedRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import com.ptithcm.shopthoitrangnam.enumeration.Role;
@@ -26,29 +27,29 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
 	    }
 
 	    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-	        String targetUrl = determineTargetUrl(request, authentication);
+	        String targetUrl = determineTargetUrl(request, response, authentication);
 	        if (response.isCommitted()) {
 	            return;
 	        }
 	        redirectStrategy.sendRedirect(request, response, targetUrl);
 	    }
 
-	    protected String determineTargetUrl(HttpServletRequest request, Authentication authentication) {
-	        String targetUrl = "/company/login";
+	    protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+	        String targetUrl = "/";
 	        HttpSession session = request.getSession(false);
 	        if (session != null) {
-	        	SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
-	        	if (savedRequest != null) {
-		            targetUrl = savedRequest.getRequestURI();
-		        } else {
-		            if (isOwner(authentication)) {
-		                targetUrl = "/company/owner";
-		            } else if (isTeller(authentication)) {
-		                targetUrl = "/company/teller";
-		            } else if (isWareHouseWorker(authentication)) {
-		            	targetUrl = "/company/ware-house-worker";
-		            }
-		        }
+	            SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
+	            if (savedRequest != null) {
+	                targetUrl = savedRequest.getRedirectUrl();
+	            } else {
+	                if (isOwner(authentication)) {
+	                    targetUrl = "/owner/dashboard";
+	                } else if (isTeller(authentication)) {
+	                    targetUrl = "/teller";
+	                } else if (isWareHouseWorker(authentication)) {
+	                    targetUrl = "/ware-house-worker";
+	                }
+	            }
 	        }
 	        return targetUrl;
 	    }

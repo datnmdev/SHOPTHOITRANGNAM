@@ -34,6 +34,9 @@ public class Supplier {
 	
 	@OneToMany(mappedBy = "supplier")
 	private List<SupplyDetail> supplyDetails;
+	
+	@OneToMany(mappedBy = "supplier")
+	private List<PurchaseOrder> purchaseOrders;
 
 //	Getter and setter methods
 	public String getSupplierCode() {
@@ -82,5 +85,13 @@ public class Supplier {
 
 	public void setSupplyDetails(List<SupplyDetail> supplyDetails) {
 		this.supplyDetails = supplyDetails;
+	}
+
+	public List<PurchaseOrder> getPurchaseOrders() {
+		return purchaseOrders;
+	}
+
+	public void setPurchaseOrders(List<PurchaseOrder> purchaseOrders) {
+		this.purchaseOrders = purchaseOrders;
 	}
 }

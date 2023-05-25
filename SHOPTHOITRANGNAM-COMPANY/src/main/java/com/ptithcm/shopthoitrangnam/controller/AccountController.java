@@ -75,6 +75,7 @@ public class AccountController {
 			return "redirect:/owner/accounts";
 		}
 		
+		search = search.trim();
 		String pattern = "%" + search.replaceAll(" ", "%") + "%";
 		List<Account> accounts = accountService.findByUsernameUsingRegex(pattern);
 		

@@ -3,8 +3,6 @@ package com.ptithcm.shopthoitrangnam.entity;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -16,7 +14,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "")
+@Table(name = "PHIEUDAT")
 public class PurchaseOrder {
 	@Id
 	@Column(name = "MAPHIEUDAT")
@@ -30,7 +28,6 @@ public class PurchaseOrder {
 	
 	@Column(name = "THOIDIEMLAP")
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date creationTime;
 	
 	@OneToMany(mappedBy = "purchaseOrder")
@@ -39,7 +36,10 @@ public class PurchaseOrder {
 	@ManyToOne
 	@JoinColumn(name = "MANCC")
 	private Supplier supplier;
-
+	
+	@Column(name = "TRANGTHAI")
+	private Boolean status;
+	
 //	Getter and setter methods
 	public String getPurchaseOrderCode() {
 		return purchaseOrderCode;
@@ -87,5 +87,13 @@ public class PurchaseOrder {
 
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 }

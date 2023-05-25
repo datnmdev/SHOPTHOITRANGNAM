@@ -36,12 +36,6 @@ public class SupplyDetail {
 	@Column(name = "GIA")
 	private BigDecimal price;
 	
-	@OneToMany(mappedBy = "supplyDetail")
-	private List<PurchaseNoteDetail> purchaseNoteDetails;
-	
-	@OneToMany(mappedBy = "supplyDetail")
-	private List<PurchaseOrderDetail> purchaseOrderDetails;
-
 //	Getter and setter methods
 	public Integer getSupplyDetailId() {
 		return supplyDetailId;
@@ -65,21 +59,5 @@ public class SupplyDetail {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
-	}
-
-	public List<PurchaseNoteDetail> getPurchaseNoteDetails() {
-		return purchaseNoteDetails;
-	}
-
-	public void setPurchaseNoteDetails(List<PurchaseNoteDetail> purchaseNoteDetails) {
-		this.purchaseNoteDetails = purchaseNoteDetails;
-	}
-
-	public List<PurchaseOrderDetail> getPurchaseOrderDetails() {
-		return purchaseOrderDetails;
-	}
-
-	public void setPurchaseOrderDetails(List<PurchaseOrderDetail> purchaseOrderDetails) {
-		this.purchaseOrderDetails = purchaseOrderDetails;
 	}
  }

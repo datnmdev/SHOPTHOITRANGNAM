@@ -29,18 +29,6 @@ public class Order {
 	private Date creationTime;
 	
 	@ManyToOne
-	@JoinColumn(name = "MATRANGTHAI")
-	private OrderStatus orderStatus;
-	
-	@ManyToOne
-	@JoinColumn(name = "MADVVC")
-	private ShippingCarrier shippingCarrier;
-	
-	@OneToOne
-	@JoinColumn(name = "SOHD")
-	private Bill bill;
-	
-	@ManyToOne
 	@JoinColumn(name = "ID_CNDC", referencedColumnName = "ID_CNDC")
 	private AddressUpdateHistory addressUpdateHistory;
 	
@@ -53,6 +41,9 @@ public class Order {
 	
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> orderDetails;
+	
+	@OneToMany(mappedBy = "order")
+	private List<OrderPreparationDetail> orderPreparationDetails;
 
 //	Getter and setter methods
 	public String getOrderCode() {
@@ -69,30 +60,6 @@ public class Order {
 
 	public void setCreationTime(Date creationTime) {
 		this.creationTime = creationTime;
-	}
-
-	public OrderStatus getOrderStatus() {
-		return orderStatus;
-	}
-
-	public void setOrderStatus(OrderStatus orderStatus) {
-		this.orderStatus = orderStatus;
-	}
-
-	public ShippingCarrier getShippingCarrier() {
-		return shippingCarrier;
-	}
-
-	public void setShippingCarrier(ShippingCarrier shippingCarrier) {
-		this.shippingCarrier = shippingCarrier;
-	}
-
-	public Bill getBill() {
-		return bill;
-	}
-
-	public void setBill(Bill bill) {
-		this.bill = bill;
 	}
 
 	public AddressUpdateHistory getAddressUpdateHistory() {
@@ -125,5 +92,13 @@ public class Order {
 
 	public void setOrderDetails(List<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
+	}
+
+	public List<OrderPreparationDetail> getOrderPreparationDetails() {
+		return orderPreparationDetails;
+	}
+
+	public void setOrderPreparationDetails(List<OrderPreparationDetail> orderPreparationDetails) {
+		this.orderPreparationDetails = orderPreparationDetails;
 	}
 }

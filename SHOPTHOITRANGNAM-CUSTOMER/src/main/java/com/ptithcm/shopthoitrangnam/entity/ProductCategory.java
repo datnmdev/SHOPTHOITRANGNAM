@@ -18,8 +18,8 @@ public class ProductCategory {
 	@Column(name = "TENLOAISP")
 	private String productCategoryName;
 	
-	@OneToMany(mappedBy = "productCategory")
-	private List<Product> products;
+//	@OneToMany(mappedBy = "productCategory")
+//	private List<Product> products;
 
 //	Getter and setter methods
 	public String getProductCategoryCode() {
@@ -38,11 +38,11 @@ public class ProductCategory {
 		this.productCategoryName = productCategoryName;
 	}
 
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
+//	public List<Product> getProducts() {
+//		return products;
+//	}
+//
+//	public void setProducts(List<Product> products) {
+//		this.products = products;
+//	}
 }

@@ -1,7 +1,6 @@
 package com.ptithcm.shopthoitrangnam.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -38,12 +36,9 @@ public class DeliveryNote {
 	private Employee employee;
 	
 	@ManyToOne
-	@JoinColumn(name = "MAKHO")
-	private WareHouse wareHouse;
+	@JoinColumn(name = "MANVVC")
+	private Employee deliveryStaff;
 	
-	@OneToMany(mappedBy = "deliveryNote")
-	private List<DeliveryNoteDetail> deliveryNoteDetails;
-
 //	Getter and setter methods
 	public String getDeliveryNoteCode() {
 		return deliveryNoteCode;
@@ -85,19 +80,11 @@ public class DeliveryNote {
 		this.employee = employee;
 	}
 
-	public WareHouse getWareHouse() {
-		return wareHouse;
+	public Employee getDeliveryStaff() {
+		return deliveryStaff;
 	}
 
-	public void setWareHouse(WareHouse wareHouse) {
-		this.wareHouse = wareHouse;
-	}
-
-	public List<DeliveryNoteDetail> getDeliveryNoteDetails() {
-		return deliveryNoteDetails;
-	}
-
-	public void setDeliveryNoteDetails(List<DeliveryNoteDetail> deliveryNoteDetails) {
-		this.deliveryNoteDetails = deliveryNoteDetails;
+	public void setDeliveryStaff(Employee deliveryStaff) {
+		this.deliveryStaff = deliveryStaff;
 	}
 }

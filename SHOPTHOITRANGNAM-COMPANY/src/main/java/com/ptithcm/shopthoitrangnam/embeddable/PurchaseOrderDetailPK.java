@@ -12,8 +12,8 @@ public class PurchaseOrderDetailPK implements Serializable {
 	@Column(name = "MAPHIEUDAT")
 	private String purchaseOrderCode;
 	
-	@Column(name = "IDCTCC")
-	private Integer supplyDetailId;
+	@Column(name = "IDCTSP")
+	private Integer productDetailId;
 
 //	Getter and setter methods
 	public String getPurchaseOrderCode() {
@@ -24,14 +24,14 @@ public class PurchaseOrderDetailPK implements Serializable {
 		this.purchaseOrderCode = purchaseOrderCode;
 	}
 
-	public Integer getSupplyDetailId() {
-		return supplyDetailId;
+	public Integer getProductDetailId() {
+		return productDetailId;
 	}
 
-	public void setSupplyDetailId(Integer supplyDetailId) {
-		this.supplyDetailId = supplyDetailId;
+	public void setProductDetailId(Integer productDetailId) {
+		this.productDetailId = productDetailId;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
