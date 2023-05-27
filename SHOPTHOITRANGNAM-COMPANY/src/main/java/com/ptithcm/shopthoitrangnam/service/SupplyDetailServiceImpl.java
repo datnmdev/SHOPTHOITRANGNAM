@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ptithcm.shopthoitrangnam.dto.SupplyDetailDto;
 import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
+import com.ptithcm.shopthoitrangnam.entity.Supplier;
 import com.ptithcm.shopthoitrangnam.entity.SupplyDetail;
 import com.ptithcm.shopthoitrangnam.repository.SupplyDetailRepository;
 
@@ -40,8 +41,18 @@ public class SupplyDetailServiceImpl implements SupplyDetailService {
 	}
 	
 	@Override
+	public List<SupplyDetail> findBySupplierAndProductDetail(Supplier supplier, ProductDetail productDetail) {
+		return supplyDetailRepository.findBySupplierAndProductDetail(supplier, productDetail);
+	}
+	
+	@Override
 	public void deleteBySupplyDetailId(Integer supplyDetailId) {
 		supplyDetailRepository.deleteBySupplyDetailId(supplyDetailId);
+	}
+	
+	@Override
+	public void deleteBySupplier(Supplier supplier) {
+		supplyDetailRepository.deleteBySupplier(supplier);
 	}
 	
 	@Override

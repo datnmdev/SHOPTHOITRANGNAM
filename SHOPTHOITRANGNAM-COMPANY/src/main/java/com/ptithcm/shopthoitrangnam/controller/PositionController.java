@@ -19,13 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ptithcm.shopthoitrangnam.dto.PositionDto;
-import com.ptithcm.shopthoitrangnam.dto.SizeDto;
 import com.ptithcm.shopthoitrangnam.entity.Position;
-import com.ptithcm.shopthoitrangnam.entity.Size;
 import com.ptithcm.shopthoitrangnam.mapper.PositionMapper;
-import com.ptithcm.shopthoitrangnam.mapper.SizeMapper;
 import com.ptithcm.shopthoitrangnam.service.PositionService;
-import com.ptithcm.shopthoitrangnam.service.SizeService;
 
 import jakarta.validation.Valid;
 

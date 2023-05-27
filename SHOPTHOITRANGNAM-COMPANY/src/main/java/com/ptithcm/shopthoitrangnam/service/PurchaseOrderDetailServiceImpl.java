@@ -48,6 +48,11 @@ public class PurchaseOrderDetailServiceImpl implements PurchaseOrderDetailServic
 	}
 	
 	@Override
+	public void deleteByPurchaseOrder(PurchaseOrder purchaseOrder) {
+		purchaseOrderDetailRepository.deleteByPurchaseOrder(purchaseOrder);
+	}
+	
+	@Override
 	public void update(PurchaseOrderDetailDto purchaseOrderDetailDto) {
 		String sql = "UPDATE CHITIETPHIEUDAT SET SOLUONG = ? WHERE MAPHIEUDAT = ? AND IDCTSP = ?";
 		Query query = entityManager.createNativeQuery(sql);

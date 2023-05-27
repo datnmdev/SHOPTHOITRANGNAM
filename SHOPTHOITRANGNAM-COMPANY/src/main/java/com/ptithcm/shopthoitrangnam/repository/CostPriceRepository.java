@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.ptithcm.shopthoitrangnam.entity.CostPrice;
-import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
-import com.ptithcm.shopthoitrangnam.entity.SellingPrice;
 import com.ptithcm.shopthoitrangnam.entity.SupplyDetail;
 
 @Repository
@@ -23,6 +21,8 @@ public interface CostPriceRepository extends JpaRepository<CostPrice, String> {
 	public List<CostPrice> findBySupplyDetailAndEffectiveTime(SupplyDetail supplyDetail, Date effectiveTime);
 	
 	public void deleteByCostPriceId(Integer costPriceId);
+	
+	public void deleteBySupplyDetail(SupplyDetail supplyDetail);
 	
 	public CostPrice save(CostPrice costPrice);
 }

@@ -1,6 +1,6 @@
 package com.ptithcm.shopthoitrangnam.entity;
 
-import com.ptithcm.shopthoitrangnam.embeddable.DiscountDetailPK;
+import com.ptithcm.shopthoitrangnam.embeddable.SaleOffDetailPK;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -10,37 +10,37 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "CHITIETKHUYENMAI")
-public class DiscountDetail {
+@Table(name = "SALEOFFDETAIL")
+public class SaleOffDetail {
 	@EmbeddedId
-	private DiscountDetailPK discountDetailPK;
+	private SaleOffDetailPK saleOffDetailPK;
 	
 	@ManyToOne
 	@JoinColumn(name = "ID_KM", insertable=false, updatable=false)
-	private Discount discount;
+	private SaleOff saleOff;
 	
 	@ManyToOne
 	@JoinColumn(name = "IDCTSP", referencedColumnName = "IDCTSP", insertable=false, updatable=false)
 	private ProductDetail productDetail;
 	
 	@Column(name = "PHANTRAMGIAMGIA")
-	private Float discountPercentage;
+	private Float saleOffPercentage;
 
 //	Getter and setter methods
-	public DiscountDetailPK getDiscountDetailPK() {
-		return discountDetailPK;
+	public SaleOffDetailPK getSaleOffDetailPK() {
+		return saleOffDetailPK;
 	}
 
-	public void setDiscountDetailPK(DiscountDetailPK discountDetailPK) {
-		this.discountDetailPK = discountDetailPK;
+	public void setSaleOffDetailPK(SaleOffDetailPK saleOffDetailPK) {
+		this.saleOffDetailPK = saleOffDetailPK;
 	}
 
-	public Discount getDiscount() {
-		return discount;
+	public SaleOff getSaleOff() {
+		return saleOff;
 	}
 
-	public void setDiscount(Discount discount) {
-		this.discount = discount;
+	public void setSaleOff(SaleOff saleOff) {
+		this.saleOff = saleOff;
 	}
 
 	public ProductDetail getProductDetail() {
@@ -51,11 +51,11 @@ public class DiscountDetail {
 		this.productDetail = productDetail;
 	}
 
-	public Float getDiscountPercentage() {
-		return discountPercentage;
+	public Float getSaleOffPercentage() {
+		return saleOffPercentage;
 	}
 
-	public void setDiscountPercentage(Float discountPercentage) {
-		this.discountPercentage = discountPercentage;
+	public void setSaleOffPercentage(Float saleOffPercentage) {
+		this.saleOffPercentage = saleOffPercentage;
 	}
 }

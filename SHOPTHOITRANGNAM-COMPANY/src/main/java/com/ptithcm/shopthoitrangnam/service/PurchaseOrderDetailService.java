@@ -17,6 +17,8 @@ public interface PurchaseOrderDetailService {
 	
 	public void deleteByPurchaseOrderAndProductDetail(PurchaseOrder purchaseOrder, ProductDetail productDetail);
 	
+	public void deleteByPurchaseOrder(PurchaseOrder purchaseOrder);
+	
 	public void update(PurchaseOrderDetailDto purchaseOrderDetailDto);
 	
 	public void save(PurchaseOrderDetailDto purchaseOrderDetailDto);

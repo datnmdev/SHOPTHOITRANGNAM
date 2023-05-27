@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ptithcm.shopthoitrangnam.dto.PurchaseOrderDto;
 import com.ptithcm.shopthoitrangnam.entity.PurchaseOrder;
 import com.ptithcm.shopthoitrangnam.mapper.PurchaseOrderMapper;
+import com.ptithcm.shopthoitrangnam.service.PurchaseOrderDetailService;
 import com.ptithcm.shopthoitrangnam.service.PurchaseOrderService;
 
 import jakarta.validation.Valid;
@@ -29,6 +30,9 @@ import jakarta.validation.Valid;
 public class PurchaseOrderController {
 	@Autowired
 	PurchaseOrderService purchaseOrderService;
+	
+	@Autowired
+	PurchaseOrderDetailService purchaseOrderDetailService;
 	
 	@Autowired
 	@Qualifier("createPurchaseOrderFormValidator")
@@ -116,6 +120,7 @@ public class PurchaseOrderController {
 			return "redirect:/owner/purchase-orders?supplier-code=" + supplierCode; 
 		}
 		
+		purchaseOrderDetailService.deleteByPurchaseOrder(purchaseOrder);
 		purchaseOrderService.deleteByPurchaseOrderCode(purchaseOrderCode);
 		redirectAttributes.addFlashAttribute("isDeletedPurchaseOrder", true);
 		model.addAttribute("supplierCode", supplierCode);

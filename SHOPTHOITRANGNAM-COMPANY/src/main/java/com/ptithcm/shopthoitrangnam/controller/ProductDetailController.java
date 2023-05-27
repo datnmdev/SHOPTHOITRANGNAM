@@ -224,10 +224,13 @@ public class ProductDetailController {
 	
 	@PostMapping(value = "/owner/product-details/{productDetailId}", params = "delete")
 	public String deleteProductDetail(@PathVariable(name = "productDetailId") Integer productDetailId, RedirectAttributes redirectAttributes) {
+		
 		ProductDetail productDetail = productDetailService.findByProductDetailId(productDetailId).get();
+		System.out.println("size: "+productDetail.getSupplyDetails().size());
 		if (!productDetail.getOrderDetails().isEmpty() || !productDetail.getShoppingCarts().isEmpty() || 
-				!productDetail.getDiscountDetails().isEmpty() && !productDetail.getPurchaseNoteDetails().isEmpty() &&
-				!productDetail.getPurchaseOrderDetails().isEmpty() && !productDetail.getSupplyDetails().isEmpty()) {
+				!productDetail.getFlashSaleDetails().isEmpty() || !productDetail.getSaleOffDetails().isEmpty() ||
+				!productDetail.getPurchaseNoteDetails().isEmpty() || !productDetail.getFlatRateSaleDetails().isEmpty() ||
+				!productDetail.getPurchaseOrderDetails().isEmpty() || !productDetail.getSupplyDetails().isEmpty()) {
 			redirectAttributes.addFlashAttribute("isDeletedProductDetail", false);
 			return "redirect:/owner/product-details"; 
 		}

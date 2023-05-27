@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.ptithcm.shopthoitrangnam.dto.SupplyDetailDto;
 import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
+import com.ptithcm.shopthoitrangnam.entity.Supplier;
 import com.ptithcm.shopthoitrangnam.entity.SupplyDetail;
 
 public interface SupplyDetailService {
@@ -14,7 +15,11 @@ public interface SupplyDetailService {
 	
 	public List<SupplyDetail> findByProductDetail(ProductDetail productDetail);
 	
+	public List<SupplyDetail> findBySupplierAndProductDetail(Supplier supplier, ProductDetail productDetail);
+	
 	public void deleteBySupplyDetailId(Integer supplyDetailId);
+	
+	public void deleteBySupplier(Supplier supplier);
 	
 	public void insert(SupplyDetailDto supplyDetailDto);
 }

@@ -1,18 +1,14 @@
 package com.ptithcm.shopthoitrangnam.controller;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,15 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ptithcm.shopthoitrangnam.dto.SupplierDto;
 import com.ptithcm.shopthoitrangnam.dto.SupplyDetailDto;
 import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
 import com.ptithcm.shopthoitrangnam.entity.PurchaseOrder;
 import com.ptithcm.shopthoitrangnam.entity.PurchaseOrderDetail;
 import com.ptithcm.shopthoitrangnam.entity.Supplier;
 import com.ptithcm.shopthoitrangnam.entity.SupplyDetail;
-import com.ptithcm.shopthoitrangnam.mapper.SupplierMapper;
 import com.ptithcm.shopthoitrangnam.mapper.SupplyDetailMapper;
+import com.ptithcm.shopthoitrangnam.service.CostPriceService;
 import com.ptithcm.shopthoitrangnam.service.ProductDetailService;
 import com.ptithcm.shopthoitrangnam.service.PurchaseOrderService;
 import com.ptithcm.shopthoitrangnam.service.SupplierService;
@@ -47,6 +42,12 @@ public class SupplyDetailController {
 	
 	@Autowired
 	PurchaseOrderService purchaseOrderService;
+	
+	@Autowired
+	SupplierService supplierService;
+	
+	@Autowired
+	CostPriceService costPriceService;
 	
 	@GetMapping(value = "/owner/supply-details", params = "supplier-code")
 	public String supplyDetailPage(Model model, @RequestParam("supplier-code") String supplierCode, RedirectAttributes redirectAttributes) {
@@ -85,7 +86,8 @@ public class SupplyDetailController {
 	
 	@PostMapping(value = "/owner/supply-details", params = {"supplier-code", "create-page"})
 	public String createSupplyDetailPage(Model model, @RequestParam("supplier-code") String supplierCode) {
-		List<ProductDetail> productDetails = productDetailService.findAll().stream().filter(productDetail -> supplyDetailService.findByProductDetail(productDetail).isEmpty()).toList();
+		Supplier supplier = supplierService.findBySupplierCode(supplierCode).get();
+		List<ProductDetail> productDetails = productDetailService.findAll().stream().filter(productDetail -> supplyDetailService.findBySupplierAndProductDetail(supplier, productDetail).isEmpty()).toList();
 		SupplyDetailDto supplyDetailDto = new SupplyDetailDto();
 		supplyDetailDto.setSupplierCode(supplierCode);
 		model.addAttribute("productDetails", productDetails);
@@ -102,7 +104,8 @@ public class SupplyDetailController {
 		
 		model.addAttribute("hasError", false);
 		supplyDetailService.insert(supplyDetailDto);
-		List<ProductDetail> productDetails = productDetailService.findAll().stream().filter(productDetail -> supplyDetailService.findByProductDetail(productDetail).isEmpty()).toList();
+		Supplier supplier = supplierService.findBySupplierCode(supplyDetailDto.getSupplierCode()).get();
+		List<ProductDetail> productDetails = productDetailService.findAll().stream().filter(productDetail -> supplyDetailService.findBySupplierAndProductDetail(supplier, productDetail).isEmpty()).toList();
 		model.addAttribute("productDetails", productDetails);
 		return "owner-create-supply-detail.html";
 	}
@@ -122,6 +125,7 @@ public class SupplyDetailController {
 			return "redirect:/owner/supply-details?supplier-code=" + supplierCode; 
 		}
 		
+		costPriceService.deleteBySupplyDetail(supplyDetail);
 		supplyDetailService.deleteBySupplyDetailId(supplyDetailId);
 		redirectAttributes.addFlashAttribute("isDeletedSupplyDetail", true);
 		model.addAttribute("supplierCode", supplierCode);

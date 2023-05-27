@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.ptithcm.shopthoitrangnam.dto.CostPriceDto;
 import com.ptithcm.shopthoitrangnam.entity.CostPrice;
+import com.ptithcm.shopthoitrangnam.entity.Supplier;
 import com.ptithcm.shopthoitrangnam.entity.SupplyDetail;
 
 public interface CostPriceService {
@@ -19,7 +20,9 @@ public interface CostPriceService {
 	
 	public void deleteByCostPriceId(Integer costPriceId);
 	
-	public void deleteAll(List<CostPrice> costPrices);
+	public void deleteBySupplyDetail(SupplyDetail supplyDetail);
+	
+	public void deleteAllBySupplier(Supplier supplier);
 	
 	public void save(CostPriceDto costPriceDto);	
 }

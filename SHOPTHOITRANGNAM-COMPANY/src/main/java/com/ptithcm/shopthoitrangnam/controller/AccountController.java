@@ -1,8 +1,6 @@
 package com.ptithcm.shopthoitrangnam.controller;
 
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,19 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ptithcm.shopthoitrangnam.dto.AccountDto;
-import com.ptithcm.shopthoitrangnam.dto.ProductDto;
 import com.ptithcm.shopthoitrangnam.entity.Account;
 import com.ptithcm.shopthoitrangnam.entity.AccountType;
-import com.ptithcm.shopthoitrangnam.entity.Product;
-import com.ptithcm.shopthoitrangnam.entity.ProductCategory;
 import com.ptithcm.shopthoitrangnam.mapper.AccountMapper;
-import com.ptithcm.shopthoitrangnam.mapper.ProductMapper;
 import com.ptithcm.shopthoitrangnam.service.AccountService;
 import com.ptithcm.shopthoitrangnam.service.AccountTypeService;
 import com.ptithcm.shopthoitrangnam.service.CustomerService;
 import com.ptithcm.shopthoitrangnam.service.EmployeeService;
-import com.ptithcm.shopthoitrangnam.service.ProductCategoryService;
-import com.ptithcm.shopthoitrangnam.service.ProductService;
 
 import jakarta.validation.Valid;
 

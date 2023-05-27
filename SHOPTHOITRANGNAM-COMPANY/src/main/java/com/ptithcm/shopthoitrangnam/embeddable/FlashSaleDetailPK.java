@@ -6,24 +6,24 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public class DiscountDetailPK implements Serializable {
+public class FlashSaleDetailPK implements Serializable {
 	private static final long serialVersionUID = 6633063442180901574L;
 
 	@Column(name = "ID_KM")
-	private Integer discountId;
+	private Integer flashSaleId;
 	
 	@Column(name = "IDCTSP")
 	private Integer productDetailId;
 
 //	Getter and setter methods
-	public Integer getDiscountId() {
-		return discountId;
+	public Integer getFlashSaleId() {
+		return flashSaleId;
 	}
 
-	public void setDiscountId(Integer discountId) {
-		this.discountId = discountId;
+	public void setFlashSaleId(Integer flashSaleId) {
+		this.flashSaleId = flashSaleId;
 	}
-
+	
 	public Integer getProductDetailId() {
 		return productDetailId;
 	}

@@ -21,7 +21,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ptithcm.shopthoitrangnam.dto.SupplierDto;
 import com.ptithcm.shopthoitrangnam.entity.Supplier;
 import com.ptithcm.shopthoitrangnam.mapper.SupplierMapper;
+import com.ptithcm.shopthoitrangnam.service.CostPriceService;
 import com.ptithcm.shopthoitrangnam.service.SupplierService;
+import com.ptithcm.shopthoitrangnam.service.SupplyDetailService;
 
 import jakarta.validation.Valid;
 
@@ -29,6 +31,12 @@ import jakarta.validation.Valid;
 public class SupplierController {
 	@Autowired
 	SupplierService supplierService;
+	
+	@Autowired
+	SupplyDetailService supplyDetailService;
+	
+	@Autowired
+	CostPriceService costPriceService;
 	
 	@Autowired
 	@Qualifier("createSupplierFormValidator")
@@ -112,6 +120,8 @@ public class SupplierController {
 			return "redirect:/owner/suppliers"; 
 		}
 		
+		costPriceService.deleteAllBySupplier(supplier);
+		supplyDetailService.deleteBySupplier(supplier);
 		supplierService.deleteBySupplierCode(supplierCode);
 		redirectAttributes.addFlashAttribute("isDeletedSupplier", true);
 		return "redirect:/owner/suppliers";

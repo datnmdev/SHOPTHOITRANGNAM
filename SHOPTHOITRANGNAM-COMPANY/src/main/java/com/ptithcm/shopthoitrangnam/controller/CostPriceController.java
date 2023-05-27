@@ -20,20 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ptithcm.shopthoitrangnam.dto.CostPriceDto;
-import com.ptithcm.shopthoitrangnam.dto.SellingPriceDto;
 import com.ptithcm.shopthoitrangnam.entity.CostPrice;
-import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
 import com.ptithcm.shopthoitrangnam.entity.PurchaseOrder;
-import com.ptithcm.shopthoitrangnam.entity.PurchaseOrderDetail;
-import com.ptithcm.shopthoitrangnam.entity.SellingPrice;
 import com.ptithcm.shopthoitrangnam.entity.SupplyDetail;
 import com.ptithcm.shopthoitrangnam.mapper.CostPriceMapper;
-import com.ptithcm.shopthoitrangnam.mapper.SellingPriceMapper;
 import com.ptithcm.shopthoitrangnam.service.CostPriceService;
-import com.ptithcm.shopthoitrangnam.service.ProductDetailService;
-import com.ptithcm.shopthoitrangnam.service.PurchaseOrderDetailService;
 import com.ptithcm.shopthoitrangnam.service.PurchaseOrderService;
-import com.ptithcm.shopthoitrangnam.service.SellingPriceService;
 import com.ptithcm.shopthoitrangnam.service.SupplyDetailService;
 
 import jakarta.validation.Valid;

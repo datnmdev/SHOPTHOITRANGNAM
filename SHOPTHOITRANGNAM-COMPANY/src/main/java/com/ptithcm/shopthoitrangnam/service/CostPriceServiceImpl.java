@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ptithcm.shopthoitrangnam.dto.CostPriceDto;
 import com.ptithcm.shopthoitrangnam.entity.CostPrice;
+import com.ptithcm.shopthoitrangnam.entity.Supplier;
 import com.ptithcm.shopthoitrangnam.entity.SupplyDetail;
 import com.ptithcm.shopthoitrangnam.repository.CostPriceRepository;
 
@@ -49,9 +50,15 @@ public class CostPriceServiceImpl implements CostPriceService {
 	}
 	
 	@Override
-	public void deleteAll(List<CostPrice> costPrices) {
-		for (CostPrice costPrice : costPrices) {
-			deleteByCostPriceId(costPrice.getCostPriceId());
+	public void deleteBySupplyDetail(SupplyDetail supplyDetail) {
+		costPriceRepository.deleteBySupplyDetail(supplyDetail);
+	}
+	
+	@Override
+	public void deleteAllBySupplier(Supplier supplier) {
+		List<SupplyDetail> supplyDetails = supplier.getSupplyDetails();
+		for (SupplyDetail supplyDetail : supplyDetails) {
+			deleteBySupplyDetail(supplyDetail);
 		}
 	}
 	

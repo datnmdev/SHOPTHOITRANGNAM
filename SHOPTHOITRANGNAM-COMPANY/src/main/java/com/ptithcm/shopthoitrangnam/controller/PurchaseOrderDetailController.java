@@ -27,6 +27,7 @@ import com.ptithcm.shopthoitrangnam.entity.CostPrice;
 import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
 import com.ptithcm.shopthoitrangnam.entity.PurchaseOrder;
 import com.ptithcm.shopthoitrangnam.entity.PurchaseOrderDetail;
+import com.ptithcm.shopthoitrangnam.entity.SupplyDetail;
 import com.ptithcm.shopthoitrangnam.mapper.PurchaseOrderDetailMapper;
 import com.ptithcm.shopthoitrangnam.service.ProductDetailService;
 import com.ptithcm.shopthoitrangnam.service.PurchaseOrderDetailService;
@@ -121,11 +122,9 @@ public class PurchaseOrderDetailController {
 		purchaseOrderDetailDto.setPurchaseOrderCode(purchaseOrderCode);
 		model.addAttribute("purchaseOrderDetailDto", purchaseOrderDetailDto);
 		
-		List<PurchaseOrderDetail> purchaseOrderDetails = purchaseOrderDetailService.findByPurchaseOrder(purchaseOrderService.findByPurchaseOrderCode(purchaseOrderCode).get());
-		List<ProductDetail> productDetails = purchaseOrderService.findByPurchaseOrderCode(purchaseOrderCode).get().getSupplier().getSupplyDetails()
-				.stream().map(supplyDetail -> supplyDetail.getProductDetail())
-				.filter(productDetail -> purchaseOrderDetails.stream().noneMatch(purchaseOrderDetail -> purchaseOrderDetail.getPurchaseOrderDetailPK().getProductDetailId() != productDetail.getProductDetailId()))
-				.toList();
+		List<ProductDetail> productDetailsInPurchaseOrderDetails = purchaseOrderDetailService.findByPurchaseOrder(purchaseOrderService.findByPurchaseOrderCode(purchaseOrderCode).get()).stream().map(purchaseOrderDetail -> purchaseOrderDetail.getProductDetail()).toList();
+		List<ProductDetail> productDetails = purchaseOrderService.findByPurchaseOrderCode(purchaseOrderCode).get().getSupplier().getSupplyDetails().stream().map(supplyDetail -> supplyDetail.getProductDetail()).toList();
+		productDetails.removeAll(productDetailsInPurchaseOrderDetails);
 		model.addAttribute("productDetails", productDetails);
 		return "owner-create-purchase-order-detail.html";
 	}
@@ -139,6 +138,12 @@ public class PurchaseOrderDetailController {
 		
 		model.addAttribute("hasError", false);
 		purchaseOrderDetailService.save(purchaseOrderDetailDto);
+		
+		List<ProductDetail> productDetailsInPurchaseOrderDetails = purchaseOrderDetailService.findByPurchaseOrder(purchaseOrderService.findByPurchaseOrderCode(purchaseOrderDetailDto.getPurchaseOrderCode()).get()).stream().map(purchaseOrderDetail -> purchaseOrderDetail.getProductDetail()).toList();
+		List<ProductDetail> productDetails = purchaseOrderService.findByPurchaseOrderCode(purchaseOrderDetailDto.getPurchaseOrderCode()).get().getSupplier().getSupplyDetails().stream().map(supplyDetail -> supplyDetail.getProductDetail()).toList();
+		productDetails.removeAll(productDetailsInPurchaseOrderDetails);
+		model.addAttribute("productDetails", productDetails);
+		
 		return "owner-create-purchase-order-detail.html";
 	}
 	

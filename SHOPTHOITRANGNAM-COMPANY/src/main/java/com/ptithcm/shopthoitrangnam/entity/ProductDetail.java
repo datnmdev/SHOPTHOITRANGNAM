@@ -58,7 +58,13 @@ public class ProductDetail {
 	private List<SupplyDetail> supplyDetails;
 	
 	@OneToMany(mappedBy = "productDetail")
-	private List<DiscountDetail> discountDetails;
+	private List<FlashSaleDetail> flashSaleDetails;
+	
+	@OneToMany(mappedBy = "productDetail")
+	private List<SaleOffDetail> saleOffDetails;
+	
+	@OneToMany(mappedBy = "productDetail")
+	private List<FlatRateSaleDetail> flatRateSaleDetails;
 	
 	@OneToMany(mappedBy = "productDetail")
 	private List<PurchaseNoteDetail> purchaseNoteDetails;
@@ -155,12 +161,28 @@ public class ProductDetail {
 		this.supplyDetails = supplyDetails;
 	}
 
-	public List<DiscountDetail> getDiscountDetails() {
-		return discountDetails;
+	public List<FlashSaleDetail> getFlashSaleDetails() {
+		return flashSaleDetails;
 	}
 
-	public void setDiscountDetails(List<DiscountDetail> discountDetails) {
-		this.discountDetails = discountDetails;
+	public void setFlashSaleDetails(List<FlashSaleDetail> flashSaleDetails) {
+		this.flashSaleDetails = flashSaleDetails;
+	}
+
+	public List<SaleOffDetail> getSaleOffDetails() {
+		return saleOffDetails;
+	}
+
+	public void setSaleOffDetails(List<SaleOffDetail> saleOffDetails) {
+		this.saleOffDetails = saleOffDetails;
+	}
+
+	public List<FlatRateSaleDetail> getFlatRateSaleDetails() {
+		return flatRateSaleDetails;
+	}
+
+	public void setFlatRateSaleDetails(List<FlatRateSaleDetail> flatRateSaleDetails) {
+		this.flatRateSaleDetails = flatRateSaleDetails;
 	}
 
 	public List<PurchaseNoteDetail> getPurchaseNoteDetails() {

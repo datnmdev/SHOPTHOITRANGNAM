@@ -21,5 +21,7 @@ public interface PurchaseOrderDetailRepository extends JpaRepository<PurchaseOrd
 	
 	public void deleteByPurchaseOrderAndProductDetail(PurchaseOrder purchaseOrder, ProductDetail productDetail);
 	
+	public void deleteByPurchaseOrder(PurchaseOrder purchaseOrder);
+	
 	public PurchaseOrderDetail save(PurchaseOrderDetail purchaseOrderDetail);
 }
