@@ -30,7 +30,7 @@ public class SecurityConfig {
                                 .requestMatchers("/js/**", "/css/**", "/img/**", "/dist/**").permitAll()
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/owner/**").hasAuthority(Role.OWNER.getCode())
-                                .requestMatchers("/teller/**").hasAuthority(Role.TELLER.getCode())
+                                .requestMatchers("/shipper/**").hasAuthority(Role.SHIPPER.getCode())
                                 .requestMatchers("/ware-house-worker/**").hasAuthority(Role.WAREHOUSE_WORKER.getCode())
                                 .anyRequest().authenticated()
                 )

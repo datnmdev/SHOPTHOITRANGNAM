@@ -1,5 +1,14 @@
 package com.ptithcm.shopthoitrangnam.service;
 
-public interface OrderService {
+import java.util.List;
+import java.util.Optional;
 
+import com.ptithcm.shopthoitrangnam.entity.Order;
+
+public interface OrderService {
+	public List<Order> findAll();
+	
+	public Optional<Order> findByOrderCode(String orderCode);
+	
+	public List<Order> findByOrderCodeUsingRegex(String pattern);
 }

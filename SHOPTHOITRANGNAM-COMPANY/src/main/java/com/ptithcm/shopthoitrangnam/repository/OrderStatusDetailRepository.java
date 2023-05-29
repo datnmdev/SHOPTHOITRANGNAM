@@ -8,5 +8,5 @@ import com.ptithcm.shopthoitrangnam.entity.OrderStatusDetail;
 
 @Repository
 public interface OrderStatusDetailRepository extends JpaRepository<OrderStatusDetail, OrderStatusDetailPK> {
-
+	public OrderStatusDetail save(OrderStatusDetail orderStatusDetail);
 }

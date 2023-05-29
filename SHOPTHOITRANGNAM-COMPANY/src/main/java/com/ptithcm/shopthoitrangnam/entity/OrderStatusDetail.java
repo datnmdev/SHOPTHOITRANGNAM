@@ -1,5 +1,9 @@
 package com.ptithcm.shopthoitrangnam.entity;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.ptithcm.shopthoitrangnam.embeddable.OrderStatusDetailPK;
 
 import jakarta.persistence.Column;
@@ -9,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "CHITIETTRANGTHAIDONHANG")
@@ -16,13 +22,9 @@ public class OrderStatusDetail {
 	@EmbeddedId
 	private OrderStatusDetailPK orderStatusDetailPK;
 	
-	@MapsId("orderCode")
 	@ManyToOne
-	@JoinColumn(name = "MADONHANG")
+	@JoinColumn(name = "MADONHANG", insertable = false, updatable = false)
 	private Order order;
-	
-	@Column(name = "MAVANDON", nullable = true)
-	private String trackingCode;
 	
 	@Column(name = "NOIDUNG")
 	private String content;
@@ -46,14 +48,6 @@ public class OrderStatusDetail {
 
 	public void setOrder(Order order) {
 		this.order = order;
-	}
-
-	public String getTrackingCode() {
-		return trackingCode;
-	}
-
-	public void setTrackingCode(String trackingCode) {
-		this.trackingCode = trackingCode;
 	}
 
 	public String getContent() {

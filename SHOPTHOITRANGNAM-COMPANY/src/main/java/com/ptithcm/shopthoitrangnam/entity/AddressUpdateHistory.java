@@ -14,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -46,7 +47,7 @@ public class AddressUpdateHistory {
 	
 	@OneToMany(mappedBy = "addressUpdateHistory")
 	private List<Order> orders;
-
+	
 //	Getter and setter methods
 	public Integer getAddressUpdateHistoryId() {
 		return addressUpdateHistoryId;

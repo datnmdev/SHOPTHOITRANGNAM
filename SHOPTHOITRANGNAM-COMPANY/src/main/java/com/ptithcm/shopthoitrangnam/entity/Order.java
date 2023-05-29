@@ -44,6 +44,10 @@ public class Order {
 	
 	@OneToMany(mappedBy = "order")
 	private List<OrderPreparationDetail> orderPreparationDetails;
+	
+	@ManyToOne
+	@JoinColumn(name = "MAPHIEUXUAT")
+	private DeliveryNote deliveryNote;
 
 //	Getter and setter methods
 	public String getOrderCode() {
@@ -100,5 +104,13 @@ public class Order {
 
 	public void setOrderPreparationDetails(List<OrderPreparationDetail> orderPreparationDetails) {
 		this.orderPreparationDetails = orderPreparationDetails;
+	}
+
+	public DeliveryNote getDeliveryNote() {
+		return deliveryNote;
+	}
+
+	public void setDeliveryNote(DeliveryNote deliveryNote) {
+		this.deliveryNote = deliveryNote;
 	}
 }

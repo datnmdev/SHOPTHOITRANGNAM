@@ -1,7 +1,7 @@
 package com.ptithcm.shopthoitrangnam.enumeration;
 
 public enum Role {
-	OWNER("owner"), CUSTOMER("customer"), TELLER("teller"), WAREHOUSE_WORKER("warehouseworker");
+	OWNER("owner"), CUSTOMER("customer"), SHIPPER("shipper"), WAREHOUSE_WORKER("warehouseworker");
 	
 	private String code;
 	

@@ -1,6 +1,7 @@
 package com.ptithcm.shopthoitrangnam.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -38,6 +40,9 @@ public class DeliveryNote {
 	@ManyToOne
 	@JoinColumn(name = "MANVVC")
 	private Employee deliveryStaff;
+	
+	@OneToMany(mappedBy = "deliveryNote")
+	List<Order> orders;
 	
 //	Getter and setter methods
 	public String getDeliveryNoteCode() {
@@ -86,5 +91,13 @@ public class DeliveryNote {
 
 	public void setDeliveryStaff(Employee deliveryStaff) {
 		this.deliveryStaff = deliveryStaff;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 }

@@ -43,8 +43,8 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
 	                targetUrl = savedRequest.getRedirectUrl();
 	            } else {
 	                if (isOwner(authentication)) {
-	                    targetUrl = "/owner/dashboard";
-	                } else if (isTeller(authentication)) {
+	                    targetUrl = "/owner/orders";
+	                } else if (isShipper(authentication)) {
 	                    targetUrl = "/teller";
 	                } else if (isWareHouseWorker(authentication)) {
 	                    targetUrl = "/ware-house-worker";
@@ -58,8 +58,8 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
 	        return authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(Role.OWNER.getCode()));
 	    }
 
-	    protected boolean isTeller(Authentication authentication) {
-	        return authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(Role.TELLER.getCode()));
+	    protected boolean isShipper(Authentication authentication) {
+	        return authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(Role.SHIPPER.getCode()));
 	    }
 	    
 	    protected boolean isWareHouseWorker(Authentication authentication) {

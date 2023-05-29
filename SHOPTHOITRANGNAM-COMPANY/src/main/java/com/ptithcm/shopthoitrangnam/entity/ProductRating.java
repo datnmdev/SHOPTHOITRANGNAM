@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -33,9 +32,6 @@ public class ProductRating {
 	@Column(name = "NOIDUNG", nullable = true)
 	private String content;
 	
-//	@OneToOne(mappedBy = "productRating")
-//	private OrderDetail orderDetail;
-
 //	Getter and setter methods
 	public Long getProductRatingId() {
 		return productRatingId;
@@ -68,12 +64,4 @@ public class ProductRating {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-//	public OrderDetail getOrderDetail() {
-//		return orderDetail;
-//	}
-//
-//	public void setOrderDetail(OrderDetail orderDetail) {
-//		this.orderDetail = orderDetail;
-//	}
 }
