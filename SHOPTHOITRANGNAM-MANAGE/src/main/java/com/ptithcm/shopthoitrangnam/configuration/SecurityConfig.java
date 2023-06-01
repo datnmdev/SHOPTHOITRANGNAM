@@ -3,6 +3,7 @@ package com.ptithcm.shopthoitrangnam.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,9 +21,6 @@ public class SecurityConfig {
 	AuthenticationSuccessHandler authenticationSuccessHandler;
 	
 	@Autowired
-	AuthenticationFailureHandler authenticationFailureHandler;
-	
-	@Autowired
 	UserDetailsService userDetailsService;
 	
 	@Bean
@@ -33,6 +31,7 @@ public class SecurityConfig {
                         authorizeRequests
                                 .requestMatchers("/js/**", "/css/**", "/img/**", "/dist/**").permitAll()
                                 .requestMatchers("/").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/forgot-password/**", "/reset-password/**").permitAll()
                                 .requestMatchers("/owner/**").hasAuthority(Role.OWNER.getCode())
                                 .requestMatchers("/shipper/**").hasAuthority(Role.SHIPPER.getCode())
                                 .requestMatchers("/ware-house-worker/**").hasAuthority(Role.WAREHOUSE_WORKER.getCode())
@@ -44,7 +43,7 @@ public class SecurityConfig {
                                 .usernameParameter("username")
                                 .passwordParameter("password")
                                 .successHandler(authenticationSuccessHandler)
-                                .failureHandler(authenticationFailureHandler)
+                                .failureUrl("/login?error")
                                 .permitAll()
                 )
                 .authenticationProvider(daoAuthenticationProvider())

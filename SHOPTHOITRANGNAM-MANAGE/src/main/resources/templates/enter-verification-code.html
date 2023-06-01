@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop thời trang nam - Quên mật khẩu</title>
+    <link rel="stylesheet" th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
+	<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
+	<script src="https://kit.fontawesome.com/66c7a31f42.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/enter-verification-code.css}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="enter-verification-code-box">
+            <h3>Nhập mã bảo mật</h3>
+            <div class="message">Vui lòng kiểm tra tin nhắn có chứa mã trong thư của bạn. Mã của bạn gồm 6 số</div>
+            <form action="/reset-password" method="post">
+                <input type="hidden" name="username" th:value="${username}">
+                <input type="hidden" name="reset-password-page">
+                <div class="box-body">
+                    <label for="verify-code">
+                        <input type="text" name="verify-code" id="verify-code" placeholder="######" autocomplete="off">
+                        <div th:if="${hasError != null && hasError}" style="color: red;margin-top: 4px;">(*) Mã bảo mật không chính xác</div>
+                    </label>
+                    <div>
+                        <div>Chúng tôi đã gửi cho bạn mã đến:</div>
+                        <div th:text="${anonymousEmail}"></div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div>
+                        <button type="submit">Tiếp tục</button>
+                        <a href="/">Hủy</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -27,14 +27,14 @@ public class RedisConfig {
         config.useSingleServer()
                 .setAddress(redisUrl)
                 .setPassword(redisPassword)
-                .setConnectTimeout(5000);
+                .setConnectTimeout(10000);
         return Redisson.create(config);
     }
 
     @Bean
-    RedisTemplate<String, Object> redisTemplate(RedissonClient redissonClient) {
+    RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(new RedissonConnectionFactory(redissonClient));
+        redisTemplate.setConnectionFactory(new RedissonConnectionFactory(redissonClient()));
         return redisTemplate;
     }
 }

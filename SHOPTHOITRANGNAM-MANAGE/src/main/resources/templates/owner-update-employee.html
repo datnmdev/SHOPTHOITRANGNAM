@@ -209,7 +209,8 @@
 					</div>
 					<div class="first">
 						<label for="username">
-							<div>Tên đăng nhập</div> <select th:field="*{username}"
+							<div>Tên đăng nhập</div> 
+							<select th:field="*{username}"
 							id="username">
 								<th:block th:each="account, iterStatus : ${accounts}">
 									<option th:value="${account.getUsername()}"

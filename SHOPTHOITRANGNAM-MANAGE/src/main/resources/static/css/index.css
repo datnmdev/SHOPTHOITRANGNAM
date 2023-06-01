@@ -16,6 +16,14 @@ html {
     font-size: 0.875rem;
 }
 
+#login-section.hide, #forgot-password-section.hide {
+    display: none;
+}
+
+#login-section.show, #forgot-password-section.show {
+    display: block;
+}
+
 :root {
     --primary-color: #f54a0b;
 }
@@ -96,7 +104,6 @@ html {
 
 .wrapper .box form input {
     width: 100%;
-    margin-bottom: 16px;
     padding: 8px;
     background-color: #fff;
     border-radius: 4px;

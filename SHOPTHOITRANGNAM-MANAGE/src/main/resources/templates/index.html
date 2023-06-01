@@ -24,7 +24,7 @@
 
 			<div class="section section-right">
 				<div class="box">
-					<div id="login-section">
+					<div th:classappend="${hasUserNameError != null ? 'hide' : ''}" id="login-section">
 						<div class="box-heading">Đăng nhập</div>
 						<div th:if="${hasError}" class="error-message">
 							<i class="fa-solid fa-circle-xmark"></i>
@@ -34,24 +34,25 @@
 							<label for="username"> 
 								<input name="username" id="username" type="text" placeholder="Tên đăng nhập">
 							</label> 
-							<label for="password"> 
+							<label for="password" style="margin-top: 16px;"> 
 								<input name="password" id="password" type="password" placeholder="Mật khẩu"> 
 								<i class="show-password fa-regular fa-eye"></i> 
 								<i class="hide-password  fa-regular fa-eye-slash"></i>
 							</label>
-							<button type="submit">ĐĂNG NHẬP</button>
+							<button type="submit" style="margin-top: 16px;">ĐĂNG NHẬP</button>
 						</form>
 						<div class="forgot-password">
 							<a id="forgot-password">Quên mật khẩu?</a>
 						</div>
 					</div>
-					<div id="forgot-password-section">
+					<div th:classappend="${hasUserNameError != null && hasUserNameError ? 'show' : ''}" id="forgot-password-section">
 						<div class="box-heading">Quên mật khẩu</div>
-						<form action="/" method="post">
-							<label for="username"> 
-								<input name="username" id="username" type="text" placeholder="Tên đăng nhập">
+						<form name="forgot-password" action="/forgot-password" method="post">
+							<label> 
+								<input th:name="username" type="text" placeholder="Tên đăng nhập" th:value="${username}">
+								<div th:if="${hasUserNameError}" style="color: red;margin-top: 4px;">(*) Tên đăng nhập không chính xác</div>
 							</label> 
-							<button type="submit">XÁC NHẬN</button>
+							<button type="submit" style="margin-top: 16px;">XÁC NHẬN</button>
 						</form>
 						<div class="forgot-password">
 							<a id="back-home">Trở lại trang đăng nhập</a>
