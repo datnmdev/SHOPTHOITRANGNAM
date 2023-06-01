@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop thời trang nam - Quản lý màu sắc sản phẩm</title>
+<script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+<link rel="stylesheet"
+	th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
+<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
+<link rel="stylesheet"
+	th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.min.css}">
+<link rel="stylesheet" th:href="@{/css/owner-color-manage.css}">
+<script th:src="@{/js/owner-color-manage.js}"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div id="header">
+			<nav>
+				<div class="total-revenue-card">
+					<span class="rotate-1"></span> <span class="rotate-2"></span> <span
+						class="rotate-3"></span>
+					<div class="total-revenue-card__content">
+						<span class="total-revenue-card__content_number">10999</span> <span
+							class="total-revenue-card__content_unit">USD</span>
+					</div>
+				</div>
+				<ul class="category">
+					<li class="category-item"><a href="/owner/orders"><i
+							class="fa-solid fa-note-sticky"></i>Quản lý đơn đặt hàng</a></li>
+					<li class="category-item">
+						<div class="product-manage-btn active">
+							<span><i class="fa-sharp fa-solid fa-box"></i>Quản lý sản
+								phẩm</span> <span><i class="fa-solid fa-angle-down"></i></span>
+						</div>
+						<ul class="category-item__children">
+							<li class="category-item__children__item"><a
+								href="/owner/products"> <span><i
+										class="fa-brands fa-product-hunt"></i></span> Sản phẩm
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/sizes"> <span><i
+										class="fa-solid fa-sitemap"></i></span> Kích thước sản phẩm
+							</a></li>
+							<li class="category-item__children__item"><a class="active"
+								href="/owner/colors"> <span><i
+										class="fa-solid fa-droplet"></i></span> Màu sắc sắc sản phẩm
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/product-categories"> <span><i
+										class="fa-solid fa-book-open"></i></span> Loại sản phẩm
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/product-details"> <span><i
+										class="fa-solid fa-asterisk"></i></span> Chi tiết sản phẩm
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/selling-prices"> <span><i
+										class="fa-solid fa-money-bill-wave"></i></span> Cập nhật giá sản phẩm
+							</a></li>
+						</ul>
+					</li>
+					<li class="category-item">
+						<div class="product-manage-btn">
+							<span><i class="fa-solid fa-user-group"></i>Quản lý nhân
+								viên</span> <span><i class="fa-solid fa-angle-right"></i></span>
+						</div>
+						<ul class="category-item__children" style="display: none;">
+							<li class="category-item__children__item"><a
+								href="/owner/employees"> <span><i
+										class="fa-solid fa-people-group"></i></span> Nhân viên
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/positions"> <span><i
+										class="fa-solid fa-hat-cowboy"></i></span> Chức vụ
+							</a></li>
+						</ul>
+					</li>
+					<li class="category-item"><a href="/owner/suppliers"><i
+							class="fa-solid fa-store"></i> Nhà cung cấp</a></li>
+					<li class="category-item"><a href="/owner/accounts"><i
+							class="fa-solid fa-key"></i>Quản lý tài khoản</a></li>
+					<li class="category-item">
+						<div class="product-manage-btn">
+							<span><i class="fa-solid fa-tags"></i>Quản lý khuyến mãi</span> <span><i
+								class="fa-solid fa-angle-right"></i></span>
+						</div>
+						<ul class="category-item__children" style="display: none;">
+							<li class="category-item__children__item"><a
+								href="/owner/flash-sales"> <span><i
+										class="fa-solid fa-tag"></i></span> Flash sale
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/sale-offs"> <span><i
+										class="fa-solid fa-tag"></i></span> Sale off
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/flat-rate-sales"> <span><i
+										class="fa-solid fa-tag"></i></span> Sale đồng giá
+							</a></li>
+						</ul>
+					</li>
+					<li class="category-item"><a href="/logout"><i
+							class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div id="content">
+			<div class="option-funtion">
+				<div class="main-option-function">
+					<div class="direction">
+						<span class="forward-btn" onclick="history.back()"><i
+							class="fa-solid fa-arrow-left"></i></span> <span class="back-btn"
+							onclick="history.forward()"><i
+							class="fa-solid fa-arrow-right"></i></span>
+					</div>
+					<form action="/owner/colors" id="product-search-form">
+						<label for="product-search"> <i
+							class="fa-solid fa-magnifying-glass"></i> <input th:name="search"
+							type="search" th:value="${search}" id="product-search"
+							placeholder="Nhập mã hoặc tên màu sắc sản phẩm muốn tìm kiếm...">
+						</label>
+					</form>
+				</div>
+				<div class="orther-option-function">
+					<a id="export" class="export">
+						<div class="orther-option-function-btn">
+							<i class="fa-solid fa-file-export"></i> Xuất file
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="product-container">
+				<div class="product-header">
+					<h3 th:if="${isSearched == null}">Danh sách màu sắc sản phẩm</h3>
+					<h3
+						th:if="${isSearched != null && isSearched && !colors.isEmpty()}"
+						th:text="${'Kết quả tìm kiếm màu sắc sản phẩm với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
+					<h3 th:if="${isSearched != null && isSearched && colors.isEmpty()}"
+						th:text="${'Không tìm thấy màu sắc sản phẩm nào với từ khóa ' + '&quot;' + search + '&quot;'}"></h3>
+					<form action="/owner/colors" method="post">
+						<input hidden type="text" th:name="create-page">
+						<button class="add-product-btn">
+							<i class="fa-solid fa-plus"></i> Thêm màu sắc sản phẩm
+						</button>
+					</form>
+				</div>
+				<table th:unless="${colors.isEmpty()}" class="product-table">
+					<thead>
+						<th>Mã màu sắc</th>
+						<th>Tên màu sắc</th>
+						<th>Thao tác khác</th>
+					</thead>
+					<tbody
+						th:each="i : ${#numbers.sequence(pageNumber * 20, ((pageNumber + 1) * 20) <= colors.size() ? (pageNumber + 1) * 20 - 1 : colors.size() - 1)}">
+						<tr>
+							<td th:text="${colors[i].getColorCode()}"></td>
+							<td th:text="${colors[i].getColorName()}"></td>
+							<td>
+								<div class="orther-action">
+									<form
+										th:action="@{/owner/colors/{colorCode}(colorCode=${colors[i].getColorCode()})}"
+										method="post">
+										<input hidden type="text" th:name="update-page">
+										<button class="update-product-btn">
+											<i class="fa-solid fa-pen-to-square"></i>
+										</button>
+									</form>
+									<form
+										th:action="@{/owner/colors/{colorCode}(colorCode=${colors[i].getColorCode()})}"
+										method="post">
+										<input hidden type="text" th:name="delete">
+										<button class="delete-product-btn">
+											<i class="fa-solid fa-trash-can"></i>
+										</button>
+									</form>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div th:with="colorsSize=${colors.size()}" class="product-footer">
+					<th:block
+						th:with="pageCount=${colorsSize % 20 == 0 ? colorsSize / 20 : colorsSize / 20 + 1}">
+						<div class="total-product">
+							<span>Tổng số kích thước sản phẩm:</span> <span
+								th:text="${colorsSize}" class="total-product-number"></span>
+						</div>
+						<th:block th:if="${colorsSize > 20}">
+							<ul id="pagination" class="pagination"
+								th:attr="current-page-number=${pageNumber+1}, page-count=${pageCount}">
+								<li id="pagination-previous" th:if="${colorsSize <= 20}"
+									class="page-number-item page-active"><a
+									href="/owner/colors?page-number=1">1</a></li>
+								<li th:if="${colorsSize > 20}" id="pagination-previous"
+									class="page-number-item"><a><i
+										class="fa-solid fa-chevron-left"></i></a></li>
+								<a th:if="${pageNumber+1 >= 3}" th:text="..."></a>
+								<th:block
+									th:each="i : ${#numbers.sequence((pageNumber+1) % 2 != 0 ? (pageCount == pageNumber+1 ? pageCount-2 : pageNumber+1) : pageNumber, (pageNumber+1) % 2 != 0 ? (pageCount == pageNumber+1 ? pageCount : pageNumber+3) : pageNumber+2)}">
+									<li th:if="${i <= pageCount}"
+										th:classappend="${i == pageNumber+1 ? 'page-active' : ''}"
+										class="page-number-item"><a th:text="${i}"
+										th:href="@{/owner/colors(page-number=${i})}"></a></li>
+								</th:block>
+								<a
+									th:if="${((pageCount - (pageNumber + 1)) > 3) || (pageCount % 2 == 0 && pageCount > 3 && (pageCount - (pageNumber + 1)) <= 2)}"
+									th:text="..."></a>
+								<li th:if="${colorsSize > 20}" id="pagination-next"
+									class="page-number-item"><a><i
+										class="fa-solid fa-chevron-right"></i></a></li>
+							</ul>
+						</th:block>
+						<div class="goto-page-number">
+							<div id="goto-page-number-btn">
+								Đi tới trang khác <i class="fa-solid fa-arrow-right"></i>
+							</div>
+							<form id="goto-page-form" class="goto-page-box">
+								<h5>Chuyển trang</h5>
+								<div>
+									<input name="page-number" type="number" min="1"
+										th:max="${pageCount}" placeholder="Nhập số trang..." required>
+									<input type="submit" value="Đến">
+								</div>
+								<div>
+									<button type="button" id="first-page-btn">Đến đầu
+										trang</button>
+									<button type="button" id="last-page-btn">Đến cuối
+										trang</button>
+								</div>
+							</form>
+						</div>
+					</th:block>
+				</div>
+			</div>
+		</div>
+
+		<!-- Message delete success box -->
+		<div
+			th:classappend="${isDeletedColor != null && isDeletedColor ? 'show' : ''}"
+			id="success-message-wrapper" class="message-wrapper">
+			<div class="overlay">
+				<div class="message-box">
+					<div class="check-container">
+						<i class="fa-solid fa-circle-check"></i>
+					</div>
+					<div class="message">Xóa màu sắc sản phẩm thành công!</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Message delete failure box -->
+		<div
+			th:classappend="${isDeletedColor != null && !isDeletedColor ? 'show' : ''}"
+			id="failure-message-wrapper" class="message-wrapper">
+			<div class="overlay">
+				<div class="message-box">
+					<div class="check-container">
+						<i class="fa-solid fa-circle-check"></i>
+					</div>
+					<div class="message">Thông tin màu sắc sản phẩm này có ảnh
+						hưởng đến dữ liệu khác. Không thể xóa!</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

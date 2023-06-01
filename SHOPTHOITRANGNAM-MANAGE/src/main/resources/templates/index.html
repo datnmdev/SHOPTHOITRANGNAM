@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop thời trang nam - đăng nhập</title>
+<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
+<link rel="stylesheet"
+	th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}"></link>
+<script th:src="@{https://kit.fontawesome.com/66c7a31f42.js}"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/index.css}">
+<script th:src="@{/js/index.js}"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="container-cst">
+			<div class="section section-left">
+				<div class="shop-name">SHOP THỜI TRANG NAM</div>
+				<div class="page-decription typewriter">-- Bạn đang ở trang
+					dành cho người bán --</div>
+			</div>
+
+			<div class="section section-right">
+				<div class="box">
+					<div id="login-section">
+						<div class="box-heading">Đăng nhập</div>
+						<div th:if="${hasError}" class="error-message">
+							<i class="fa-solid fa-circle-xmark"></i>
+							<span>Tên đăng nhập hoặc mật khẩu không chính xác, vui lòng thử lại</span> 
+						</div>
+						<form action="/" method="post">
+							<label for="username"> 
+								<input name="username" id="username" type="text" placeholder="Tên đăng nhập">
+							</label> 
+							<label for="password"> 
+								<input name="password" id="password" type="password" placeholder="Mật khẩu"> 
+								<i class="show-password fa-regular fa-eye"></i> 
+								<i class="hide-password  fa-regular fa-eye-slash"></i>
+							</label>
+							<button type="submit">ĐĂNG NHẬP</button>
+						</form>
+						<div class="forgot-password">
+							<a id="forgot-password" href="">Quên mật khẩu?</a>
+						</div>
+					</div>
+					<div id="forgot-password-section">
+						<div class="box-heading">Quên mật khẩu</div>
+						<form action="/" method="post">
+							<label for="username"> 
+								<input name="username" id="username" type="text" placeholder="Tên đăng nhập">
+							</label> 
+							<button type="submit">XÁC NHẬN</button>
+						</form>
+						<div class="forgot-password">
+							<a id="back-home" href="">Trở lại trang đăng nhập</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

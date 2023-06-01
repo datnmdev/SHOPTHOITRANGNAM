@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop thời trang nam - Tạo chi tiết sản phẩm</title>
+<link rel="stylesheet"
+	th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
+<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
+<link rel="stylesheet"
+	th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.min.css}">
+<link rel="stylesheet" th:href="@{/css/owner-create-product-detail.css}">
+<script th:src="@{/js/owner-create-product-detail.js}"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div id="header">
+			<nav>
+				<div class="total-revenue-card">
+					<span class="rotate-1"></span> <span class="rotate-2"></span> <span
+						class="rotate-3"></span>
+					<div class="total-revenue-card__content">
+						<span class="total-revenue-card__content_number">10999</span> <span
+							class="total-revenue-card__content_unit">USD</span>
+					</div>
+				</div>
+				<ul class="category">
+					<li class="category-item"><a href="/owner/orders"><i
+							class="fa-solid fa-note-sticky"></i>Quản lý đơn đặt hàng</a></li>
+					<li class="category-item">
+						<div class="product-manage-btn active">
+							<span><i class="fa-sharp fa-solid fa-box"></i>Quản lý sản
+								phẩm</span> <span><i class="fa-solid fa-angle-down"></i></span>
+						</div>
+						<ul class="category-item__children">
+							<li class="category-item__children__item"><a
+								href="/owner/products"> <span><i
+										class="fa-brands fa-product-hunt"></i></span> Sản phẩm
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/sizes"> <span><i
+										class="fa-solid fa-sitemap"></i></span> Kích thước sản phẩm
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/colors"> <span><i
+										class="fa-solid fa-droplet"></i></span> Màu sắc sắc sản phẩm
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/product-categories"> <span><i
+										class="fa-solid fa-book-open"></i></span> Loại sản phẩm
+							</a></li>
+							<li class="category-item__children__item"><a class="active"
+								href="/owner/product-details"> <span><i
+										class="fa-solid fa-asterisk"></i></span> Chi tiết sản phẩm
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/selling-prices"> <span><i
+										class="fa-solid fa-money-bill-wave"></i></span> Cập nhật giá sản phẩm
+							</a></li>
+						</ul>
+					</li>
+					<li class="category-item">
+						<div class="product-manage-btn">
+							<span><i class="fa-solid fa-user-group"></i>Quản lý nhân
+								viên</span> <span><i class="fa-solid fa-angle-right"></i></span>
+						</div>
+						<ul class="category-item__children" style="display: none;">
+							<li class="category-item__children__item"><a
+								href="/owner/employees"> <span><i
+										class="fa-solid fa-people-group"></i></span> Nhân viên
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/positions"> <span><i
+										class="fa-solid fa-hat-cowboy"></i></span> Chức vụ
+							</a></li>
+						</ul>
+					</li>
+					<li class="category-item"><a href="/owner/suppliers"><i
+							class="fa-solid fa-store"></i> Nhà cung cấp</a></li>
+					<li class="category-item"><a href="/owner/accounts"><i
+							class="fa-solid fa-key"></i>Quản lý tài khoản</a></li>
+					<li class="category-item">
+						<div class="product-manage-btn">
+							<span><i class="fa-solid fa-tags"></i>Quản lý khuyến mãi</span> <span><i
+								class="fa-solid fa-angle-right"></i></span>
+						</div>
+						<ul class="category-item__children" style="display: none;">
+							<li class="category-item__children__item"><a
+								href="/owner/flash-sales"> <span><i
+										class="fa-solid fa-tag"></i></span> Flash sale
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/sale-offs"> <span><i
+										class="fa-solid fa-tag"></i></span> Sale off
+							</a></li>
+							<li class="category-item__children__item"><a
+								href="/owner/flat-rate-sales"> <span><i
+										class="fa-solid fa-tag"></i></span> Sale đồng giá
+							</a></li>
+						</ul>
+					</li>
+					<li class="category-item"><a href="/logout"><i
+							class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div id="content">
+			<div class="option-funtion">
+				<div class="main-option-function">
+					<div class="direction">
+						<span class="forward-btn" onclick="history.back()"><i
+							class="fa-solid fa-arrow-left"></i></span> <span class="back-btn"
+							onclick="history.forward()"><i
+							class="fa-solid fa-arrow-right"></i></span>
+					</div>
+				</div>
+				<div class="orther-option-funtion">
+					<div class="direction-btn"
+						onclick="location.assign('/owner/product-details')">
+						<span>Đến trang chi tiết sản phẩm</span> <i
+							class="fa-solid fa-arrow-right"></i>
+					</div>
+				</div>
+			</div>
+
+			<div class="product-container">
+				<div class="product-header">
+					<h3>Thêm chi tiết sản phẩm</h3>
+				</div>
+				<form th:object="${productDetailDto}"
+					action="/owner/product-details" method="post"
+					enctype="multipart/form-data">
+					<input hidden type="text" th:name="create">
+					<div th:if="${#fields.hasErrors('primaryKeyError')}"
+						class="primary-key-error">
+						<i class="fa-solid fa-circle-xmark"></i> <span
+							th:text="${#fields.errors('primaryKeyError')[0]}"></span>
+					</div>
+					<div class="first">
+						<label th:if="${productCode == null}" for="product-code">
+							<div>Mã sản phẩm</div> <select th:field="*{productCode}"
+							id="product-code">
+								<th:block th:each="product, iterStatus : ${products}">
+									<option th:value="${product.getProductCode()}"
+										th:text="${product.getProductCode()}"
+										th:selected="${iterStatus.index == 1}"></option>
+								</th:block>
+						</select>
+						</label> <label th:if="${productCode != null}" for="product-code">
+							<div>Mã sản phẩm</div> <input th:field="*{productCode}"
+							type="text" id="product-code" readonly>
+						</label> <label for="size-code">
+							<div>Mã kích thước</div> <select th:field="*{sizeCode}"
+							id="size-code">
+								<th:block th:each="size, iterStatus : ${sizes}">
+									<option th:value="${size.getSizeCode()}"
+										th:text="${size.getSizeCode()}"
+										th:selected="${iterStatus.index == 1}"></option>
+								</th:block>
+						</select>
+						</label>
+					</div>
+					<div class="first">
+						<label for="color-code">
+							<div>Mã màu sắc</div> <select th:field="*{colorCode}"
+							id="color-code">
+								<th:block th:each="color, iterStatus : ${colors}">
+									<option th:value="${color.getColorCode()}"
+										th:text="${color.getColorCode()}"
+										th:selected="${iterStatus.index == 1}"></option>
+								</th:block>
+						</select>
+						</label> <label for="quantity">
+							<div>Số lượng tồn</div> <input th:field="*{quantity}" type="text"
+							id="quantity" readonly>
+						</label>
+					</div>
+					<div class="product-image">
+						<div>Hình ảnh</div>
+						<div class="image-chooser">
+							<img th:src="${productDetailDto.getImage()}"
+								alt="Shop thời trang nam"> <label for="product-image-btn">
+								<input id="product-image-btn" name="productDetailImage"
+								type="file"
+								accept="image/jpeg, image/png, image/webp, image/jpg, image/jfif">
+								<input id="product-image-path" hidden th:field="*{image}"
+								type="text"> Chọn ảnh
+							</label>
+						</div>
+						<div th:if="${#fields.hasErrors('image')}"
+							th:text="${#fields.errors('image')[0]}" class="error-message"></div>
+					</div>
+					<div>
+						<button type="submit">
+							<i class="fa-solid fa-plus"></i> Tạo chi tiết sản phẩm
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Message success box -->
+	<div th:classappend="${hasError !=null && !hasError ? 'show' : ''}"
+		id="message-wrapper" class="message-wrapper">
+		<div class="overlay">
+			<div class="message-box">
+				<div class="check-container">
+					<i class="fa-solid fa-circle-check"></i>
+				</div>
+				<div class="message">Tạo chi tiết sản phẩm thành công!</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

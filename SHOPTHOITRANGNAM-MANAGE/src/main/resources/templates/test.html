@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script
+	src="https://cdn.tiny.cloud/1/jvxfcg3e5hmewedl7l75biz3yze9r7ovbke6b0wffkkr1dqt/tinymce/6/tinymce.min.js"
+	referrerpolicy="origin"></script>
+</head>
+<body>
+	<textarea id="test">
+    Welcome to TinyMCE!
+  </textarea>
+	<button id="html"></button>
+	<script>
+    tinymce.init({
+        selector: '#test',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        themes: "modern",
+        images_upload_url: '/uploadImage',
+        images_upload_handler: function (blobInfo, success, failure) {
+            var xhr, formData;
+            xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('POST', '/uploadImage');
+            xhr.onload = function() {
+                var json;
+                if (xhr.status != 200) {
+                    failure('HTTP Error: ' + xhr.status);
+                    return;
+                }
+                json = JSON.parse(xhr.responseText);
+                if (!json || typeof json.location != 'string') {
+                    failure('Invalid JSON: ' + xhr.responseText);
+                    return;
+                }
+                success(json.location);
+            };
+            formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+            xhr.send(formData);
+        }
+    });
+    
+    const a = document.getElementById('html');
+    a.addEventListener('click', function() {
+        // Lấy đối tượng editor
+        var editor = tinymce.get('test');
+
+        // Lấy mã HTML
+        var html = editor.getContent();
+
+        // Lấy mã CSS
+        console.log(html)
+    })
+  </script>
+</body>
+</html>
