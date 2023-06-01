@@ -10,12 +10,12 @@ $(document).ready(function () {
     })
 
     $("#forgot-password").click(function() {
-        $(this).attr('display', 'none')
-        $('#forgot-password-section').attr('display', 'block')
+        $('#login-section').css('display', 'none')
+        $('#forgot-password-section').css('display', 'block')
     })
 
     $("#back-home").click(function() {
-        $(this).attr('display', 'none')
-        $('#login-section').attr('display', 'block')
+        $('#forgot-password-section').css('display', 'none')
+        $('#login-section').css('display', 'block')
     })
 });

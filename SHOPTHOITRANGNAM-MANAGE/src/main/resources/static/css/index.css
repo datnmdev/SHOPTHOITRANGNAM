@@ -153,6 +153,7 @@ i.hide-password {
 .wrapper .box .forgot-password a {
     text-decoration: none;
     color: #575454;
+    cursor: pointer;
 }
 
 .wrapper .box .forgot-password:hover a {
