@@ -31,7 +31,7 @@ public class SizeController {
 	SizeService sizeService;
 	
 	@Autowired
-	@Qualifier("createColorFormValidator")
+	@Qualifier("createSizeFormValidator")
 	Validator createSizeFormValidator;
 	
 	@GetMapping("/owner/sizes")

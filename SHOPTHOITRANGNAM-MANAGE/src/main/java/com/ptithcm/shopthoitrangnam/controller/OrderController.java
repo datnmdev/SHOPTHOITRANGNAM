@@ -64,9 +64,12 @@ public class OrderController {
 		}
 		
 		List<String> statuses = new ArrayList<>();
-		orders.forEach(order -> {
-			statuses.add(order.getOrderStatusDetails().stream().sorted(new OrderStatusDetailComparator()).findFirst().get().getOrderStatus().getOrderStatusCode());
-		});
+		System.out.println("abc: " + orders.size());
+		if (!orders.isEmpty()) {
+			orders.forEach(order -> {
+				statuses.add(order.getOrderStatusDetails().stream().sorted(new OrderStatusDetailComparator()).findFirst().get().getOrderStatus().getOrderStatusCode());
+			});
+		}
 		model.addAttribute("statuses", statuses);
 		
 		Integer numberOfOrdersAwaitingConfirmation = orders.stream().filter(order -> order.getOrderStatusDetails().stream().sorted(new OrderStatusDetailComparator()).findFirst().get().getOrderStatus().getOrderStatusCode().equals(OrderStatus.WAITING.getCode())).toList().size();

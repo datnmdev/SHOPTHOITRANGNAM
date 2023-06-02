@@ -1,5 +1,9 @@
 package com.ptithcm.shopthoitrangnam.service;
 
-public interface ProductRatingService {
+import java.util.List;
 
+import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
+import com.ptithcm.shopthoitrangnam.entity.ProductRating;
+
+public interface ProductRatingService {
 }

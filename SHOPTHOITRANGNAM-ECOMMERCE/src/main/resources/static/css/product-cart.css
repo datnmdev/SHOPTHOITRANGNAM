@@ -1,0 +1,309 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 0.875rem;
+}
+
+:root {
+    --primary-color: #f54a0b;
+}
+
+.container-cst {
+    margin: 0;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.content {
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+.content h1 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+.content .cart {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.content .cart-table {
+    width: 100%;
+}
+
+.content .cart-table thead {
+    border-bottom: 1px solid #ada9a9;
+}
+
+.content .cart-table th {
+    font-size: 1.4rem;
+    font-weight: 400;
+    text-shadow: 1px 1px 4px #706b6b;
+    padding-bottom: 12px;
+}
+
+.content .cart-table th, .content .cart-table td {
+    text-align: center;
+}
+
+.content .cart-table td {
+    padding-top: 24px;
+}
+
+.content .cart-table td.product-detail {
+    display: flex;
+    justify-content: flex-start;
+    align-items: self-start;
+    padding-left: 40px;
+}
+
+.content .product-detail {
+    padding-right: 24px;
+}
+
+.content .product-detail img {
+    border-radius: 4px;
+}
+
+.content .product-detail h3 {
+    margin-left: 16px;
+    font-size: 1.2rem;
+    margin-right: 16px;
+    flex-grow: 1;
+    text-align: left;
+}
+
+.content .product-detail .classification {
+    font-size: 1rem;
+    color: #7e7676;
+    position: relative;
+    cursor: pointer;
+}
+
+.content .classification-select i {
+    margin-left: 12px;
+}
+
+.content .classification .select-box {
+    width: 400px;
+    position: absolute;
+    left: calc(50% - 9px);
+    top: calc(100% + 16px);
+    transform: translateX(-50%);
+    background-color: #fff;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    padding: 24px 24px;
+    border-radius: 8px;
+    color: #000;
+    border: 1px solid rgba(0,0,0,.09);
+    display: none;
+    z-index: 1;
+}
+
+.content .classification .select-box::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border-top: 1px solid #e6e1e1;
+    border-left: 1px solid #e6e1e1;
+    position: absolute;
+    top: 0;
+    transform: translateY(-54%) rotate(45deg);
+    background-color: #fff;
+}
+
+.content .select-box .button-section {
+    margin-top: 24px;
+    text-align: right;
+}
+
+.content .button-section .back-btn {
+    background-color: #fff;
+}
+
+.content .button-section .back-btn:hover {
+    cursor: pointer;
+    background-color: #f8f5f5;
+}
+
+.content .button-section .apply-btn {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.content .button-section .apply-btn:hover {
+    opacity: 0.8;
+}
+
+.content .button-section .back-btn, 
+.content .button-section .apply-btn {
+    border: none;
+    outline: none;
+    width: 150px;
+    padding: 8px 24px;
+    font-size: 1.1rem;
+}
+
+.content .classification .element-list {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.content .select-content p {
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+.content .element-list .element-item {
+    min-width: 80px;
+    padding: 4px 16px;
+    border: 1px solid #e7e2e2;
+    border-radius: 2px;
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+.content .element-list .element-item:hover {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.content .cart-table .old-price {
+    text-decoration: line-through;
+    color: #ada9a9;
+}
+
+.content .cart-table .quantity-modify {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content .quantity-modify .quantity-modify-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ada9a9;
+    cursor: pointer;
+    color: #ada9a9;
+}
+
+.content .quantity-modify input {
+    width: 48px;
+    height: 32px;
+    border: none;
+    border-top: 1px solid #ada9a9;
+    border-bottom: 1px solid #ada9a9;
+    text-align: center;
+}
+
+.content .quantity-modify input:focus {
+    outline: none;
+}
+
+.content .cart-table .total-price {
+    color: var(--primary-color);
+}
+
+.content .cart-table .manipulation-btn {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 1.4rem;
+    padding: 2px;
+}
+
+.content .cart-table .manipulation-btn:first-child {
+    margin-right: 8px;
+}
+
+.content .cart-table .update-btn {
+    color: rgb(15, 240, 15);
+}
+
+.content .cart-table .delete-btn {
+    color: #ff0000
+}
+
+.content .cart .common-manipulation-section {
+    margin-top: 32px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-right: 16px;
+    padding-left: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    bottom: 0;
+    background-color: #fff;
+    box-shadow: 0 -1px 4px rgba(214, 213, 213, 0.3);
+}
+
+.content .common-manipulation-section .left-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content .left-section span {
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.content .left-section span:not(:first-child) {
+    margin-left: 8px;
+}
+
+.content .left-section span:hover {
+    opacity: 0.8;
+}
+
+.content .common-manipulation-section  .right-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content .right-section #total-price {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-right: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content #total-price #price-number {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    padding-left: 12px;
+}
+
+.content .right-section #buy-btn {
+    border: none;
+    outline: none;
+    padding: 12px 64px;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+.content .right-section #buy-btn:hover {
+    opacity: 0.8;
+}

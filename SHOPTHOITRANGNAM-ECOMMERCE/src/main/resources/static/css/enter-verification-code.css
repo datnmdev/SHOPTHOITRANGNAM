@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+}
+
+.wrapper .enter-verification-code-box {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 0 4px #fff;
+}
+
+.wrapper .enter-verification-code-box h3 {
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+.wrapper .enter-verification-code-box .message {
+    font-weight: 500;
+}
+
+.wrapper .enter-verification-code-box .box-body {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wrapper .box-body label {
+    flex: 1;
+}
+
+.wrapper .box-body label input {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    font-size: 1.2rem;
+}
+
+.wrapper .box-body div {
+    flex: 1;
+    margin-left: 16px;
+}
+
+.wrapper .box-body div div:first-child {
+    font-weight: 500;
+}
+
+.wrapper .box-footer {
+    border-top: 1px solid #ccc;
+    padding-top: 8px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wrapper .box-footer > a {
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.wrapper .box-footer div > a, 
+.wrapper .box-footer div button {
+    display: inline-block;
+    width: 80px;
+    padding: 4px 8px;
+    text-decoration: none;
+    color: #000000;
+    border-radius: 2px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.wrapper .box-footer div button {
+    background-color: #086fe6;
+    color: #fff;
+    border: none;
+}
+
+.wrapper .box-footer div a:last-child {
+    border: 1px solid #ccc;
+    margin-left: 4px;
+}
+
+.wrapper .box-footer a:hover, 
+.wrapper .box-footer div button:hover {
+    opacity: 0.8;
+}
+
+.wrapper .box-footer form button {
+    border: none;
+    background: transparent;
+    color: #086fe6;
+}
