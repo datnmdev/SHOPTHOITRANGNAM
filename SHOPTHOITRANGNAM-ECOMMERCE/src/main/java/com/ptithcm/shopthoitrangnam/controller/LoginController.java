@@ -5,6 +5,10 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ptithcm.shopthoitrangnam.dto.AccountDto;
 import com.ptithcm.shopthoitrangnam.entity.Account;
+import com.ptithcm.shopthoitrangnam.entity.Customer;
 import com.ptithcm.shopthoitrangnam.mapper.AccountMapper;
 import com.ptithcm.shopthoitrangnam.service.AccountService;
 import com.ptithcm.shopthoitrangnam.service.CustomerService;
@@ -127,5 +132,13 @@ public class LoginController {
 		accountDto.setPassword(password);
 		accountService.update(accountDto);
 		return "reset-password-success.html";
+	}
+	
+	@GetMapping(value = "/user/home")
+	public String home(@AuthenticationPrincipal UserDetails userDetail, Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerService.findByAccount(accountService.findByUsername(authentication.getName()).get()).get();
+		model.addAttribute("customer", customer);
+		return "index.html";
 	}
 }

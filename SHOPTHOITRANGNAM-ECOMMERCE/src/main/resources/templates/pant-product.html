@@ -16,7 +16,7 @@
         <nav class="container-cst">
 			<div class="first-nav">
 				<ul class="first-nav__left">
-					<li class="first-nav__left__item"><a href="" class="active">TRANG CHỦ</a></li>
+					<li class="first-nav__left__item"><a href="/" class="active">TRANG CHỦ</a></li>
 					<li class="first-nav__left__item category">
 						<a href="/products?category=AO">SẢN PHẨM</a>
 						<ul class="category__detail">
@@ -115,7 +115,7 @@
 						<div class="col-6 col-sm-4 col-md-3 product-item">
 							<img th:src="${mainHost + pant.getImage()}" alt="" class="product-thumbnail">
 							<div class="product-body">
-								<h3 th:text="${pant.getProduct().getProductName()}" class="product-body__heading"></h3>
+								<a th:href="${'/products/' + pant.getProduct().getProductCode()}" style="text-decoration: none;color: inherit;"><h3 th:text="${pant.getProduct().getProductName()}" class="product-body__heading"></h3></a>
 								<div class="star-rating">
 									<div th:if="${ratingOfPants[iterStatus.index] - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
 									<div th:if="${ratingOfPants[iterStatus.index] - 20 < 0 && ratingOfPants[iterStatus.index] > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfPants[iterStatus.index] + '%, transparent 0%);'"></div>
@@ -144,7 +144,7 @@
 								<div th:if="${percentageOfPants[iterStatus.index] == null}" class="price">
 									<span th:text="${'&#x20AB; ' + #numbers.formatDecimal(oldPriceOfPants[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
 								</div>
-								<div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+								<a th:href="${'/user/product-carts?add=' + pant.getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
 							</div>
 							<span th:if="${percentageOfPants[iterStatus.index] != null}" th:text="${'Giảm ' + percentageOfPants[iterStatus.index]}" class="sale-percent"></span>
 						</div>

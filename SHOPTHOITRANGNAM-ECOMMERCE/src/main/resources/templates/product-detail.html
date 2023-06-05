@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop thời trang nam - Chi tiết sản phẩm</title>
+    <script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
+    <link rel="stylesheet"
+        th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}"></link>
+    <script src="https://kit.fontawesome.com/66c7a31f42.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/header-customer.css}">
+	<link rel="stylesheet" th:href="@{/css/footer-customer.css}">
+    <link rel="stylesheet" th:href="@{/css/product-detail.css}">
+    <script th:src="@{/js/product-detail.js}"></script>
+</head>
+<body>
+    <div class="wrapper">
+		<input id="product" type="hidden" th:value="${product.getProductCode()}">
+        <nav class="container-cst">
+			<div class="first-nav">
+				<ul class="first-nav__left">
+					<li class="first-nav__left__item"><a href="/" class="active">TRANG CHỦ</a></li>
+					<li class="first-nav__left__item category">
+						<a href="/products?category=AO">SẢN PHẨM</a>
+						<ul class="category__detail">
+							<li class="category__detail__item"><a href="/products?category=AO">Áo</a></li>
+							<li class="category__detail__item"><a href="/products?category=QUAN">Quần</a></li>
+							<li class="category__detail__item"><a href="/products?category=PHUKIEN">Phụ kiện</a></li>
+						</ul>
+					</li>
+					<li class="first-nav__left__item category">
+						<a href="/sales?type=flashsale">SALE</a>
+						<ul class="category__detail">
+							<li class="category__detail__item"><a href="/sales?type=flashsaleS">Flash sale</a></li>
+							<li class="category__detail__item"><a href="/sales?type=saleoffS">Sale off</a></li>
+							<li class="category__detail__item"><a href="/sales?type=flatratesaleS">Sale đồng giá</a></li>
+						</ul>
+					</li>
+					<li class="first-nav__left__item"><a href="/presentation">GIỚI THIỆU</a></li>
+				</ul>
+
+				<div class="first-nav-right">
+					<form action="/products" method="get">
+						<input type="text" name="product-detail-id" placeholder="Tìm sản phẩm theo tên hoặc mã sản phẩm...">
+						<button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+					</form>
+					<a th:if="${customer == null}" href="/login" class="login-btn">Đăng nhập</a>
+					<div th:if="${customer != null}" class="user">
+						<img src="" width="48" height="48" alt="Hình ảnh">
+						<span th:text="${customer.getFirstName() + ' ' + customer.getLastName()}"></span>
+						<i class="fa-solid fa-caret-down"></i>
+						<ul class="user-box">
+							<li class="category__detail__item"><a href="">Hồ sơ</a></li>
+							<li class="category__detail__item"><a href="">Đơn mua</a></li>
+							<li class="category__detail__item"><a href="/logout">Đăng xuất</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="last-nav">
+				<div class="logo">
+					<a href="/"><img src="/logo/logo.png" alt="Logo" width="160"></a>
+				</div>
+
+				<ul class="last-nav__right">
+					<li class="last-nav__right__item">
+						<a href="/products?category=AO">
+							<img src="/img/icons/shirt.png" alt="Áo" width="32">
+							<p class="last-nav__right__item__title">ÁO</p>
+						</a>
+					</li>
+					<li class="last-nav__right__item">
+						<a href="/products?category=QUAN">
+							<img src="/img/icons/jean.png" alt="Quần" width="32">
+							<p class="last-nav__right__item__title">QUẦN</p>
+						</a>
+					</li>
+					<li class="last-nav__right__item">
+						<a href="/products?category=PHUKIEN">
+							<img src="/img/icons/accessories.png" alt="Phụ kiện" width="32">
+							<p class="last-nav__right__item__title">PHỤ KIỆN</p>
+						</a>
+					</li>
+					<li class="last-nav__right__item">
+						<a href="/sales?type=flashsales">
+							<img src="/img/icons/sale.png" alt="Sale" width="32">
+							<p class="last-nav__right__item__title">SALE</p>
+						</a>
+					</li>
+					<li class="last-nav__right__item">
+						<a th:if="${customer != null}" th:href="@{/product-carts(customer-code=${customer.getCustomerCode()})}">
+							<img src="/img/icons/shopping-cart.png" alt="Giỏ hàng" width="32">
+							<p class="last-nav__right__item__title">GIỎ</p>
+						</a>
+						<a th:if="${customer == null}" href="/product-carts">
+							<img src="/img/icons/shopping-cart.png" alt="Giỏ hàng" width="32">
+							<p class="last-nav__right__item__title">GIỎ</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+        <div id="content" class="container-cst">
+            <div class="product-info">
+                <div class="product-image-section">
+					<img th:src="${mainHost + productDetailsWithColorNameDistinct[0].getImage()}" alt="Shop thời trang nam">
+					<div class="product-image-list">
+						<span class="arrow-left"><i class="fa-solid fa-angle-left"></i></span>
+						<span class="arrow-right"><i class="fa-solid fa-angle-right"></i></span>
+						<div class="product-image-container">
+							<th:block th:each="productDetail : ${productDetailsWithColorNameDistinct}">
+								<img th:src="${mainHost + productDetail.getImage()}" alt="Shop thời trang nam">
+							</th:block>
+						</div>
+					</div>
+				</div>
+
+				<div class="product-main-info">
+					<div class="first-part">
+						<div class="product-main-info__header">
+							<h3 th:text="${product.getProductName()}" class="product-name"></h3>
+							<div class="orther-main-info">
+								<a href="#product-rating">
+									<div class="orther-main-info__item">
+										<span th:text="${productRatingNumber}" class="rating-number"></span>
+										<div class="star-rating">
+											<div th:if="${productRatingNumber - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+											<div th:if="${productRatingNumber - 20 < 0 && productRatingNumber > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + productRatingNumber + '%, transparent 0%);'"></div>
+											<div th:if="${productRatingNumber - 20 < 0 && productRatingNumber <= 0}" class="star"></div>
+			
+											<div th:if="${productRatingNumber - 40 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+											<div th:if="${productRatingNumber - 40 < 0 && productRatingNumber - 20 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + productRatingNumber + '%, transparent 0%);'"></div>
+											<div th:if="${productRatingNumber - 40 < 0 && productRatingNumber - 20 <= 0}" class="star"></div>
+			
+											<div th:if="${productRatingNumber - 60 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+											<div th:if="${productRatingNumber - 60 < 0 && productRatingNumber - 60 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + productRatingNumber + '%, transparent 0%);'"></div>
+											<div th:if="${productRatingNumber - 60 < 0 && productRatingNumber - 60 <= 0}" class="star"></div>
+			
+											<div th:if="${productRatingNumber - 80 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+											<div th:if="${productRatingNumber - 80 < 0 && productRatingNumber - 80 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + productRatingNumber + '%, transparent 0%);'"></div>
+											<div th:if="${productRatingNumber - 80 < 0 && productRatingNumber - 80 <= 0}" class="star"></div>
+			
+											<div th:if="${productRatingNumber - 100 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+											<div th:if="${productRatingNumber - 100 < 0 && productRatingNumber - 100 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + productRatingNumber + '%, transparent 0%);'"></div>
+											<div th:if="${productRatingNumber - 100 < 0 && productRatingNumber - 100 <= 0}" class="star"></div>
+										</div>
+									</div>
+								</a>
+	
+								<a href="#product-rating">
+									<div class="orther-main-info__item">
+										<span th:text="${orderDetails.size()}" class="rating-quantity"></span>
+										<span>Đánh giá</span>
+									</div>
+								</a>
+	
+								<a>
+									<div class="orther-main-info__item">
+										<span th:text="${soldOutNumber}" class="sold-out"></span>
+										<span>Đã bán</span>
+									</div>
+								</a>
+							</div>
+							<div class="price-section">
+								<th:block th:if="${oldPrice != null}">
+									<span th:text="${'₫ ' + #numbers.formatDecimal(oldPrice, 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
+								</th:block>
+								<th:block th:if="${oldPrice == null}">
+									<span th:text="${'₫ ' + #numbers.formatDecimal(minOldPrice, 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
+									<span th:text="${' - ₫ ' + #numbers.formatDecimal(maxOldPrice, 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
+								</th:block>
+								
+								<th:block th:if="${newPrice != null}">
+									<span th:text="${'₫ ' + #numbers.formatDecimal(newPrice, 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
+								</th:block>
+								<th:block th:if="${newPrice == null}">
+									<span th:text="${'₫ ' + #numbers.formatDecimal(minNewPrice, 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
+									<span th:text="${' - ₫ ' + #numbers.formatDecimal(maxNewPrice, 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
+								</th:block>
+							</div>
+							<div th:text="${product.getDescription()}" class="description">
+								
+							</div>
+						</div>
+						
+						<div class="product-classfication">
+							<div class="size-section">
+								<div class="label">Phân loại size:</div>
+								<div class="size-list">
+									<th:block th:each="size : ${sizes}">
+										<div th:text="${size.getSizeName()}" class="size-item"></div>
+									</th:block>
+								</div>
+							</div>
+	
+							<div class="color-section">
+								<div class="label">Phân loại màu sắc:</div>
+								<div class="color-list">
+									<th:block th:each="color, iterStatus : ${colors}">
+										<div th:text="${color.getColorName()}" class="color-item" th:data-src-product-img="${mainHost + images[iterStatus.index]}"></div>
+									</th:block>
+								</div>
+							</div>
+	
+							<div class="product-quantity">
+								<div class="label">Số lượng</div>
+								<div th:classappend="${inventory == 0 ? 'disable' : ''}" class="quantity-modify">
+									<div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
+									<input type="text" name="quantity" value="1" min="1" th:max="${inventory}" required>
+									<div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
+								</div>
+								<div th:text="${inventory + ' sản phẩm có sẵn'}" class="show-product-quantity"></div>
+							</div>
+	
+							<!-- <div th:if="#fields.hasErrors('sizeCode')" th:errors="'sizeCode'" class="error-message"></div> -->
+						</div>
+					</div>
+
+					<div class="order-manipulation">
+						<a href=""><i class="fa-solid fa-cart-plus"></i>Thêm Vào Giỏ Hàng</a>
+						<a href="">Mua Ngay</a>
+					</div>
+				</div>
+            </div>
+
+            <div id="product-rating" class="product-rating">
+				<h5>ĐÁNH GIÁ SẢN PHẨM</h5>
+				<div class="overview">
+					<div class="rating-overview">
+						<div class="rating-overview__content">
+							<span th:text="${productRatingNumber}"></span> trên 5
+						</div>
+
+						<div class="star-rating">
+							<div th:if="${productRatingNumber - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+							<div th:if="${productRatingNumber - 20 < 0 && productRatingNumber > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + productRatingNumber + '%, transparent 0%);'"></div>
+							<div th:if="${productRatingNumber - 20 < 0 && productRatingNumber <= 0}" class="star"></div>
+
+							<div th:if="${productRatingNumber - 40 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+							<div th:if="${productRatingNumber - 40 < 0 && productRatingNumber - 20 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + productRatingNumber + '%, transparent 0%);'"></div>
+							<div th:if="${productRatingNumber - 40 < 0 && productRatingNumber - 20 <= 0}" class="star"></div>
+
+							<div th:if="${productRatingNumber - 60 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+							<div th:if="${productRatingNumber - 60 < 0 && productRatingNumber - 60 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + productRatingNumber + '%, transparent 0%);'"></div>
+							<div th:if="${productRatingNumber - 60 < 0 && productRatingNumber - 60 <= 0}" class="star"></div>
+
+							<div th:if="${productRatingNumber - 80 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+							<div th:if="${productRatingNumber - 80 < 0 && productRatingNumber - 80 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + productRatingNumber + '%, transparent 0%);'"></div>
+							<div th:if="${productRatingNumber - 80 < 0 && productRatingNumber - 80 <= 0}" class="star"></div>
+
+							<div th:if="${productRatingNumber - 100 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+							<div th:if="${productRatingNumber - 100 < 0 && productRatingNumber - 100 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + productRatingNumber + '%, transparent 0%);'"></div>
+							<div th:if="${productRatingNumber - 100 < 0 && productRatingNumber - 100 <= 0}" class="star"></div>
+						</div>
+					</div>
+
+					<ul class="overview-nav">
+						<li class="overview-nav-item"><a th:href="@{/products/{productCode}(productCode=${product.getProductCode()})}" class="active-rating">Tất cả</a></li>
+						<li class="overview-nav-item"><a th:href="@{/products/{productCode}(productCode=${product.getproductCode()})(star-rating=5)}">5 sao (<span th:text="${fiveStarRating}"></span>)</a></li>
+						<li class="overview-nav-item"><a th:href="@{/products/{productCode}(productCode=${product.getproductCode()})(star-rating=4)}">4 sao (<span th:text="${fourStarRating}"></span>)</a></li>
+						<li class="overview-nav-item"><a th:href="@{/products/{productCode}(productCode=${product.getproductCode()})(star-rating=3)}">3 sao (<span th:text="${threeStarRating}"></span>)</a></li>
+						<li class="overview-nav-item"><a th:href="@{/products/{productCode}(productCode=${product.getproductCode()})(star-rating=2)}">2 sao (<span th:text="${twoStarRating}"></span>)</a></li>
+						<li class="overview-nav-item"><a th:href="@{/products/{productCode}(productCode=${product.getproductCode()})(star-rating=1)}">1 sao (<span th:text="${oneStarRating}"></span>)</a></li>
+					</ul>
+				</div>
+				<div class="rating-content-section">
+					<th:block th:each="orderDetail : ${orderDetails}">
+						<div class="rating-content-item">
+							<div class="rating-content-item__header">
+								<img th:src="${mainHost + orderDetail.getOrder().getCustomer().getImage()}" alt="avatar">
+								<div class="right">
+									<div th:text="${orderDetail.getOrder().getCustomer().getFirstName() + ' ' + orderDetail.getOrder().getCustomer().getLastName()}" class="username"></div>
+									<div class="star-rating">
+										<div th:if="${orderDetail.getProductRating().getStarRating - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 20 < 0 && orderDetail.getProductRating().getStarRating() > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + orderDetail.getProductRating().getStarRating() + '%, transparent 0%);'"></div>
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 20 < 0 && orderDetail.getProductRating().getStarRating() <= 0}" class="star"></div>
+			
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 40 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 40 < 0 && orderDetail.getProductRating().getStarRating() - 20 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + orderDetail.getProductRating().getStarRating() + '%, transparent 0%);'"></div>
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 40 < 0 && orderDetail.getProductRating().getStarRating() - 20 <= 0}" class="star"></div>
+			
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 60 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 60 < 0 && orderDetail.getProductRating().getStarRating() - 60 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + orderDetail.getProductRating().getStarRating() + '%, transparent 0%);'"></div>
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 60 < 0 && orderDetail.getProductRating().getStarRating() - 60 <= 0}" class="star"></div>
+			
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 80 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 80 < 0 && orderDetail.getProductRating().getStarRating() - 80 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + orderDetail.getProductRating().getStarRating() + '%, transparent 0%);'"></div>
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 80 < 0 && orderDetail.getProductRating().getStarRating() - 80 <= 0}" class="star"></div>
+			
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 100 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 100 < 0 && orderDetail.getProductRating().getStarRating() - 100 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + orderDetail.getProductRating().getStarRating() + '%, transparent 0%);'"></div>
+										<div th:if="${orderDetail.getProductRating().getStarRating() - 100 < 0 && orderDetail.getProductRating().getStarRating() - 100 <= 0}" class="star"></div>
+									</div>
+									<div class="orther">
+										<span th:text="${orderDetail.getOrder().getCreationTime()}" class="creation-time"></span>
+										<span th:text="${'Phân loại hàng: ' + orderDetail.getProductDetail().getSize().getSizeName() + ',' + orderDetail.getProductDetail().getColor().getColorName()}" class="rating-classification"></span>
+									</div>
+								</div>
+							</div>
+							
+							<div th:text="${orderDetail.getProductRating().getContent()}" class="rating-content-item__body"></div>
+						</div>
+					</th:block>
+				</div>
+
+				<div th:with="ordersSize=${orderDetails.size()}" class="rating-footer">
+					<th:block
+						th:with="pageCount=${ordersSize % 6 == 0 ? ordersSize / 6 : ordersSize / 6 + 1}">
+						<th:block th:if="${ordersSize > 6}">
+							<ul id="pagination" class="pagination"
+								th:attr="current-page-number=${pageNumber+1}, page-count=${pageCount}">
+								<li id="pagination-previous" th:if="${ordersSize <= 6}"
+									class="page-number-item page-active"><a
+									th:href="@{/products/{productCode}(productCode=${product.getProductCode()})?product-rating?page-number=1}">1</a></li>
+								<li th:if="${ordersSize > 6}" id="pagination-previous"
+									class="page-number-item"><a><i
+										class="fa-solid fa-chevron-left"></i></a></li>
+								<a th:if="${pageNumber+1 >= 3}" th:text="..."></a>
+								<th:block
+									th:each="i : ${#numbers.sequence((pageNumber+1) % 2 != 0 ? (pageCount == pageNumber+1 ? pageCount-2 : pageNumber+1) : pageNumber, (pageNumber+1) % 2 != 0 ? (pageCount == pageNumber+1 ? pageCount : pageNumber+3) : pageNumber+2)}">
+									<li th:if="${i <= pageCount}"
+										th:classappend="${i == pageNumber+1 ? 'page-active' : ''}"
+										class="page-number-item"><a th:text="${i}"
+										th:href="@{/products/{productCode}(productCode=${product.getProductCode()})?product-rating(page-number=${i})}"></a></li>
+								</th:block>
+								<a
+									th:if="${((pageCount - (pageNumber + 1)) > 3) || (pageCount % 2 == 0 && pageCount > 3 && (pageCount - (pageNumber + 1)) <= 2)}"
+									th:text="..."></a>
+								<li th:if="${ordersSize > 6}" id="pagination-next"
+									class="page-number-item"><a><i
+										class="fa-solid fa-chevron-right"></i></a></li>
+							</ul>
+						</th:block>
+					</th:block>
+				</div>
+            </div>
+        </div>
+
+        <div id="footer" class="container-cst">
+			<div class="row">
+				<div class="col-6 col-sm-3 col-md-3 footer-group">
+					<h4>THÀNH VIÊN PHÁT TRIỂN DỰ ÁN</h4>
+					<ul class="footer-group__content">
+						<li class="footer-group__item">Nguyễn Minh Đạt</li>
+						<li class="footer-group__item">Đào Quốc Luận</li>
+					</ul>
+				</div>
+				<div class="col-6 col-sm-3 col-md-3 footer-group">
+					<h4>LIÊN HỆ</h4>
+					<ul class="footer-group__content">
+						<li class="footer-group__item">SĐT: <a href="tel:+0378450500">0378450500</a></li>
+						<li class="footer-group__item">Email: <a href="mailto:minhdat450500@gmail.com">minhdat450500@gmail.com</a></li>
+						<li class="footer-group__item">Facebook: <a href="https://www.facebook.com/profile.php?id=100081014870997" target="_blank">@fb/nguyenminhdat</a></li>
+						<li class="footer-group__item">Địa chỉ: Phường Linh Trung, Tp. Thủ Đức, Tp. Hồ Chí Minh</li>
+					</ul>
+				</div>
+				<div class="col-6 col-sm-3 col-md-3 footer-group">
+					<h4>THANH TOÁN</h4>
+					<ul class="footer-group__content pay">
+						<li class="footer-group__item"><img src="../static/img/bank-brand/vietcombank.webp" alt="Vietcombank" width="22"></li>
+						<li class="footer-group__item"><img src="../static/img/bank-brand/agribank.webp" alt="Agribank" width="22"></li>
+						<li class="footer-group__item"><img src="../static/img/bank-brand/paypal.png" alt="Paypal" width="22"></li>
+						<li class="footer-group__item"><img src="../static/img/bank-brand/momo.png" alt="Momo" width="22"></li>
+					</ul>
+				</div>
+				<div class="col-6 col-sm-3 col-md-3 footer-group">
+					<h4>ĐƠN VỊ VẬN CHUYỂN</h4>
+					<ul class="footer-group__content transfer-unit">
+						<li class="footer-group__item"><img src="../static/img/ship-brand/grabexpress.png" alt="Vietcombank" width="52" height="22"></li>
+						<li class="footer-group__item"><img src="../static/img/ship-brand/vietnampost.png" alt="Vietcombank" width="52" height="22"></li>
+						<li class="footer-group__item"><img src="../static/img/ship-brand/ghn.jfif" alt="Vietcombank" width="52" height="22"></li>
+						<li class="footer-group__item"><img src="../static/img/ship-brand/be.png" alt="Vietcombank" width="52" height="22"></li>
+						<li class="footer-group__item"><img src="../static/img/ship-brand/viettelpost.png" alt="Vietcombank" width="52" height="22"></li>
+					</ul>
+				</div>
+			</div>
+			<div class="copyright">
+				&copy;Copyright 2023 08 Group
+			</div>
+		</div>
+    </div>
+</body>
+</html>

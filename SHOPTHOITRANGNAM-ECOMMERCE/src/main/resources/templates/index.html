@@ -16,7 +16,7 @@
 		<nav class="container-cst">
 			<div class="first-nav">
 				<ul class="first-nav__left">
-					<li class="first-nav__left__item"><a href="" class="active">TRANG CHỦ</a></li>
+					<li class="first-nav__left__item"><a href="/" class="active">TRANG CHỦ</a></li>
 					<li class="first-nav__left__item category">
 						<a href="/products?category=AO">SẢN PHẨM</a>
 						<ul class="category__detail">
@@ -57,7 +57,7 @@
 
 			<div class="last-nav">
 				<div class="logo">
-					<img src="/logo/logo.png" alt="Logo" width="160">
+					<a href="/"><img src="/logo/logo.png" alt="Logo" width="160"></a>
 				</div>
 
 				<ul class="last-nav__right">
@@ -102,15 +102,15 @@
 		<div class="content container-cst">
 			<div class="slider">
 				<div id="slider__product" class="slider__product">
-					<a class="slider__product__link" th:href="${mainHost + '/products/2012'}"><img src="http://localhost:8080/img/products/8e293c74-bd19-4d92-a38d-d3b2e95cd6e4.jpg" alt="" class="slider__product__item"></a>
-					<a class="slider__product__link" th:href="${mainHost + '/products/2015'}"><img src="http://localhost:8080/img/products/3069b4fd-d92a-4d40-a2fc-3a23e7bb072c.jpg" alt="" class="slider__product__item"></a>
-					<a class="slider__product__link" th:href="${mainHost + '/products/2016'}"><img src="http://localhost:8080/img/products/82bb1583-9973-4c29-8806-820430078cb5.jpg" alt="" class="slider__product__item"></a>
-					<a class="slider__product__link" th:href="${mainHost + '/products/2017'}"><img src="http://localhost:8080/img/products/66b23095-e483-432b-9f37-a95114ebf7e7.jpg" alt="" class="slider__product__item"></a>
-					<a class="slider__product__link" th:href="${mainHost + '/products/3011'}"><img src="http://localhost:8080/img/products/51e3cb57-6d61-46d0-b629-96a7af7c96e3.jpg" alt="" class="slider__product__item"></a>
+					<a class="slider__product__link" href="/products/AO000001"><img th:src="${mainHost + '/img/products/8e293c74-bd19-4d92-a38d-d3b2e95cd6e4.jpg'}" alt="" class="slider__product__item"></a>
+					<a class="slider__product__link" href="/products/AO000002"><img th:src="${mainHost + '/img/products/3069b4fd-d92a-4d40-a2fc-3a23e7bb072c.jpg'}" alt="" class="slider__product__item"></a>
+					<a class="slider__product__link" href="/products/AO000003"><img th:src="${mainHost + '/img/products/82bb1583-9973-4c29-8806-820430078cb5.jpg'}" alt="" class="slider__product__item"></a>
+					<a class="slider__product__link" href="/products/AO000004"><img th:src="${mainHost + '/img/products/66b23095-e483-432b-9f37-a95114ebf7e7.jpg'}" alt="" class="slider__product__item"></a>
+					<a class="slider__product__link" href="/products/AO000006"><img th:src="${mainHost + '/img/products/51e3cb57-6d61-46d0-b629-96a7af7c96e3.jpg'}" alt="" class="slider__product__item"></a>
 				</div>
 			</div>
 
-			<!-- <div th:if="${flashSale != null}" class="product-section">
+			<div th:if="${flashSale != null}" class="product-section">
 				<div class="heading">
 					<div>
 						<h2>Flash Sale</h2>
@@ -118,125 +118,138 @@
 							<input type="hidden" name="time-down" th:value="${timeDown}">
 						</div>
 					</div>
-					<a class="view-more" href="/sales?type=flashsales">Xem thêm <i class="fa-solid fa-angles-right"></i></a>
+					<a class="view-more" href="/sales?type=flashSales">Xem thêm <i class="fa-solid fa-angles-right"></i></a>
 				</div>
-				<div th:each="productDetailInFlashSale, iterStatus : $(productDetailsInFlashSale)" class="product-list">
-					<div class="product-item">
-						<img th:src="@{productDetailInFlashSale.getImage()}" alt="" class="product-thumbnail">
-						<div class="product-body">
-							<h3 th:text="${productDetailInFlashSale.getProduct().getProductName()}" class="product-body__heading"></h3>
-							<div class="star-rating">
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 20 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlashSale[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 20 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 40 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 40 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 20 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlashSale[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 40 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 20 <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 60 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 60 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 60 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlashSale[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 60 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 60 <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 80 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 80 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 80 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlashSale[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 80 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 80 <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 100 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 100 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 100 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlashSale[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 100 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 100 <= 0}" class="star"></div>
+				<div class="product-list">
+					<th:block th:each="flashSaleDetail, iterStatus : ${flashSaleDetails}">
+						<div class="product-item">
+							<img th:src="${mainHost + flashSaleDetail.getProductDetail().getImage()}" alt="" class="product-thumbnail">
+							<div class="product-body">
+								<a th:href="${'/products/' + flashSaleDetail.getProductDetail().getProduct().getProductCode()}" style="text-decoration: none;color: inherit;"><h3 th:text="${flashSaleDetail.getProductDetail().getProduct().getProductName()}" class="product-body__heading"></h3></a>
+								<div class="star-rating">
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 20 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlashSale[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 20 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 40 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 40 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 20 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlashSale[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 40 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 20 <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 60 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 60 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 60 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlashSale[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 60 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 60 <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 80 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 80 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 80 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlashSale[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 80 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 80 <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 100 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 100 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 100 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlashSale[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInFlashSale[iterStatus.index] - 100 < 0 && ratingOfProductDetailInFlashSale[iterStatus.index] - 100 <= 0}" class="star"></div>
+								</div>
+								<div class="price">
+									<span th:text="${'₫ ' + #numbers.formatDecimal(oldPriceOfProductDetailInFlashSale[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
+									<span style="margin-left: 4px;" th:text="${'₫ ' + #numbers.formatDecimal(newPriceOfProductDetailInFlashSale[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
+								</div>
+								<a th:href="${'/user/product-carts?add=' + flashSaleDetail.getProductDetail().getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
 							</div>
-							<div class="price">
-								<span th:text="${newPriceOfProductDetailInFlashSale[iterStatus.index]}" class="new-price"></span>
-								(<span th:text="${oldPriceOfProductDetailInFlashSale[iterStatus.index]}" class="old-price"></span>)
-							</div>
-							<div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+							<span th:text="${'Giảm ' + flashSaleDetail.getFlashSalePercentage() + '%'}" class="sale-percent"></span>
 						</div>
-						<span th:text="${'Giảm ' + percentageOfProductDetailInFlashSale[iterStatus.index]}" class="sale-percent"></span>
-					</div>
+					</th:block>
 				</div>
 			</div>
+
 			<div th:if="${saleOff != null}" class="product-section">
 				<div class="heading">
-					<h2>Sale off</h2>
-					<a class="view-more" href="/sales?type=saleoffs">Xem thêm <i class="fa-solid fa-angles-right"></i></a>
-				</div>
-				<div th:each="productDetailInSaleOff, iterStatus : $(productDetailsInSaleOff)" class="product-list">
-					<div class="product-item">
-						<img th:src="@{productDetailInSaleOff.getImage()}" alt="" class="product-thumbnail">
-						<div class="product-body">
-							<h3 th:text="${productDetailInSaleOff.getProduct().getProductName()}" class="product-body__heading"></h3>
-							<div class="star-rating">
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 20 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInSaleOff[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 20 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 40 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 40 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 20 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInSaleOff[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 40 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 20 <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 60 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 60 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 60 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInSaleOff[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 60 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 60 <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 80 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 80 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 80 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInSaleOff[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 80 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 80 <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 100 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 100 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 100 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInSaleOff[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 100 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 100 <= 0}" class="star"></div>
-							</div>
-							<div class="price">
-								<span th:text="${newPriceOfProductDetailInSaleOff[iterStatus.index]}" class="new-price"></span>
-								(<span th:text="${oldPriceOfProductDetailInSaleOff[iterStatus.index]}" class="old-price"></span>)
-							</div>
-							<div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div>
-						</div>
-						<span th:text="${'Giảm ' + percentageOfProductDetailInSaleOff[iterStatus.index]}" class="sale-percent"></span>
+					<div>
+						<h2>Sale off</h2>
 					</div>
+					<a class="view-more" href="/sales?type=saleOffs">Xem thêm <i class="fa-solid fa-angles-right"></i></a>
+				</div>
+				<div class="product-list">
+					<th:block th:each="saleOffDetail, iterStatus : ${saleOffDetails}">
+						<div class="product-item">
+							<img th:src="${mainHost + saleOffDetail.getProductDetail().getImage()}" alt="" class="product-thumbnail">
+							<div class="product-body">
+								<a th:href="${'/products/' + saleOffDetail.getProductDetail().getProduct().getProductCode()}" style="text-decoration: none;color: inherit;"><h3 th:text="${saleOffDetail.getProductDetail().getProduct().getProductName()}" class="product-body__heading"></h3></a>
+								<div class="star-rating">
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 20 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInSaleOff[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 20 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 40 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 40 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 20 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInSaleOff[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 40 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 20 <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 60 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 60 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 60 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInSaleOff[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 60 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 60 <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 80 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 80 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 80 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInSaleOff[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 80 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 80 <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 100 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 100 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 100 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInSaleOff[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInSaleOff[iterStatus.index] - 100 < 0 && ratingOfProductDetailInSaleOff[iterStatus.index] - 100 <= 0}" class="star"></div>
+								</div>
+								<div class="price">
+									<span th:text="${'₫ ' + #numbers.formatDecimal(oldPriceOfProductDetailInSaleOff[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
+									<span style="margin-left: 4px;" th:text="${'₫ ' + #numbers.formatDecimal(newPriceOfProductDetailInSaleOff[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
+								</div>
+								<a th:href="${'/user/product-carts?add=' + saleOffDetail.getProductDetail().getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
+							</div>
+							<span th:text="${'Giảm ' + saleOffDetail.getSaleOffPercentage() + '%'}" class="sale-percent"></span>
+						</div>
+					</th:block>
 				</div>
 			</div>
-			<div th:if="${flatRateSale != null}" class="product-section">
+
+			<div th:if="${flatRateSales != null}" class="product-section">
 				<div class="heading">
-					<h2>Sale đồng giá</h2>
-					<a class="view-more" href="/sales?type=flatratesales">Xem thêm <i class="fa-solid fa-angles-right"></i></a>
-				</div>
-				<div th:each="productDetailInFlatRateSale, iterStatus : $(productDetailsInFlatRateSale)" class="product-list">
-					<div class="product-item">
-						<img th:src="@{productDetailInFlatRateSale.getImage()}" alt="" class="product-thumbnail">
-						<div class="product-body">
-							<h3 th:text="${productDetailInFlatRateSale.getProduct().getProductName()}" class="product-body__heading"></h3>
-							<div class="star-rating">
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 20 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlatRateSale[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 20 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 40 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 40 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 20 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlatRateSale[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 40 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 20 <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 60 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 60 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 60 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlatRateSale[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 60 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 60 <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 80 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 80 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 80 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlatRateSale[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 80 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 80 <= 0}" class="star"></div>
-
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 100 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 100 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 100 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlatRateSale[iterStatus.index] + '%, transparent 0%);'"></div>
-								<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 100 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 100 <= 0}" class="star"></div>
-							</div>
-							<div class="price">
-								<span th:text="${flatRateSale.getPrice()}" class="new-price"></span>
-								(<span th:text="${oldPriceOfProductDetailInFlatRateSale[iterStatus.index]}" class="old-price"></span>)
-							</div>
-							<div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div>
-						</div>
+					<div>
+						<h2>Sale đồng giá</h2>
 					</div>
+					<a class="view-more" href="/sales?type=flatRateSales">Xem thêm <i class="fa-solid fa-angles-right"></i></a>
 				</div>
-			</div> -->
+				<div class="product-list">
+					<th:block th:each="flatRateSaleDetail, iterStatus : ${flatRateSaleDetails}">
+						<div class="product-item">
+							<img th:src="${mainHost + flatRateSaleDetail.getProductDetail().getImage()}" alt="" class="product-thumbnail">
+							<div class="product-body">
+								<a th:href="${'/products/' + flatRateSaleDetail.getProductDetail().getProduct().getProductCode()}" style="text-decoration: none;color: inherit;"><h3 th:text="${flatRateSaleDetail.getProductDetail().getProduct().getProductName()}" class="product-body__heading"></h3></a>
+								<div class="star-rating">
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 20 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlatRateSale[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 20 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 40 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 40 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 20 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlatRateSale[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 40 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 20 <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 60 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 60 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 60 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlatRateSale[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 60 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 60 <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 80 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 80 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 80 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlatRateSale[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 80 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 80 <= 0}" class="star"></div>
+	
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 100 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 100 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 100 > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfProductDetailInFlatRateSale[iterStatus.index] + '%, transparent 0%);'"></div>
+									<div th:if="${ratingOfProductDetailInFlatRateSale[iterStatus.index] - 100 < 0 && ratingOfProductDetailInFlatRateSale[iterStatus.index] - 100 <= 0}" class="star"></div>
+								</div>
+								<div class="price">
+									<span th:text="${'₫ ' + #numbers.formatDecimal(oldPriceOfProductDetailInFlatRateSale[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
+									<span style="margin-left: 4px;" th:text="${'₫ ' + #numbers.formatDecimal(newPriceOfProductDetailInFlatRateSale[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
+								</div>
+								<a th:href="${'/user/product-carts?add=' + flatRateSaleDetail.getProductDetail().getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
+							</div>
+						</div>
+					</th:block>
+				</div>
+			</div>
+
 			<div th:if="${clothes != null}" class="product-section">
 				<div class="heading">
 					<h2>Áo</h2>
@@ -245,9 +258,9 @@
 				<div class="product-list">
 					<th:block th:each="clothing, iterStatus : ${clothes}">
 						<div class="product-item">
-							<img th:src="${ma + clothing.getImage()}" alt="" class="product-thumbnail">
+							<img th:src="${mainHost + clothing.getImage()}" alt="" class="product-thumbnail">
 							<div class="product-body">
-								<h3 th:text="${clothing.getProduct().getProductName()}" class="product-body__heading"></h3>
+								<a th:href="${'/products/' + clothing.getProduct().getProductCode()}" class="product-body__heading" style="text-decoration: none;color: inherit;"><h3 th:text="${clothing.getProduct().getProductName()}" class="product-body__heading"></h3></a>
 								<div class="star-rating">
 									<div th:if="${ratingOfClothes[iterStatus.index] - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
 									<div th:if="${ratingOfClothes[iterStatus.index] - 20 < 0 && ratingOfClothes[iterStatus.index] > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfClothes[iterStatus.index] + '%, transparent 0%);'"></div>
@@ -276,7 +289,7 @@
 								<div th:if="${percentageOfClothes[iterStatus.index] == null}" class="price">
 									<span th:text="${'&#x20AB; ' + #numbers.formatDecimal(oldPriceOfClothes[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
 								</div>
-								<div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+								<a th:href="${'/user/product-carts?add=' + clothing.getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
 							</div>
 							<span th:if="${percentageOfClothes[iterStatus.index] != null}" th:text="${'Giảm ' + percentageOfClothes[iterStatus.index]}" class="sale-percent"></span>
 						</div>
@@ -291,9 +304,9 @@
 				<div class="product-list">
 					<th:block th:each="pant, iterStatus : ${pants}">
 						<div class="product-item">
-							<img th:src="${ma + pant.getImage()}" alt="" class="product-thumbnail">
+							<img th:src="${mainHost + pant.getImage()}" alt="" class="product-thumbnail">
 							<div class="product-body">
-								<h3 th:text="${pant.getProduct().getProductName()}" class="product-body__heading"></h3>
+								<a th:href="${'/products/' + pant.getProduct().getProductCode()}" style="text-decoration: none;color: inherit;"><h3 th:text="${pant.getProduct().getProductName()}" class="product-body__heading"></h3></a>
 								<div class="star-rating">
 									<div th:if="${ratingOfPants[iterStatus.index] - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
 									<div th:if="${ratingOfPants[iterStatus.index] - 20 < 0 && ratingOfPants[iterStatus.index] > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfPants[iterStatus.index] + '%, transparent 0%);'"></div>
@@ -322,7 +335,7 @@
 								<div th:if="${percentageOfPants[iterStatus.index] == null}" class="price">
 									<span th:text="${'&#x20AB; ' + #numbers.formatDecimal(oldPriceOfPants[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
 								</div>
-								<div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+								<a th:href="${'/user/product-carts?add=' + pant.getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
 							</div>
 							<span th:if="${percentageOfPants[iterStatus.index] != null}" th:text="${'Giảm ' + percentageOfPants[iterStatus.index]}" class="sale-percent"></span>
 						</div>
@@ -337,9 +350,9 @@
 				<div class="product-list">
 					<th:block th:each="accessory, iterStatus : ${accessories}">
 						<div class="product-item">
-							<img th:src="${ma + accessory.getImage()}" alt="" class="product-thumbnail">
+							<img th:src="${mainHost + accessory.getImage()}" alt="" class="product-thumbnail">
 							<div class="product-body">
-								<h3 th:text="${accessory.getProduct().getProductName()}" class="product-body__heading"></h3>
+								<a th:href="${'/products/' + accessory.getProduct().getProductCode()}" style="text-decoration: none;color: inherit;"><h3 th:text="${accessory.getProduct().getProductName()}" class="product-body__heading"></h3></a>
 								<div class="star-rating">
 									<div th:if="${ratingOfAccessories[iterStatus.index] - 20 >= 0}" class="star" style="background-image: linear-gradient(to right, #ffe600e5 100%, transparent 0%);"></div>
 									<div th:if="${ratingOfAccessories[iterStatus.index] - 20 < 0 && ratingOfAccessories[iterStatus.index] > 0}" class="star" th:attr="style='background-image: linear-gradient(to right, #ffe600e5 ' + ratingOfAccessories[iterStatus.index] + '%, transparent 0%);'"></div>
@@ -368,7 +381,7 @@
 								<div th:if="${percentageOfAccessories[iterStatus.index] == null}" class="price">
 									<span th:text="${'&#x20AB; ' + #numbers.formatDecimal(oldPriceOfAccessories[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
 								</div>
-								<div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+								<a th:href="${'/user/product-carts?add=' + accessory.getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
 							</div>
 							<span th:if="${percentageOfAccessories[iterStatus.index] != null}" th:text="${'Giảm ' + percentageOfAccessories[iterStatus.index]}" class="sale-percent"></span>
 						</div>

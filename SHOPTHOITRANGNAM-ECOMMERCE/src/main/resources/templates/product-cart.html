@@ -3,81 +3,95 @@
 <head>
     <meta charset="UTF-8">
 	<title>Shop thời trang nam - Giỏ hàng</title>
-	<link rel="stylesheet" href="../static/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css">
-	<script src="../static/dist/node_modules/jquery/dist/jquery.min.js"></script>
+	<link rel="stylesheet" th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
+	<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
 	<script src="https://kit.fontawesome.com/66c7a31f42.js" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="../static/css/header-customer.css">
-	<link rel="stylesheet" href="../static/css/footer-customer.css">
-    <link rel="stylesheet" href="../static/css/product-cart.css">
-    <script src="../static/js/product-cart.js"></script>
+	<link rel="stylesheet" th:href="@{/css/header-customer.css}">
+	<link rel="stylesheet" th:href="@{/css/footer-customer.css}">
+    <link rel="stylesheet" th:href="@{/css/product-cart.css}">
+    <script th:src="@{/js/product-cart.js}"></script>
 </head>
 <body>
     <div class="wrapper">
         <nav class="container-cst">
 			<div class="first-nav">
 				<ul class="first-nav__left">
-					<li class="first-nav__left__item"><a href="" class="active">TRANG CHỦ</a></li>
+					<li class="first-nav__left__item"><a href="/" class="active">TRANG CHỦ</a></li>
 					<li class="first-nav__left__item category">
-						<a href="">SẢN PHẨM</a>
+						<a href="/products?category=AO">SẢN PHẨM</a>
 						<ul class="category__detail">
-							<li class="category__detail__item"><a href="">Áo</a></li>
-							<li class="category__detail__item"><a href="">Quần</a></li>
-							<li class="category__detail__item"><a href="">Phụ kiện</a></li>
+							<li class="category__detail__item"><a href="/products?category=AO">Áo</a></li>
+							<li class="category__detail__item"><a href="/products?category=QUAN">Quần</a></li>
+							<li class="category__detail__item"><a href="/products?category=PHUKIEN">Phụ kiện</a></li>
 						</ul>
 					</li>
 					<li class="first-nav__left__item category">
-						<a href="">SALE</a>
+						<a href="/sales?type=flashsale">SALE</a>
 						<ul class="category__detail">
-							<li class="category__detail__item"><a href="">Flash sale</a></li>
-							<li class="category__detail__item"><a href="">Sale off</a></li>
-							<li class="category__detail__item"><a href="">Sale đồng giá</a></li>
+							<li class="category__detail__item"><a href="/sales?type=flashsaleS">Flash sale</a></li>
+							<li class="category__detail__item"><a href="/sales?type=saleoffS">Sale off</a></li>
+							<li class="category__detail__item"><a href="/sales?type=flatratesaleS">Sale đồng giá</a></li>
 						</ul>
 					</li>
-					<li class="first-nav__left__item"><a href="">GIỚI THIỆU</a></li>
+					<li class="first-nav__left__item"><a href="/presentation">GIỚI THIỆU</a></li>
 				</ul>
 
 				<div class="first-nav-right">
-					<form action="" method="get">
-						<input type="text" name="" id="" placeholder="Tìm sản phẩm theo tên hoặc mã sản phẩm...">
+					<form action="/products" method="get">
+						<input type="text" name="product-detail-id" placeholder="Tìm sản phẩm theo tên hoặc mã sản phẩm...">
 						<button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 					</form>
-					<div class="login-btn">Đăng nhập</div>
+					<a th:if="${customer == null}" href="/login" class="login-btn">Đăng nhập</a>
+					<div th:if="${customer != null}" class="user">
+						<img src="" width="48" height="48" alt="Hình ảnh">
+						<span th:text="${customer.getFirstName() + ' ' + customer.getLastName()}"></span>
+						<i class="fa-solid fa-caret-down"></i>
+						<ul class="user-box">
+							<li class="category__detail__item"><a href="">Hồ sơ</a></li>
+							<li class="category__detail__item"><a href="">Đơn mua</a></li>
+							<li class="category__detail__item"><a href="/logout">Đăng xuất</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 
 			<div class="last-nav">
 				<div class="logo">
-					<img src="../static/logo/logo.jpg" alt="Logo" width="160">
+					<a href="/"><img src="/logo/logo.png" alt="Logo" width="160"></a>
 				</div>
 
 				<ul class="last-nav__right">
 					<li class="last-nav__right__item">
-						<a href="">
-							<img src="../static/img/icons/shirt.png" alt="Áo" width="32">
+						<a href="/products?category=AO">
+							<img src="/img/icons/shirt.png" alt="Áo" width="32">
 							<p class="last-nav__right__item__title">ÁO</p>
 						</a>
 					</li>
 					<li class="last-nav__right__item">
-						<a href="">
-							<img src="../static/img/icons/jean.png" alt="Quần" width="32">
+						<a href="/products?category=QUAN">
+							<img src="/img/icons/jean.png" alt="Quần" width="32">
 							<p class="last-nav__right__item__title">QUẦN</p>
 						</a>
 					</li>
 					<li class="last-nav__right__item">
-						<a href="">
-							<img src="../static/img/icons/accessories.png" alt="Phụ kiện" width="32">
+						<a href="/products?category=PHUKIEN">
+							<img src="/img/icons/accessories.png" alt="Phụ kiện" width="32">
 							<p class="last-nav__right__item__title">PHỤ KIỆN</p>
 						</a>
 					</li>
 					<li class="last-nav__right__item">
-						<a href="">
-							<img src="../static/img/icons/sale.png" alt="Sale" width="32">
+						<a href="/sales?type=flashsales">
+							<img src="/img/icons/sale.png" alt="Sale" width="32">
 							<p class="last-nav__right__item__title">SALE</p>
 						</a>
 					</li>
 					<li class="last-nav__right__item">
-						<a href="">
-							<img src="../static/img/icons/shopping-cart.png" alt="Giỏ hàng" width="32">
+						<a th:if="${customer != null}" th:href="@{/product-carts(customer-code=${customer.getCustomerCode()})}">
+							<img src="/img/icons/shopping-cart.png" alt="Giỏ hàng" width="32">
+							<p class="last-nav__right__item__title">GIỎ</p>
+						</a>
+						<a th:if="${customer == null}" href="/product-carts">
+							<img src="/img/icons/shopping-cart.png" alt="Giỏ hàng" width="32">
 							<p class="last-nav__right__item__title">GIỎ</p>
 						</a>
 					</li>
@@ -103,462 +117,64 @@
                         <th>Thao tác</th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="select">
-                                    <i class="fa-solid fa-check"></i>
-                                </label>
-                            </td>
-                            <td class="product-detail">
-                                <img src="../static/img/products/img1.jfif" alt="Quần jean" width="80">
-                                <h3>Quần jean hollet</h3>
-                                <div class="classification">
-                                    <div class="classification-select">
-                                        Phân loại:<i class="fa-solid fa-angle-down"></i>
-                                        <div class="select-box">
-                                            <div class="select-content">
-                                                <p>Size</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item style-active">S</li>
-                                                    <li class="element-item">M</li>
-                                                    <li class="element-item">L</li>
-                                                    <li class="element-item">XL</li>
-                                                </ul>
-                                            </div>
-                                            <div class="select-content">
-                                                <p>Màu sắc</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item">Trắng</li>
-                                                    <li class="element-item style-active">Đen</li>
-                                                    <li class="element-item">Xám</li>
-                                                </ul>
-                                            </div>
-                                            <div class="button-section">
-                                                <button class="back-btn">Trở lại</button>
-                                                <button class="apply-btn">Xác nhận</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>Đen, S</div>
-                                </div>
-                            </td>
-                            <td class="price">
-                                <span class="old-price">500.000&#8363</span>
-                                <span class="new-price">300.000&#8363</span>
-                            </td>
-                            <td>
-                                <div class="quantity-modify">
-                                    <div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
-									<input type="text" name="quantity" value="1" max="10">
-                                    <div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
-                                </div>
-                            </td>
-                            <td><div class="total-price">300.000&#8363</div></td>
-                            <td>
-                                <button class="manipulation-btn update-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="manipulation-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button>
-                            </td>
-                        </tr>
-						<tr>
-                            <td>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="select">
-                                    <i class="fa-solid fa-check"></i>
-                                </label>
-                            </td>
-                            <td class="product-detail">
-                                <img src="../static/img/products/img1.jfif" alt="Quần jean" width="80">
-                                <h3>Quần jean hollet</h3>
-                                <div class="classification">
-                                    <div class="classification-select">
-                                        Phân loại:<i class="fa-solid fa-angle-down"></i>
-                                        <div class="select-box">
-                                            <div class="select-content">
-                                                <p>Size</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item style-active">S</li>
-                                                    <li class="element-item">M</li>
-                                                    <li class="element-item">L</li>
-                                                    <li class="element-item">XL</li>
-                                                </ul>
-                                            </div>
-                                            <div class="select-content">
-                                                <p>Màu sắc</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item">Trắng</li>
-                                                    <li class="element-item style-active">Đen</li>
-                                                    <li class="element-item">Xám</li>
-                                                </ul>
-                                            </div>
-                                            <div class="button-section">
-                                                <button class="back-btn">Trở lại</button>
-                                                <button class="apply-btn">Xác nhận</button>
-                                            </div>
-										</div>
-										<div>Đen, S</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="price">
-                                <span class="old-price">500.000&#8363</span>
-                                <span class="new-price">300.000&#8363</span>
-                            </td>
-                            <td>
-                                <div class="quantity-modify">
-                                    <div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
-									<input type="text" name="quantity" value="1" max="10">
-                                    <div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
-                                </div>
-                            </td>
-                            <td><div class="total-price">300.000&#8363</div></td>
-                            <td>
-                                <button class="manipulation-btn update-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="manipulation-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button>
-                            </td>
-                        </tr>
-						<tr>
-                            <td>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="select">
-                                    <i class="fa-solid fa-check"></i>
-                                </label>
-                            </td>
-                            <td class="product-detail">
-                                <img src="../static/img/products/img1.jfif" alt="Quần jean" width="80">
-                                <h3>Quần jean hollet</h3>
-                                <div class="classification">
-                                    <div class="classification-select">
-                                        Phân loại:<i class="fa-solid fa-angle-down"></i>
-                                        <div class="select-box">
-                                            <div class="select-content">
-                                                <p>Size</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item style-active">S</li>
-                                                    <li class="element-item">M</li>
-                                                    <li class="element-item">L</li>
-                                                    <li class="element-item">XL</li>
-                                                </ul>
-                                            </div>
-                                            <div class="select-content">
-                                                <p>Màu sắc</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item">Trắng</li>
-                                                    <li class="element-item style-active">Đen</li>
-                                                    <li class="element-item">Xám</li>
-                                                </ul>
-                                            </div>
-                                            <div class="button-section">
-                                                <button class="back-btn">Trở lại</button>
-                                                <button class="apply-btn">Xác nhận</button>
+                        <th:block th:each="shoppingCart, iterStatus : ${shoppingCarts}">
+                            <tr>
+                                <td>
+                                    <label class="checkbox">
+                                        <input type="checkbox" class="select">
+                                        <i class="fa-solid fa-check"></i>
+                                    </label>
+                                </td>
+                                <td class="product-detail">
+                                    <img th:src="${mainHost + shoppingCart.getProductDetail().getImage()}" alt="Quần jean" width="80">
+                                    <h3 th:text="${shoppingCart.getProductDetail().getProduct().getProductName()}"></h3>
+                                    <div class="classification">
+                                        <div class="classification-select">
+                                            Phân loại:<i class="fa-solid fa-angle-down"></i>
+                                            <div class="select-box">
+                                                <div class="select-content">
+                                                    <p>Size</p>
+                                                    <ul class="element-list">
+                                                        <th:block th:each="size : ${sizes}">
+                                                            <li th:text="${size.getSizeName()}" th:classappend="${size.getSizeCode().equals(shoppingCart.getProductDetail().getSize().getSizeCode()) ? 'style-active' : ''}" class="element-item"></li>
+                                                        </th:block>
+                                                    </ul>
+                                                </div>
+                                                <div class="select-content">
+                                                    <p>Màu sắc</p>
+                                                    <ul class="element-list">
+                                                        <th:block th:each="color : ${colors}">
+                                                            <li th:text="${color.getColorName()}" th:classappend="${color.getColorCode().equals(shoppingCart.getProductDetail().getColor().getColorCode()) ? 'style-active' : ''}" class="element-item"></li>
+                                                        </th:block>
+                                                    </ul>
+                                                </div>
+                                                <div class="button-section">
+                                                    <button class="back-btn">Trở lại</button>
+                                                    <button class="apply-btn">Xác nhận</button>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div th:text="${shoppingCart.getProductDetail().getSize().getSizeName() + ', ' + shoppingCart.getProductDetail().getColor().getColorName()}"></div>
                                     </div>
-                                    <div>Đen, S</div>
-                                </div>
-                            </td>
-                            <td class="price">
-                                <span class="old-price">500.000&#8363</span>
-                                <span class="new-price">300.000&#8363</span>
-                            </td>
-                            <td>
-                                <div class="quantity-modify">
-                                    <div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
-									<input type="text" name="quantity" value="1" max="10">
-                                    <div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
-                                </div>
-                            </td>
-                            <td><div class="total-price">300.000&#8363</div></td>
-                            <td>
-                                <button class="manipulation-btn update-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="manipulation-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button>
-                            </td>
-                        </tr>
-						<tr>
-                            <td>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="select">
-                                    <i class="fa-solid fa-check"></i>
-                                </label>
-                            </td>
-                            <td class="product-detail">
-                                <img src="../static/img/products/img1.jfif" alt="Quần jean" width="80">
-                                <h3>Quần jean hollet</h3>
-                                <div class="classification">
-                                    <div class="classification-select">
-                                        Phân loại:<i class="fa-solid fa-angle-down"></i>
-                                        <div class="select-box">
-                                            <div class="select-content">
-                                                <p>Size</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item style-active">S</li>
-                                                    <li class="element-item">M</li>
-                                                    <li class="element-item">L</li>
-                                                    <li class="element-item">XL</li>
-                                                </ul>
-                                            </div>
-                                            <div class="select-content">
-                                                <p>Màu sắc</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item">Trắng</li>
-                                                    <li class="element-item style-active">Đen</li>
-                                                    <li class="element-item">Xám</li>
-                                                </ul>
-                                            </div>
-                                            <div class="button-section">
-                                                <button class="back-btn">Trở lại</button>
-                                                <button class="apply-btn">Xác nhận</button>
-                                            </div>
-                                        </div>
+                                </td>
+                                <td class="price">
+                                    <span th:text="${'₫ ' + #numbers.formatDecimal(oldPrices[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
+                                    <span th:text="${'₫ ' + #numbers.formatDecimal(newPrices[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
+                                </td>
+                                <td>
+                                    <div class="quantity-modify">
+                                        <div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
+                                        <input type="text" name="quantity" value="1" th:max="10">
+                                        <div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
                                     </div>
-                                    <div>Đen, S</div>
-                                </div>
-                            </td>
-                            <td class="price">
-                                <span class="old-price">500.000&#8363</span>
-                                <span class="new-price">300.000&#8363</span>
-                            </td>
-                            <td>
-                                <div class="quantity-modify">
-                                    <div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
-									<input type="text" name="quantity" value="1" max="10">
-                                    <div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
-                                </div>
-                            </td>
-                            <td><div class="total-price">300.000&#8363</div></td>
-                            <td>
-                                <button class="manipulation-btn update-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="manipulation-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button>
-                            </td>
-                        </tr>
-						<tr>
-                            <td>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="select">
-                                    <i class="fa-solid fa-check"></i>
-                                </label>
-                            </td>
-                            <td class="product-detail">
-                                <img src="../static/img/products/img1.jfif" alt="Quần jean" width="80">
-                                <h3>Quần jean hollet</h3>
-                                <div class="classification">
-                                    <div class="classification-select">
-                                        Phân loại:<i class="fa-solid fa-angle-down"></i>
-                                        <div class="select-box">
-                                            <div class="select-content">
-                                                <p>Size</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item style-active">S</li>
-                                                    <li class="element-item">M</li>
-                                                    <li class="element-item">L</li>
-                                                    <li class="element-item">XL</li>
-                                                </ul>
-                                            </div>
-                                            <div class="select-content">
-                                                <p>Màu sắc</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item">Trắng</li>
-                                                    <li class="element-item style-active">Đen</li>
-                                                    <li class="element-item">Xám</li>
-                                                </ul>
-                                            </div>
-                                            <div class="button-section">
-                                                <button class="back-btn">Trở lại</button>
-                                                <button class="apply-btn">Xác nhận</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>Đen, S</div>
-                                </div>
-                            </td>
-                            <td class="price">
-                                <span class="old-price">500.000&#8363</span>
-                                <span class="new-price">300.000&#8363</span>
-                            </td>
-                            <td>
-                                <div class="quantity-modify">
-                                    <div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
-									<input type="text" name="quantity" value="1" max="10">
-                                    <div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
-                                </div>
-                            </td>
-                            <td><div class="total-price">300.000&#8363</div></td>
-                            <td>
-                                <button class="manipulation-btn update-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="manipulation-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button>
-                            </td>
-                        </tr>
-						<tr>
-                            <td>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="select">
-                                    <i class="fa-solid fa-check"></i>
-                                </label>
-                            </td>
-                            <td class="product-detail">
-                                <img src="../static/img/products/img1.jfif" alt="Quần jean" width="80">
-                                <h3>Quần jean hollet</h3>
-                                <div class="classification">
-                                    <div class="classification-select">
-                                        Phân loại:<i class="fa-solid fa-angle-down"></i>
-                                        <div class="select-box">
-                                            <div class="select-content">
-                                                <p>Size</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item style-active">S</li>
-                                                    <li class="element-item">M</li>
-                                                    <li class="element-item">L</li>
-                                                    <li class="element-item">XL</li>
-                                                </ul>
-                                            </div>
-                                            <div class="select-content">
-                                                <p>Màu sắc</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item">Trắng</li>
-                                                    <li class="element-item style-active">Đen</li>
-                                                    <li class="element-item">Xám</li>
-                                                </ul>
-                                            </div>
-                                            <div class="button-section">
-                                                <button class="back-btn">Trở lại</button>
-                                                <button class="apply-btn">Xác nhận</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>Đen, S</div>
-                                </div>
-                            </td>
-                            <td class="price">
-                                <span class="old-price">500.000&#8363</span>
-                                <span class="new-price">300.000&#8363</span>
-                            </td>
-                            <td>
-                                <div class="quantity-modify">
-                                    <div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
-									<input type="text" name="quantity" value="1" max="10">
-                                    <div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
-                                </div>
-                            </td>
-                            <td><div class="total-price">300.000&#8363</div></td>
-                            <td>
-                                <button class="manipulation-btn update-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="manipulation-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button>
-                            </td>
-                        </tr>
-						<tr>
-                            <td>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="select">
-                                    <i class="fa-solid fa-check"></i>
-                                </label>
-                            </td>
-                            <td class="product-detail">
-                                <img src="../static/img/products/img1.jfif" alt="Quần jean" width="80">
-                                <h3>Quần jean hollet</h3>
-                                <div class="classification">
-                                    <div class="classification-select">
-                                        Phân loại:<i class="fa-solid fa-angle-down"></i>
-                                        <div class="select-box">
-                                            <div class="select-content">
-                                                <p>Size</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item style-active">S</li>
-                                                    <li class="element-item">M</li>
-                                                    <li class="element-item">L</li>
-                                                    <li class="element-item">XL</li>
-                                                </ul>
-                                            </div>
-                                            <div class="select-content">
-                                                <p>Màu sắc</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item">Trắng</li>
-                                                    <li class="element-item style-active">Đen</li>
-                                                    <li class="element-item">Xám</li>
-                                                </ul>
-                                            </div>
-                                            <div class="button-section">
-                                                <button class="back-btn">Trở lại</button>
-                                                <button class="apply-btn">Xác nhận</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>Đen, S</div>
-                                </div>
-                            </td>
-                            <td class="price">
-                                <span class="old-price">500.000&#8363</span>
-                                <span class="new-price">300.000&#8363</span>
-                            </td>
-                            <td>
-                                <div class="quantity-modify">
-                                    <div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
-									<input type="text" name="quantity" value="1" max="10">
-                                    <div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
-                                </div>
-                            </td>
-                            <td><div class="total-price">300.000&#8363</div></td>
-                            <td>
-                                <button class="manipulation-btn update-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="manipulation-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button>
-                            </td>
-                        </tr>
-						<tr>
-                            <td>
-                                <label class="checkbox">
-                                    <input type="checkbox" class="select">
-                                    <i class="fa-solid fa-check"></i>
-                                </label>
-                            </td>
-                            <td class="product-detail">
-                                <img src="../static/img/products/img1.jfif" alt="Quần jean" width="80">
-                                <h3>Quần jean hollet</h3>
-                                <div class="classification">
-                                    <div class="classification-select">
-                                        Phân loại:<i class="fa-solid fa-angle-down"></i>
-                                        <div class="select-box">
-                                            <div class="select-content">
-                                                <p>Size</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item style-active">S</li>
-                                                    <li class="element-item">M</li>
-                                                    <li class="element-item">L</li>
-                                                    <li class="element-item">XL</li>
-                                                </ul>
-                                            </div>
-                                            <div class="select-content">
-                                                <p>Màu sắc</p>
-                                                <ul class="element-list">
-                                                    <li class="element-item">Trắng</li>
-                                                    <li class="element-item style-active">Đen</li>
-                                                    <li class="element-item">Xám</li>
-                                                </ul>
-                                            </div>
-                                            <div class="button-section">
-                                                <button class="back-btn">Trở lại</button>
-                                                <button class="apply-btn">Xác nhận</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>Đen, S</div>
-                                </div>
-                            </td>
-                            <td class="price">
-                                <span class="old-price">500.000&#8363</span>
-                                <span class="new-price">300.000&#8363</span>
-                            </td>
-                            <td>
-                                <div class="quantity-modify">
-                                    <div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
-									<input type="text" name="quantity" value="1" max="10">
-                                    <div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
-                                </div>
-                            </td>
-                            <td><div class="total-price">300.000&#8363</div></td>
-                            <td>
-                                <button class="manipulation-btn update-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="manipulation-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button>
-                            </td>
-                        </tr>
+                                </td>
+                                <td><div th:text="${'₫ ' + #numbers.formatDecimal(totalPrices[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="total-price"></div></td>
+                                <td>
+                                    <a th:href="${'/user/product-carts?update&product-detail-id=' + shoppingCart.getProductDetail().getProductDetailId()}" style="text-decoration: none; color: inherit;"><button class="manipulation-btn update-btn"><i class="fa-solid fa-pen-to-square"></i></button></a>
+                                    <a th:href="${'/user/product-carts?update&product-detail-id=' + shoppingCart.getProductDetail().getProductDetailId()}" style="text-decoration: none; color: inherit;"><button class="manipulation-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button></a>
+                                </td>
+                            </tr>
+                        </th:block>
                     </tbody>
                 </table>
                 <div class="common-manipulation-section">

@@ -29,10 +29,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/js/**", "/css/**", "/img/**", "/dist/**", "/logo/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/", "/products/**").permitAll()
+                                .requestMatchers("/js/**", "/css/**", "/img/**", "/dist/**", "/logo/**", "/orthers/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/", "/products/**", "/sales/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/forgot-password/**", "/reset-password/**").permitAll()
-                                .requestMatchers("/customer/**").hasAuthority(Role.CUSTOMER.getCode())
+                                .requestMatchers("/user/**").hasAuthority(Role.CUSTOMER.getCode())
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->

@@ -4,25 +4,35 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ptithcm.shopthoitrangnam.controller.ProductController.SellingPriceComparator;
 import com.ptithcm.shopthoitrangnam.entity.Customer;
 import com.ptithcm.shopthoitrangnam.entity.FlashSale;
+import com.ptithcm.shopthoitrangnam.entity.FlashSaleDetail;
 import com.ptithcm.shopthoitrangnam.entity.FlatRateSale;
+import com.ptithcm.shopthoitrangnam.entity.FlatRateSaleDetail;
 import com.ptithcm.shopthoitrangnam.entity.OrderDetail;
 import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
 import com.ptithcm.shopthoitrangnam.entity.SaleOff;
+import com.ptithcm.shopthoitrangnam.entity.SaleOffDetail;
 import com.ptithcm.shopthoitrangnam.entity.SellingPrice;
 import com.ptithcm.shopthoitrangnam.service.AccountService;
 import com.ptithcm.shopthoitrangnam.service.CustomerService;
@@ -61,95 +71,76 @@ public class CommonController {
 	@GetMapping(value = "/")
 	public String index(Model model) {
 		model.addAttribute("mainHost", mainHost);
+		
 		Date now = new Date();
-//		
-//		Optional<FlashSale> flashSale = flashSaleService.findAll().stream().filter(flashSale_ -> now.getTime() >= flashSale_.getStartTime().getTime() && now.getTime() <= flashSale_.getEndTime().getTime()).findFirst();
-//		model.addAttribute("flashSale", flashSale.get());
-//		List<ProductDetail> productDetailInFlashSale = null;
-//		List<Float> ratingOfProductDetailInFlashSale = new ArrayList<>();
-//		List<BigDecimal> newPriceOfProductDetailInFlashSale = new ArrayList<>();
-//		List<BigDecimal> oldPriceOfProductDetailInFlashSale = new ArrayList<>();
-//		List<Float> percentageOfProductDetailInFlashSale = new ArrayList<>();
-//		if (flashSale.isPresent()) {
-//			productDetailInFlashSale = flashSale.get().getFlashSaleDetails().stream().map(flashSaleDetail -> flashSaleDetail.getProductDetail()).toList();
-//			productDetailInFlashSale.forEach(productDetail -> {
-//				List<OrderDetail> orderDetails1 = orderDetailService.findByProductDetail(productDetail).stream().filter(orderDetail1_ -> orderDetail1_.getProductRating() != null).toList();
-//				if (orderDetails1 == null) {
-//					ratingOfProductDetailInFlashSale.add((float) 0);
-//				} else {
-//					int totalStars = orderDetails1.stream().mapToInt(orderDetail1_ -> orderDetail1_.getProductRating().getStarRating()).sum();
-//					ratingOfProductDetailInFlashSale.add((float) totalStars / (orderDetails1.size()*5));
-//				}
-//				
-//				BigDecimal oldPrice = productDetail.getSellingPrices().stream().filter(sellingPrice -> now.getTime() >= sellingPrice.getEffectiveTime().getTime()).sorted(Comparator.comparing(SellingPrice::getEffectiveTime).reversed()).findFirst().get().getPrice();
-//				oldPriceOfProductDetailInFlashSale.add(oldPrice);
-//				
-//				newPriceOfProductDetailInFlashSale.add(oldPrice.multiply(new BigDecimal(100 - flashSale.get().getFlashSaleDetails().stream().filter(flashSaleDetail -> flashSaleDetail.getProductDetail().getProductDetailId().equals(productDetail.getProductDetailId())).findFirst().get().getFlashSalePercentage())));
-//				
-//				percentageOfProductDetailInFlashSale.add(flashSale.get().getFlashSaleDetails().stream().filter(flashSaleDetail -> flashSaleDetail.getProductDetail().getProductDetailId().equals(productDetail.getProductDetailId())).findFirst().get().getFlashSalePercentage());
-//			});
-//		}
-//		model.addAttribute("productDetailInFlashSale", productDetailInFlashSale);
-//		model.addAttribute("ratingOfProductDetailInFlashSale", ratingOfProductDetailInFlashSale);
-//		model.addAttribute("newPriceOfProductDetailInFlashSale", newPriceOfProductDetailInFlashSale);
-//		model.addAttribute("newPriceOfProductDetailInFlashSale", newPriceOfProductDetailInFlashSale);
-//		model.addAttribute("percentageOfProductDetailInFlashSale", percentageOfProductDetailInFlashSale);
-//		
-//		Optional<SaleOff> saleOff = saleOffService.findAll().stream().filter(saleOff1 -> now.getTime() >= saleOff1.getStartTime().getTime() && now.getTime() <= saleOff1.getEndTime().getTime()).findFirst();
-//		model.addAttribute("saleOff", saleOff.get());
-//		List<ProductDetail> productDetailInSaleOff = null;
-//		List<Float> ratingOfProductDetailInSaleOff = new ArrayList<>();
-//		List<BigDecimal> newPriceOfProductDetailInSaleOff = new ArrayList<>();
-//		List<BigDecimal> oldPriceOfProductDetailInSaleOff = new ArrayList<>();
-//		List<Float> percentageOfProductDetailInSaleOff = new ArrayList<>();
-//		if (saleOff != null) {
-//			productDetailInSaleOff = saleOff.get().getSaleOffDetails().stream().map(saleOffDetail -> saleOffDetail.getProductDetail()).toList();
-//			productDetailInSaleOff.forEach(productDetail -> {
-//				List<OrderDetail> orderDetails1 = orderDetailService.findByProductDetail(productDetail).stream().filter(orderDetail1_ -> orderDetail1_.getProductRating() != null).toList();
-//				if (orderDetails1 == null) {
-//					ratingOfProductDetailInSaleOff.add((float) 0);
-//				} else {
-//					int totalStars = orderDetails1.stream().mapToInt(orderDetail1_ -> orderDetail1_.getProductRating().getStarRating()).sum();
-//					ratingOfProductDetailInSaleOff.add((float) totalStars / (orderDetails1.size()*5));
-//				}
-//				
-//				BigDecimal oldPrice = productDetail.getSellingPrices().stream().filter(sellingPrice -> now.getTime() >= sellingPrice.getEffectiveTime().getTime()).sorted(Comparator.comparing(SellingPrice::getEffectiveTime).reversed()).findFirst().get().getPrice();
-//				oldPriceOfProductDetailInSaleOff.add(oldPrice);
-//				
-//				newPriceOfProductDetailInSaleOff.add(oldPrice.multiply(new BigDecimal(100 - saleOff.get().getSaleOffDetails().stream().filter(saleOffDetail -> saleOffDetail.getProductDetail().getProductDetailId().equals(productDetail.getProductDetailId())).findFirst().get().getSaleOffPercentage())));
-//				
-//				percentageOfProductDetailInSaleOff.add(saleOff.get().getSaleOffDetails().stream().filter(saleOffDetail -> saleOffDetail.getProductDetail().getProductDetailId().equals(productDetail.getProductDetailId())).findFirst().get().getSaleOffPercentage());
-//			});
-//		}
-//		model.addAttribute("productDetailInSaleOff", productDetailInSaleOff);
-//		model.addAttribute("ratingOfProductDetailInSaleOff", ratingOfProductDetailInSaleOff);
-//		model.addAttribute("newPriceOfProductDetailInSaleOff", newPriceOfProductDetailInSaleOff);
-//		model.addAttribute("oldPriceOfProductDetailInSaleOff", oldPriceOfProductDetailInSaleOff);
-//		model.addAttribute("percentageOfProductDetailInSaleOff", percentageOfProductDetailInSaleOff);
-//		
-//		Optional<FlatRateSale> flatRateSale = flatRateSaleService.findAll().stream().filter(saleOff1 -> now.getTime() >= saleOff1.getStartTime().getTime() && now.getTime() <= saleOff1.getEndTime().getTime()).findFirst();
-//		model.addAttribute("flatRateSale", flatRateSale.get());
-//		List<ProductDetail> productDetailInFlatRateSale = null;
-//		List<Float> ratingOfProductDetailInFlatRateSale = new ArrayList<>();
-//		List<BigDecimal> oldPriceOfProductDetailInFlatRateSale = new ArrayList<>();
-//		if (flatRateSale.isPresent()) {
-//			productDetailInFlatRateSale = flatRateSale.get().getFlatRateSaleDetails().stream().map(flatRateSaleDetail -> flatRateSaleDetail.getProductDetail()).toList();
-//			productDetailInFlatRateSale.forEach(productDetail -> {
-//				List<OrderDetail> orderDetails1 = orderDetailService.findByProductDetail(productDetail).stream().filter(orderDetail1_ -> orderDetail1_.getProductRating() != null).toList();
-//				if (orderDetails1 == null) {
-//					ratingOfProductDetailInSaleOff.add((float) 0);
-//				} else {
-//					int totalStars = orderDetails1.stream().mapToInt(orderDetail1_ -> orderDetail1_.getProductRating().getStarRating()).sum();
-//					ratingOfProductDetailInFlatRateSale.add((float) totalStars / (orderDetails1.size()*5));
-//				}
-//				
-//				BigDecimal oldPrice = productDetail.getSellingPrices().stream().filter(sellingPrice -> now.getTime() >= sellingPrice.getEffectiveTime().getTime()).sorted(Comparator.comparing(SellingPrice::getEffectiveTime).reversed()).findFirst().get().getPrice();
-//				oldPriceOfProductDetailInFlatRateSale.add(oldPrice);
-//			});
-//		}
-//		model.addAttribute("productDetailInFlatRateSale", productDetailInFlatRateSale);
-//		model.addAttribute("ratingOfProductDetailInFlatRateSale", ratingOfProductDetailInFlatRateSale);
-//		model.addAttribute("oldPriceOfProductDetailInFlatRateSale", oldPriceOfProductDetailInFlatRateSale);
+		Optional<FlashSale> flashSale = flashSaleService.findAll().stream().filter(flashSale1 -> now.getTime() >= flashSale1.getStartTime().getTime() && now.getTime() <= flashSale1.getEndTime().getTime()).findFirst();
+		if (flashSale.isPresent()) {
+			model.addAttribute("flashSale", flashSale.get());
+			model.addAttribute("timeDown", (flashSale.get().getEndTime().getTime()-new Date().getTime()) / 1000);
+			
+			List<FlashSaleDetail> flashSaleDetails = flashSale.get().getFlashSaleDetails();
+			List<ProductDetail> productDetailInFlashSale = flashSaleDetails.stream().map(FlashSaleDetail::getProductDetail).toList();
+			List<Float> ratingOfProductDetailInFlashSale = productDetailInFlashSale.stream().map(productDetail -> ratingOfProduct(productDetail)).toList();
+			List<BigDecimal> oldPriceOfProductDetailInFlashSale = productDetailInFlashSale.stream().map(productDetail -> productDetail.getSellingPrices().stream().filter(sellingPrice -> sellingPrice.getEffectiveTime().getTime() <= now.getTime()).sorted(new SellingPriceComparator()).findFirst().get().getPrice()).toList();
+			List<BigDecimal> newPriceOfProductDetailInFlashSale = new ArrayList<>();
+			for (int i = 0; i < productDetailInFlashSale.size(); ++i) {
+				newPriceOfProductDetailInFlashSale.add(oldPriceOfProductDetailInFlashSale.get(i).multiply(new BigDecimal(100 - flashSaleDetails.get(i).getFlashSalePercentage())).divide(new BigDecimal(100)));
+			}
+			
+			model.addAttribute("flashSaleDetails", flashSaleDetails);
+			model.addAttribute("ratingOfProductDetailInFlashSale", ratingOfProductDetailInFlashSale);
+			model.addAttribute("oldPriceOfProductDetailInFlashSale", oldPriceOfProductDetailInFlashSale);
+			model.addAttribute("newPriceOfProductDetailInFlashSale", newPriceOfProductDetailInFlashSale);
+		} else {
+			model.addAttribute("flashSale", null);
+		}
+		
+		Optional<SaleOff> saleOff = saleOffService.findAll().stream().filter(saleOff1 -> now.getTime() >= saleOff1.getStartTime().getTime() && now.getTime() <= saleOff1.getEndTime().getTime()).findFirst();
+		if (saleOff.isPresent()) {
+			model.addAttribute("saleOff", saleOff.get());
+			
+			List<SaleOffDetail> saleOffDetails = saleOff.get().getSaleOffDetails();
+			List<ProductDetail> productDetailInSaleOff = saleOffDetails.stream().map(SaleOffDetail::getProductDetail).toList();
+			List<Float> ratingOfProductDetailInSaleOff = productDetailInSaleOff.stream().map(productDetail -> ratingOfProduct(productDetail)).toList();
+			List<BigDecimal> oldPriceOfProductDetailInSaleOff = productDetailInSaleOff.stream().map(productDetail -> productDetail.getSellingPrices().stream().filter(sellingPrice -> sellingPrice.getEffectiveTime().getTime() <= now.getTime()).sorted(new SellingPriceComparator()).findFirst().get().getPrice()).toList();
+			List<BigDecimal> newPriceOfProductDetailInSaleOff = new ArrayList<>();
+			for (int i = 0; i < productDetailInSaleOff.size(); ++i) {
+				newPriceOfProductDetailInSaleOff.add(oldPriceOfProductDetailInSaleOff.get(i).multiply(new BigDecimal(100 - saleOffDetails.get(i).getSaleOffPercentage())).divide(new BigDecimal(100)));
+			}
+			
+			model.addAttribute("saleOffDetails", saleOffDetails);
+			model.addAttribute("ratingOfProductDetailInSaleOff", ratingOfProductDetailInSaleOff);
+			model.addAttribute("oldPriceOfProductDetailInSaleOff", oldPriceOfProductDetailInSaleOff);
+			model.addAttribute("newPriceOfProductDetailInSaleOff", newPriceOfProductDetailInSaleOff);
+		} else {
+			model.addAttribute("saleOff", null);
+		}
+		
+		List<FlatRateSale> flatRateSales = flatRateSaleService.findAll().stream().filter(flatRateSale1 -> now.getTime() >= flatRateSale1.getStartTime().getTime() && now.getTime() <= flatRateSale1.getEndTime().getTime()).toList();
+		if (!flatRateSales.isEmpty()) {
+			model.addAttribute("flatRateSales", flatRateSales);
+			
+			List<FlatRateSaleDetail> flatRateSaleDetails = new ArrayList<>();
+			for (FlatRateSale flatRateSale : flatRateSales) {
+				flatRateSaleDetails.addAll(flatRateSale.getFlatRateSaleDetails());
+			}
+			List<ProductDetail> productDetailInFlatRateSale = flatRateSaleDetails.stream().map(FlatRateSaleDetail::getProductDetail).toList();
+			List<Float> ratingOfProductDetailInFlatRateSale = productDetailInFlatRateSale.stream().map(productDetail -> ratingOfProduct(productDetail)).toList();
+			List<BigDecimal> oldPriceOfProductDetailInFlatRateSale = productDetailInFlatRateSale.stream().map(productDetail -> productDetail.getSellingPrices().stream().filter(sellingPrice -> sellingPrice.getEffectiveTime().getTime() <= now.getTime()).sorted(new SellingPriceComparator()).findFirst().get().getPrice()).toList();
+			List<BigDecimal> newPriceOfProductDetailInFlatRateSale = new ArrayList<>();
+			for (FlatRateSale flatRateSale : flatRateSales) {
+				flatRateSale.getFlatRateSaleDetails().forEach(flatRateSaleDetail -> {
+					newPriceOfProductDetailInFlatRateSale.add(flatRateSale.getPrice());
+				});
+			}
+			
+			model.addAttribute("flatRateSaleDetails", flatRateSaleDetails);
+			model.addAttribute("ratingOfProductDetailInFlatRateSale", ratingOfProductDetailInFlatRateSale);
+			model.addAttribute("oldPriceOfProductDetailInFlatRateSale", oldPriceOfProductDetailInFlatRateSale);
+			model.addAttribute("newPriceOfProductDetailInFlatRateSale", newPriceOfProductDetailInFlatRateSale);
+		} else {
+			model.addAttribute("flatRateSales", null);
+		}
 		
 		List<ProductDetail> clothes = productDetailService.findAll().stream().filter(productDetail -> productDetail.getProduct().getProductCategory().getProductCategoryCode().equals("AO")).toList();
 		model.addAttribute("clothes", clothes);
@@ -284,10 +275,28 @@ public class CommonController {
 		}
 	}
 	
-	@GetMapping(value = "/customer/home")
-	public String home_(@AuthenticationPrincipal UserDetails userDetail, Model model) {
-		Customer customer = customerService.findByAccount(accountService.findByUsername(userDetail.getUsername()).get()).get();
-		model.addAttribute("customer", customer);
-		return "index.html";
+	public Float ratingOfProduct(ProductDetail productDetail) {
+		List<OrderDetail> orderDetails = orderDetailService.findAll().stream().filter(orderDetail -> orderDetail.getProductDetail().getProduct().getProductCode().equals(productDetail.getProductDetailPK().getProductCode())).toList();
+		
+		float productRatingNumber = (float) 0.0;
+		if (orderDetails.size() > 0) {
+			productRatingNumber = orderDetails.stream().mapToInt(od -> od.getProductRating().getStarRating()).sum() / ((float) (orderDetails.size())*5);
+		}
+		
+		return productRatingNumber;
+	}
+	
+	public <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+	    Set<Object> seen = new HashSet<>();
+	    return t -> seen.add(keyExtractor.apply(t));
+	}
+	
+	public class SellingPriceComparator implements Comparator<SellingPrice> {
+		@Override
+		public int compare(SellingPrice o1, SellingPrice o2) {
+			Long ef1 = o1.getEffectiveTime().getTime();
+			Long ef2 = o2.getEffectiveTime().getTime();
+			return ef2.compareTo(ef1);
+		}
 	}
 }

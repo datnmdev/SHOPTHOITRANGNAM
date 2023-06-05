@@ -10,7 +10,7 @@ $(document).ready(function () {
     }, 3500)
 
     // Flash sale - time down
-    // timeDown($('input[name="time-down"]').val())
+    timeDown($('input[name="time-down"]').val())
 
     // Products
     setInterval(function() {
