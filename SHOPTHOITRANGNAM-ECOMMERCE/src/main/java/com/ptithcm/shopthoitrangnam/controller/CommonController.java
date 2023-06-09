@@ -22,8 +22,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ptithcm.shopthoitrangnam.controller.ProductController.SellingPriceComparator;
+import com.ptithcm.shopthoitrangnam.entity.Account;
 import com.ptithcm.shopthoitrangnam.entity.Customer;
 import com.ptithcm.shopthoitrangnam.entity.FlashSale;
 import com.ptithcm.shopthoitrangnam.entity.FlashSaleDetail;
@@ -69,8 +71,16 @@ public class CommonController {
 	private String mainHost;
 	
 	@GetMapping(value = "/")
-	public String index(Model model) {
+	public String index(Model model, RedirectAttributes redirectAttributes) {
 		model.addAttribute("mainHost", mainHost);
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Optional<Account> account = accountService.findByUsername(authentication.getName());
+		Customer customer = null;
+		if (account.isPresent()) {
+			customer = customerService.findByAccount(account.get()).get();
+		}
+		model.addAttribute("customer", customer);
 		
 		Date now = new Date();
 		Optional<FlashSale> flashSale = flashSaleService.findAll().stream().filter(flashSale1 -> now.getTime() >= flashSale1.getStartTime().getTime() && now.getTime() <= flashSale1.getEndTime().getTime()).findFirst();
@@ -226,6 +236,14 @@ public class CommonController {
 	
 	@GetMapping(value = "/products", params = "category")
 	public String productCategoryPage(Model model, @RequestParam("category") String category) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Optional<Account> account = accountService.findByUsername(authentication.getName());
+		Customer customer = null;
+		if (account.isPresent()) {
+			customer = customerService.findByAccount(account.get()).get();
+		}
+		model.addAttribute("customer", customer);
+		
 		Date now = new Date();
 		model.addAttribute("mainHost", mainHost);
 		List<ProductDetail> productDetails = productDetailService.findAll().stream().filter(productDetail -> productDetail.getProduct().getProductCategory().getProductCategoryCode().equals(category)).toList();

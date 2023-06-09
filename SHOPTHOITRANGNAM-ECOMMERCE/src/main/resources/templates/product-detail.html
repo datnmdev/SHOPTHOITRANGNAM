@@ -32,9 +32,9 @@
 					<li class="first-nav__left__item category">
 						<a href="/sales?type=flashsale">SALE</a>
 						<ul class="category__detail">
-							<li class="category__detail__item"><a href="/sales?type=flashsaleS">Flash sale</a></li>
-							<li class="category__detail__item"><a href="/sales?type=saleoffS">Sale off</a></li>
-							<li class="category__detail__item"><a href="/sales?type=flatratesaleS">Sale đồng giá</a></li>
+							<li class="category__detail__item"><a href="/sales?type=flashsales">Flash sale</a></li>
+							<li class="category__detail__item"><a href="/sales?type=saleoffs">Sale off</a></li>
+							<li class="category__detail__item"><a href="/sales?type=flatratesales">Sale đồng giá</a></li>
 						</ul>
 					</li>
 					<li class="first-nav__left__item"><a href="/presentation">GIỚI THIỆU</a></li>
@@ -47,7 +47,7 @@
 					</form>
 					<a th:if="${customer == null}" href="/login" class="login-btn">Đăng nhập</a>
 					<div th:if="${customer != null}" class="user">
-						<img src="" width="48" height="48" alt="Hình ảnh">
+						<img th:src="${customer.getImage()}" width="48" height="48" alt="Hình ảnh">
 						<span th:text="${customer.getFirstName() + ' ' + customer.getLastName()}"></span>
 						<i class="fa-solid fa-caret-down"></i>
 						<ul class="user-box">
@@ -90,11 +90,7 @@
 						</a>
 					</li>
 					<li class="last-nav__right__item">
-						<a th:if="${customer != null}" th:href="@{/product-carts(customer-code=${customer.getCustomerCode()})}">
-							<img src="/img/icons/shopping-cart.png" alt="Giỏ hàng" width="32">
-							<p class="last-nav__right__item__title">GIỎ</p>
-						</a>
-						<a th:if="${customer == null}" href="/product-carts">
+						<a href="/product-carts">
 							<img src="/img/icons/shopping-cart.png" alt="Giỏ hàng" width="32">
 							<p class="last-nav__right__item__title">GIỎ</p>
 						</a>

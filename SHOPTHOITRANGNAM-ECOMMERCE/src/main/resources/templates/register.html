@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop thời trang nam - Đăng ký</title>
+<script th:src="@{/dist/node_modules/jquery/dist/jquery.min.js}"></script>
+<link rel="stylesheet"
+	 th:href="@{/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css}"></link>
+<script src="https://kit.fontawesome.com/66c7a31f42.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/register.css}">
+<script th:src="@{/js/register.js}"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="container-cst">
+			<div class="section section-left">
+				<div class="shop-name">SHOP THỜI TRANG NAM</div>
+				<div class="page-decription typewriter">-- Bạn đang ở trang
+					dành cho người mua --</div>
+			</div>
+
+			<div class="section section-right">
+				<div class="box">
+					<div id="login-section">
+						<div class="box-heading">Đăng ký</div>
+						<form th:object="${userDto}" action="/register" method="post">
+                            <div class="form-control-group">
+                                <label for="username"> 
+                                    Tên đăng nhập
+                                    <input th:field="*{username}" id="username" type="text">
+                                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-message"></div>
+                                </label> 
+                                <label for="phone-number"> 
+                                    Số điện thoại
+                                    <input th:field="*{phoneNumber}" id="phone-number" type="text"> 
+                                    <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="error-message"></div>
+                                </label>
+                            </div>
+                            <div class="form-control-group">
+                                <label for="first-name"> 
+                                    Họ
+                                    <input th:field="*{firstName}" id="first-name" type="text">
+                                    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error-message"></div>
+                                </label> 
+                                <label for="last-name"> 
+                                    Tên
+                                    <input th:field="*{lastName}" id="last-name" type="text"> 
+                                    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error-message"></div>
+                                </label>
+                            </div>
+                            <div class="form-control-group">
+                                <label for="password"> 
+                                    Mật khẩu
+                                    <input th:field="*{password}" id="password" type="password">
+                                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></div>
+                                </label> 
+                                <label for="confirm-password"> 
+                                    Nhập lại mật khẩu
+                                    <input th:field="*{confirmPassword}" id="confirm-password" type="password"> 
+                                    <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="error-message"></div>
+                                </label>
+                            </div>
+                            <div class="form-control-group">
+                                <label for="email"> 
+                                    Địa chỉ email
+                                    <input th:field="*{email}" id="email" type="email">
+                                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></div>
+                                </label> 
+                                <label for="date-of-birth"> 
+                                    Ngày sinh
+                                    <input th:field="*{dateOfBirth}" id="date-of-birth" type="date"> 
+                                    <div th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}" class="error-message"></div>
+                                </label>
+                            </div>
+                            <div class="address">
+                                <div>Địa chỉ</div>
+                                <div class="address-container">
+                                    <select th:field="*{provinceCode}" id="province">
+                                    </select>
+                                    <select th:field="*{districtCode}" id="district">
+                                    </select>
+                                    <select th:field="*{wardCode}" id="ward">
+                                    </select>
+                                </div>
+                                <div th:if="${#fields.hasErrors('provinceCode')}" th:errors="*{provinceCode}" class="error-message"></div>
+                                <div th:if="${#fields.hasErrors('districtCode')}" th:errors="*{districtCode}" class="error-message"></div>
+                                <div th:if="${#fields.hasErrors('wardCode')}" th:errors="*{wardCode}" class="error-message"></div>
+                            </div>
+                            <div class="form-control-group">
+                                <label for="specific-address" style="margin-left: 0;"> 
+                                    Số nhà, tên đường
+                                    <input th:field="*{specificAddress}" id="specific-address" type="text">
+                                    <div th:if="${#fields.hasErrors('specificAddress')}" th:errors="*{specificAddress}" class="error-message"></div>
+                                </label> 
+                            </div>
+							<button type="submit" style="margin-top: 16px;">ĐĂNG KÝ</button>
+							<div class="forgot-password" style="margin-top: 16px;text-align: center;">
+								<a href="/login">Đã có tài khoản?</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

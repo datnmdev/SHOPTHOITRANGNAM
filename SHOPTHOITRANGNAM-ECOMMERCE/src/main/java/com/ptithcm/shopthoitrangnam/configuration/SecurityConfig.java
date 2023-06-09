@@ -30,9 +30,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/js/**", "/css/**", "/img/**", "/dist/**", "/logo/**", "/orthers/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/", "/products/**", "/sales/**").permitAll()
+                                .requestMatchers("/", "/register", "/products/**", "/sales/**", "/provinces/**", "/districts/**", "/wards/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/forgot-password/**", "/reset-password/**").permitAll()
-                                .requestMatchers("/user/**").hasAuthority(Role.CUSTOMER.getCode())
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->

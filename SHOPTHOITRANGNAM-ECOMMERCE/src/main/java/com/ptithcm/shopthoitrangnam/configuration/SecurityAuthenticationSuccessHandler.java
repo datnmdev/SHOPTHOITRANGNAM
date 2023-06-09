@@ -42,7 +42,7 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
 	            if (savedRequest != null) {
 	                targetUrl = savedRequest.getRedirectUrl();
 	            } else {
-	                targetUrl = "/user/home";
+	                targetUrl = "/";
 	            }
 	        }
 	        return targetUrl;

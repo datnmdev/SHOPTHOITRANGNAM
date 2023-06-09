@@ -18,6 +18,34 @@ html {
     padding-right: 40px;
 }
 
+.style-active {
+    border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
+    position: relative;
+}
+
+.style-active::before {
+    content: "\2713";
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 500;
+    position: absolute;
+    right: 1px;
+    bottom: -3px;
+    z-index: 1;
+}
+
+.style-active::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-top: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid var(--primary-color);
+    border-bottom: 10px solid var(--primary-color);
+}
+
 .content {
     margin-top: 32px;
     margin-bottom: 32px;
@@ -91,7 +119,7 @@ html {
 }
 
 .content .classification .select-box {
-    width: 400px;
+    min-width: 400px;
     position: absolute;
     left: calc(50% - 9px);
     top: calc(100% + 16px);
@@ -163,7 +191,7 @@ html {
 }
 
 .content .element-list .element-item {
-    min-width: 80px;
+    min-width: 120px;
     padding: 4px 16px;
     border: 1px solid #e7e2e2;
     border-radius: 2px;
@@ -306,4 +334,14 @@ html {
 
 .content .right-section #buy-btn:hover {
     opacity: 0.8;
+}
+
+.update-btn i {
+    font-size: 1.2rem;
+    color: rgb(6, 42, 250);
+}
+
+.delete-btn i {
+    font-size: 1.2rem;
+    color: rgb(250, 6, 6);
 }

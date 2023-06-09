@@ -42,4 +42,20 @@ public class ShoppingCart {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public ProductDetail getProductDetail() {
+		return productDetail;
+	}
+
+	public void setProductDetail(ProductDetail productDetail) {
+		this.productDetail = productDetail;
+	}
 }

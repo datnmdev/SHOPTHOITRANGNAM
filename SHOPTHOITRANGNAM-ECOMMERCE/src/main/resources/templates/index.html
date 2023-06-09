@@ -28,9 +28,9 @@
 					<li class="first-nav__left__item category">
 						<a href="/sales?type=flashsale">SALE</a>
 						<ul class="category__detail">
-							<li class="category__detail__item"><a href="/sales?type=flashsaleS">Flash sale</a></li>
-							<li class="category__detail__item"><a href="/sales?type=saleoffS">Sale off</a></li>
-							<li class="category__detail__item"><a href="/sales?type=flatratesaleS">Sale đồng giá</a></li>
+							<li class="category__detail__item"><a href="/sales?type=flashsales">Flash sale</a></li>
+							<li class="category__detail__item"><a href="/sales?type=saleoffs">Sale off</a></li>
+							<li class="category__detail__item"><a href="/sales?type=flatratesales">Sale đồng giá</a></li>
 						</ul>
 					</li>
 					<li class="first-nav__left__item"><a href="/presentation">GIỚI THIỆU</a></li>
@@ -43,7 +43,7 @@
 					</form>
 					<a th:if="${customer == null}" href="/login" class="login-btn">Đăng nhập</a>
 					<div th:if="${customer != null}" class="user">
-						<img src="" width="48" height="48" alt="Hình ảnh">
+						<img th:src="${customer.getImage()}" width="48" height="48" alt="Hình ảnh">
 						<span th:text="${customer.getFirstName() + ' ' + customer.getLastName()}"></span>
 						<i class="fa-solid fa-caret-down"></i>
 						<ul class="user-box">
@@ -86,11 +86,7 @@
 						</a>
 					</li>
 					<li class="last-nav__right__item">
-						<a th:if="${customer != null}" th:href="@{/product-carts(customer-code=${customer.getCustomerCode()})}">
-							<img src="/img/icons/shopping-cart.png" alt="Giỏ hàng" width="32">
-							<p class="last-nav__right__item__title">GIỎ</p>
-						</a>
-						<a th:if="${customer == null}" href="/product-carts">
+						<a href="/product-carts">
 							<img src="/img/icons/shopping-cart.png" alt="Giỏ hàng" width="32">
 							<p class="last-nav__right__item__title">GIỎ</p>
 						</a>
@@ -151,7 +147,7 @@
 									<span th:text="${'₫ ' + #numbers.formatDecimal(oldPriceOfProductDetailInFlashSale[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
 									<span style="margin-left: 4px;" th:text="${'₫ ' + #numbers.formatDecimal(newPriceOfProductDetailInFlashSale[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
 								</div>
-								<a th:href="${'/user/product-carts?add=' + flashSaleDetail.getProductDetail().getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
+								<a th:href="${'/product-carts?add=' + flashSaleDetail.getProductDetail().getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
 							</div>
 							<span th:text="${'Giảm ' + flashSaleDetail.getFlashSalePercentage() + '%'}" class="sale-percent"></span>
 						</div>
@@ -197,7 +193,7 @@
 									<span th:text="${'₫ ' + #numbers.formatDecimal(oldPriceOfProductDetailInSaleOff[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
 									<span style="margin-left: 4px;" th:text="${'₫ ' + #numbers.formatDecimal(newPriceOfProductDetailInSaleOff[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
 								</div>
-								<a th:href="${'/user/product-carts?add=' + saleOffDetail.getProductDetail().getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
+								<a th:href="${'/product-carts?add=' + saleOffDetail.getProductDetail().getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
 							</div>
 							<span th:text="${'Giảm ' + saleOffDetail.getSaleOffPercentage() + '%'}" class="sale-percent"></span>
 						</div>
@@ -243,7 +239,7 @@
 									<span th:text="${'₫ ' + #numbers.formatDecimal(oldPriceOfProductDetailInFlatRateSale[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
 									<span style="margin-left: 4px;" th:text="${'₫ ' + #numbers.formatDecimal(newPriceOfProductDetailInFlatRateSale[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
 								</div>
-								<a th:href="${'/user/product-carts?add=' + flatRateSaleDetail.getProductDetail().getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
+								<a th:href="${'/product-carts?add=' + flatRateSaleDetail.getProductDetail().getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
 							</div>
 						</div>
 					</th:block>
@@ -289,7 +285,7 @@
 								<div th:if="${percentageOfClothes[iterStatus.index] == null}" class="price">
 									<span th:text="${'&#x20AB; ' + #numbers.formatDecimal(oldPriceOfClothes[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
 								</div>
-								<a th:href="${'/user/product-carts?add=' + clothing.getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
+								<a th:href="${'/product-carts?add=' + clothing.getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
 							</div>
 							<span th:if="${percentageOfClothes[iterStatus.index] != null}" th:text="${'Giảm ' + percentageOfClothes[iterStatus.index]}" class="sale-percent"></span>
 						</div>
@@ -335,7 +331,7 @@
 								<div th:if="${percentageOfPants[iterStatus.index] == null}" class="price">
 									<span th:text="${'&#x20AB; ' + #numbers.formatDecimal(oldPriceOfPants[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
 								</div>
-								<a th:href="${'/user/product-carts?add=' + pant.getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
+								<a th:href="${'/product-carts?add=' + pant.getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
 							</div>
 							<span th:if="${percentageOfPants[iterStatus.index] != null}" th:text="${'Giảm ' + percentageOfPants[iterStatus.index]}" class="sale-percent"></span>
 						</div>
@@ -381,7 +377,7 @@
 								<div th:if="${percentageOfAccessories[iterStatus.index] == null}" class="price">
 									<span th:text="${'&#x20AB; ' + #numbers.formatDecimal(oldPriceOfAccessories[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
 								</div>
-								<a th:href="${'/user/product-carts?add=' + accessory.getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
+								<a th:href="${'/product-carts?add=' + accessory.getProductDetailId()}" style="text-decoration: none;color: inherit;"><div class="add-product-btn"><i class="fa-solid fa-cart-shopping"></i></div></a>
 							</div>
 							<span th:if="${percentageOfAccessories[iterStatus.index] != null}" th:text="${'Giảm ' + percentageOfAccessories[iterStatus.index]}" class="sale-percent"></span>
 						</div>
@@ -430,6 +426,18 @@
 			</div>
 			<div class="copyright">
 				&copy;Copyright 2023 08 Group
+			</div>
+		</div>
+	</div>
+	<!-- Message success box -->
+	<div th:if="${hasError != null}" th:classappend="${!hasError ? 'show' : ''}"
+		id="message-wrapper" class="message-wrapper">
+		<div class="overlay">
+			<div class="message-box">
+				<div class="check-container">
+					<i class="fa-solid fa-circle-check"></i>
+				</div>
+				<div class="message">Đã thêm sản phẩm vào giỏ!</div>
 			</div>
 		</div>
 	</div>

@@ -13,11 +13,15 @@ import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ptithcm.shopthoitrangnam.entity.Account;
+import com.ptithcm.shopthoitrangnam.entity.Customer;
 import com.ptithcm.shopthoitrangnam.entity.FlashSale;
 import com.ptithcm.shopthoitrangnam.entity.FlashSaleDetail;
 import com.ptithcm.shopthoitrangnam.entity.FlatRateSale;
@@ -27,6 +31,8 @@ import com.ptithcm.shopthoitrangnam.entity.ProductDetail;
 import com.ptithcm.shopthoitrangnam.entity.SaleOff;
 import com.ptithcm.shopthoitrangnam.entity.SaleOffDetail;
 import com.ptithcm.shopthoitrangnam.entity.SellingPrice;
+import com.ptithcm.shopthoitrangnam.service.AccountService;
+import com.ptithcm.shopthoitrangnam.service.CustomerService;
 import com.ptithcm.shopthoitrangnam.service.FlashSaleService;
 import com.ptithcm.shopthoitrangnam.service.FlatRateSaleService;
 import com.ptithcm.shopthoitrangnam.service.OrderDetailService;
@@ -43,6 +49,12 @@ public class SaleController {
 	@Autowired
 	FlatRateSaleService flatRateSaleService;
 	
+	@Autowired
+	CustomerService customerService;
+	
+	@Autowired
+	AccountService accountService;
+	
 	@Value("${shopthoitrangnam-manage.domain}")
 	private String mainHost;
 	
@@ -51,10 +63,18 @@ public class SaleController {
 	
 	@GetMapping(value = "/sales", params = "type")
 	public String salePage(Model model, @RequestParam("type") String type) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Optional<Account> account = accountService.findByUsername(authentication.getName());
+		Customer customer = null;
+		if (account.isPresent()) {
+			customer = customerService.findByAccount(account.get()).get();
+		}
+		model.addAttribute("customer", customer);
+		
 		Date now = new Date();
 		model.addAttribute("now", now.getTime());
 		model.addAttribute("mainHost", mainHost);
-		if (type.equals("flashSales")) {
+		if (type.equals("flashsales")) {
 			@SuppressWarnings("deprecation")
 			List<FlashSale> flashSales = flashSaleService.findAll().stream().filter(flashSale1 -> now.getTime() >= flashSale1.getStartTime().getTime() && now.getTime() <= flashSale1.getEndTime().getTime() || (now.getTime() < flashSale1.getStartTime().getTime() && (flashSale1.getStartTime().getYear() == now.getYear() && flashSale1.getStartTime().getMonth() == now.getMonth() && flashSale1.getStartTime().getDate() == now.getDate()))).toList();
 			model.addAttribute("flashSales", flashSales);
@@ -82,7 +102,7 @@ public class SaleController {
 			}
 			
 			return "flash-sale.html";
-		} else if (type.equals("saleOffs")) {
+		} else if (type.equals("saleoffs")) {
 			@SuppressWarnings("deprecation")
 			List<SaleOff> saleOffs = saleOffService.findAll().stream().filter(saleOff1 -> now.getTime() >= saleOff1.getStartTime().getTime() && now.getTime() <= saleOff1.getEndTime().getTime() || (now.getTime() < saleOff1.getStartTime().getTime() && (saleOff1.getStartTime().getYear() == now.getYear() && saleOff1.getStartTime().getMonth() == now.getMonth() && saleOff1.getStartTime().getDate() == now.getDate()))).toList();
 			model.addAttribute("saleOffs", saleOffs);

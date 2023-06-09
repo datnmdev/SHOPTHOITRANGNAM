@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.active i.show-password {
+    display: block;
+}
+
+.active i.hide-password {
+    display: none;
+}
+
+html {
+    font-size: 0.875rem;
+}
+
+#login-section.hide, #forgot-password-section.hide {
+    display: none;
+}
+
+#login-section.show, #forgot-password-section.show {
+    display: block;
+}
+
+:root {
+    --primary-color: #f54a0b;
+}
+
+.wrapper {
+    
+}
+
+.wrapper .container-cst {
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-width: 100vw;
+    height: 100vh;
+    background-image: url('../img/login-register/thuong-hieu-thoi-trang-Giorgio-Armani.jpg');
+    background-position: center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper .section {
+    padding: 40px;
+    height: 100vh;
+}
+
+.wrapper .section-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    color: #fff;
+}
+
+.wrapper .section-left .shop-name {
+    font-size: 2.5rem;
+}
+
+.typewriter::after {
+    content: "|";
+    color: #fff;
+    font-size: 2rem;
+    animation: blink 0.7s infinite;
+}
+
+.wrapper .section-left .page-decription {
+    font-size: 1.2rem;
+    font-weight: 500;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.wrapper .section-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper .section-right .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 520px;
+    /* height: 400px; */
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.wrapper .box .box-heading {
+    font-size: 1.4rem;
+}
+
+.wrapper form .form-control-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapper .form-control-group label {
+    flex: 1;
+}
+
+.wrapper .form-control-group {
+    margin-top: 16px;
+}
+
+.wrapper .form-control-group input {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    appearance: none;
+    border: 1px solid #ccc2c2;
+    border-radius: 4px;
+    margin-top: 4px;
+}
+
+.wrapper .form-control-group input:focus {
+    outline: none;
+    border: 1px solid var(--primary-color);
+}
+
+.wrapper .form-control-group label:last-child {
+    margin-left: 8px;
+}
+
+.wrapper .address {
+    margin-top: 16px;
+}
+
+.wrapper .address .address-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wrapper .address-container select {
+    padding: 8px 16px;
+    border: 1px solid #ccc2c2;
+    margin-top: 4px;
+    width: 150px;
+}
+
+.wrapper .address-container select:focus {
+    outline: none;
+    border: 1px solid var(--primary-color);
+}
+
+.wrapper .address-container select:not(:first-child) {
+    margin-left: 8px;
+}
+
+.wrapper button {
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.wrapper button:hover {
+    opacity: 0.8;
+}
+
+.error-message {
+    color: #ff0000 !important;
+}
+
+/* Animation */
+@keyframes blink {
+    50% { 
+        opacity: 0; 
+    }
+}

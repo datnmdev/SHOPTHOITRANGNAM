@@ -15,12 +15,16 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.ptithcm.shopthoitrangnam.entity.Account;
 import com.ptithcm.shopthoitrangnam.entity.Color;
+import com.ptithcm.shopthoitrangnam.entity.Customer;
 import com.ptithcm.shopthoitrangnam.entity.FlashSale;
 import com.ptithcm.shopthoitrangnam.entity.FlashSaleDetail;
 import com.ptithcm.shopthoitrangnam.entity.FlatRateSale;
@@ -32,6 +36,8 @@ import com.ptithcm.shopthoitrangnam.entity.SaleOff;
 import com.ptithcm.shopthoitrangnam.entity.SaleOffDetail;
 import com.ptithcm.shopthoitrangnam.entity.SellingPrice;
 import com.ptithcm.shopthoitrangnam.entity.Size;
+import com.ptithcm.shopthoitrangnam.service.AccountService;
+import com.ptithcm.shopthoitrangnam.service.CustomerService;
 import com.ptithcm.shopthoitrangnam.service.FlashSaleService;
 import com.ptithcm.shopthoitrangnam.service.FlatRateSaleService;
 import com.ptithcm.shopthoitrangnam.service.OrderDetailService;
@@ -55,11 +61,25 @@ public class ProductController {
 	@Autowired
 	FlatRateSaleService flatRateSaleService;
 	
+	@Autowired
+	CustomerService customerService;
+	
+	@Autowired
+	AccountService accountService;
+	
 	@Value("${shopthoitrangnam-manage.domain}")
 	private String mainHost;
 	
-	@GetMapping("/products/{productCode}")
+	@GetMapping(value = "/products/{productCode}")
 	public String productDetailPage(Model model, @PathVariable("productCode") String productCode) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Optional<Account> account = accountService.findByUsername(authentication.getName());
+		Customer customer = null;
+		if (account.isPresent()) {
+			customer = customerService.findByAccount(account.get()).get();
+		}
+		model.addAttribute("customer", customer);
+		
 		Product product = productService.findByProductCode(productCode).get();
 		model.addAttribute("product", product);
 		

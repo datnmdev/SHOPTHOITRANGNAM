@@ -1,30 +1,40 @@
 package com.ptithcm.shopthoitrangnam.controller;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ptithcm.shopthoitrangnam.dto.AccountDto;
+import com.ptithcm.shopthoitrangnam.dto.AddressDto;
+import com.ptithcm.shopthoitrangnam.dto.AddressUpdateHistoryDto;
+import com.ptithcm.shopthoitrangnam.dto.CustomerDto;
+import com.ptithcm.shopthoitrangnam.dto.UserDto;
 import com.ptithcm.shopthoitrangnam.entity.Account;
 import com.ptithcm.shopthoitrangnam.entity.Customer;
+import com.ptithcm.shopthoitrangnam.enumeration.Role;
 import com.ptithcm.shopthoitrangnam.mapper.AccountMapper;
 import com.ptithcm.shopthoitrangnam.service.AccountService;
+import com.ptithcm.shopthoitrangnam.service.AddressService;
+import com.ptithcm.shopthoitrangnam.service.AddressUpdateHistoryService;
 import com.ptithcm.shopthoitrangnam.service.CustomerService;
 import com.ptithcm.shopthoitrangnam.service.MailService;
 import com.ptithcm.shopthoitrangnam.service.RedisService;
 
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 
 @Controller
 public class LoginController {
@@ -39,6 +49,16 @@ public class LoginController {
 	
 	@Autowired
 	MailService mailService;
+	
+	@Autowired
+	@Qualifier("registerFormValidator")
+	Validator registerFormValidator;
+	
+	@Autowired
+	AddressService addressService;
+	
+	@Autowired
+	AddressUpdateHistoryService addressUpdateHistoryService;
 	
 	@GetMapping("/login")
 	public String loginPage() {
@@ -134,11 +154,26 @@ public class LoginController {
 		return "reset-password-success.html";
 	}
 	
-	@GetMapping(value = "/user/home")
-	public String home(@AuthenticationPrincipal UserDetails userDetail, Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		Customer customer = customerService.findByAccount(accountService.findByUsername(authentication.getName()).get()).get();
-		model.addAttribute("customer", customer);
-		return "index.html";
+	@GetMapping("/register")
+	public String registerPage(Model model) {
+		model.addAttribute("userDto", new UserDto());
+		return "register.html";
+	}
+	
+	@PostMapping("/register")
+	public String register(Model model, @Valid @ModelAttribute("userDto") UserDto userDto, BindingResult bindingResult) {
+		registerFormValidator.validate(userDto, bindingResult);
+		
+		if (bindingResult.hasErrors()) {
+			return "register.html";
+		}
+		
+		accountService.insert(new AccountDto(userDto.getUsername(), userDto.getPassword(), UUID.randomUUID().toString(), new Date(), true, true, Role.CUSTOMER.getCode()));
+		customerService.save(new CustomerDto(userDto.getFirstName(), userDto.getLastName(), userDto.getDateOfBirth(), userDto.getPhoneNumber(), userDto.getEmail(), userDto.getUsername(), "/img/users/default.png"));
+		Customer customer = customerService.findByAccount(accountService.findByUsername(userDto.getUsername()).get()).get();
+		addressService.save(new AddressDto(customer.getCustomerCode()));
+		addressUpdateHistoryService.insert(new AddressUpdateHistoryDto(addressService.findByCustomer(customer).get(0).getAddressId(), new Date(), userDto.getFirstName() + " " + userDto.getLastName(), userDto.getPhoneNumber(), userDto.getSpecificAddress(), userDto.getWardCode()));
+		
+		return "register-success.html";
 	}
 }

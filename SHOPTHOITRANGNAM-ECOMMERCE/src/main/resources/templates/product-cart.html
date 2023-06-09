@@ -28,9 +28,9 @@
 					<li class="first-nav__left__item category">
 						<a href="/sales?type=flashsale">SALE</a>
 						<ul class="category__detail">
-							<li class="category__detail__item"><a href="/sales?type=flashsaleS">Flash sale</a></li>
-							<li class="category__detail__item"><a href="/sales?type=saleoffS">Sale off</a></li>
-							<li class="category__detail__item"><a href="/sales?type=flatratesaleS">Sale đồng giá</a></li>
+							<li class="category__detail__item"><a href="/sales?type=flashsales">Flash sale</a></li>
+							<li class="category__detail__item"><a href="/sales?type=saleoffs">Sale off</a></li>
+							<li class="category__detail__item"><a href="/sales?type=flatratesales">Sale đồng giá</a></li>
 						</ul>
 					</li>
 					<li class="first-nav__left__item"><a href="/presentation">GIỚI THIỆU</a></li>
@@ -43,7 +43,7 @@
 					</form>
 					<a th:if="${customer == null}" href="/login" class="login-btn">Đăng nhập</a>
 					<div th:if="${customer != null}" class="user">
-						<img src="" width="48" height="48" alt="Hình ảnh">
+						<img th:src="${customer.getImage()}" width="48" height="48" alt="Hình ảnh">
 						<span th:text="${customer.getFirstName() + ' ' + customer.getLastName()}"></span>
 						<i class="fa-solid fa-caret-down"></i>
 						<ul class="user-box">
@@ -86,11 +86,7 @@
 						</a>
 					</li>
 					<li class="last-nav__right__item">
-						<a th:if="${customer != null}" th:href="@{/product-carts(customer-code=${customer.getCustomerCode()})}">
-							<img src="/img/icons/shopping-cart.png" alt="Giỏ hàng" width="32">
-							<p class="last-nav__right__item__title">GIỎ</p>
-						</a>
-						<a th:if="${customer == null}" href="/product-carts">
+						<a href="/product-carts">
 							<img src="/img/icons/shopping-cart.png" alt="Giỏ hàng" width="32">
 							<p class="last-nav__right__item__title">GIỎ</p>
 						</a>
@@ -107,7 +103,6 @@
                         <th>
                             <label class="checkbox">
                                 <input type="checkbox" id="select-all">
-                                <i class="fa-solid fa-check"></i>
                             </label>
                         </th>
                         <th>Sản phẩm</th>
@@ -117,64 +112,72 @@
                         <th>Thao tác</th>
                     </thead>
                     <tbody>
-                        <th:block th:each="shoppingCart, iterStatus : ${shoppingCarts}">
-                            <tr>
-                                <td>
-                                    <label class="checkbox">
-                                        <input type="checkbox" class="select">
-                                        <i class="fa-solid fa-check"></i>
-                                    </label>
-                                </td>
-                                <td class="product-detail">
-                                    <img th:src="${mainHost + shoppingCart.getProductDetail().getImage()}" alt="Quần jean" width="80">
-                                    <h3 th:text="${shoppingCart.getProductDetail().getProduct().getProductName()}"></h3>
-                                    <div class="classification">
-                                        <div class="classification-select">
-                                            Phân loại:<i class="fa-solid fa-angle-down"></i>
-                                            <div class="select-box">
-                                                <div class="select-content">
-                                                    <p>Size</p>
-                                                    <ul class="element-list">
-                                                        <th:block th:each="size : ${sizes}">
-                                                            <li th:text="${size.getSizeName()}" th:classappend="${size.getSizeCode().equals(shoppingCart.getProductDetail().getSize().getSizeCode()) ? 'style-active' : ''}" class="element-item"></li>
-                                                        </th:block>
-                                                    </ul>
-                                                </div>
-                                                <div class="select-content">
-                                                    <p>Màu sắc</p>
-                                                    <ul class="element-list">
-                                                        <th:block th:each="color : ${colors}">
-                                                            <li th:text="${color.getColorName()}" th:classappend="${color.getColorCode().equals(shoppingCart.getProductDetail().getColor().getColorCode()) ? 'style-active' : ''}" class="element-item"></li>
-                                                        </th:block>
-                                                    </ul>
-                                                </div>
-                                                <div class="button-section">
-                                                    <button class="back-btn">Trở lại</button>
-                                                    <button class="apply-btn">Xác nhận</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div th:text="${shoppingCart.getProductDetail().getSize().getSizeName() + ', ' + shoppingCart.getProductDetail().getColor().getColorName()}"></div>
-                                    </div>
-                                </td>
-                                <td class="price">
-                                    <span th:text="${'₫ ' + #numbers.formatDecimal(oldPrices[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
-                                    <span th:text="${'₫ ' + #numbers.formatDecimal(newPrices[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
-                                </td>
-                                <td>
-                                    <div class="quantity-modify">
-                                        <div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
-                                        <input type="text" name="quantity" value="1" th:max="10">
-                                        <div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
-                                    </div>
-                                </td>
-                                <td><div th:text="${'₫ ' + #numbers.formatDecimal(totalPrices[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="total-price"></div></td>
-                                <td>
-                                    <a th:href="${'/user/product-carts?update&product-detail-id=' + shoppingCart.getProductDetail().getProductDetailId()}" style="text-decoration: none; color: inherit;"><button class="manipulation-btn update-btn"><i class="fa-solid fa-pen-to-square"></i></button></a>
-                                    <a th:href="${'/user/product-carts?update&product-detail-id=' + shoppingCart.getProductDetail().getProductDetailId()}" style="text-decoration: none; color: inherit;"><button class="manipulation-btn delete-btn"><i class="fa-solid fa-trash-can"></i></button></a>
-                                </td>
-                            </tr>
-                        </th:block>
+						<form action="/payment" method="post">
+							<th:block th:each="shoppingCart, iterStatus : ${shoppingCarts}">
+								<input type="hidden" name="productDetailId" th:value="${shoppingCart.getProductDetail().getProductDetailId()}">
+								<tr>
+									<td>
+										<label class="checkbox">
+											<input type="checkbox" class="select">
+										</label>
+									</td>
+									<td class="product-detail">
+										<img th:src="${mainHost + shoppingCart.getProductDetail().getImage()}" alt="Quần jean" width="80">
+										<h3 th:text="${shoppingCart.getProductDetail().getProduct().getProductName()}"></h3>
+										<div class="classification">
+											<div class="classification-select">
+												Phân loại:<i class="fa-solid fa-angle-down"></i>
+												<div class="select-box">
+													<div class="select-content">
+														<p>Size</p>
+														<ul class="element-list size-list">
+															<th:block th:each="size : ${sizes[iterStatus.index]}">
+																<li th:data-size-code="${size.getSizeCode()}" th:text="${size.getSizeName()}" th:classappend="${size.getSizeCode().equals(shoppingCart.getProductDetail().getSize().getSizeCode()) ? 'style-active' : ''}" class="element-item size-item"></li>
+															</th:block>
+														</ul>
+													</div>
+													<div class="select-content">
+														<p>Màu sắc</p>
+														<ul class="element-list color-list">
+															<th:block th:each="color : ${colors[iterStatus.index]}">
+																<li th:data-color-code="${color.getColorCode()}" th:text="${color.getColorName()}" th:classappend="${color.getColorCode().equals(shoppingCart.getProductDetail().getColor().getColorCode()) ? 'style-active' : ''}" class="element-item color-item"></li>
+															</th:block>
+														</ul>
+													</div>
+													<div class="button-section">
+														<button class="back-btn">Trở lại</button>
+														<button class="apply-btn">Xác nhận</button>
+													</div>
+												</div>
+											</div>
+											<input type="hidden" name="sizeCode">
+											<input type="hidden" name="colorCode">
+											<div th:text="${shoppingCart.getProductDetail().getSize().getSizeName() + ', ' + shoppingCart.getProductDetail().getColor().getColorName()}" class="classification-desc"></div>
+										</div>
+									</td>
+									<td class="price">
+										<span th:if="${oldPrices[iterStatus.index].equals(newPrices[iterStatus.index])}" th:text="${'₫ ' + #numbers.formatDecimal(newPrices[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
+										<th:block th:if="${!oldPrices[iterStatus.index].equals(newPrices[iterStatus.index])}">
+											<span th:text="${'₫ ' + #numbers.formatDecimal(oldPrices[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="old-price"></span>
+											<span th:text="${'₫ ' + #numbers.formatDecimal(newPrices[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="new-price"></span>
+										</th:block>
+									</td>
+									<td>
+										<div class="quantity-modify">
+											<div class="quantity-modify-btn decrease-btn"><i class="fa-solid fa-minus"></i></div>
+											<input type="text" th:value="${shoppingCart.getQuantity()}" name="quantity" class="quantity" min="1" max="100" required>
+											<div class="quantity-modify-btn increase-btn"><i class="fa-solid fa-plus"></i></div>
+										</div>
+									</td>
+									<td><div th:text="${'₫ ' + #numbers.formatDecimal(totalPrices[iterStatus.index], 1, 'COMMA', 0,'POINT')}" class="total-price"></div></td>
+									<td>
+										<a class="update-btn" style="text-decoration: none; color: inherit;"><i class="fa-solid fa-pen-to-square"></i></a>
+										<a class="delete-btn" style="text-decoration: none; color: inherit;"><i class="fa-solid fa-trash-can"></i></a>
+									</td>
+								</tr>
+							</th:block>
+						</form>
+                        
                     </tbody>
                 </table>
                 <div class="common-manipulation-section">
@@ -186,7 +189,7 @@
                     <div class="right-section">
                         <div id="total-price">
                             Tổng thanh toán:
-                            <span id="price-number">0&#8363</span>
+                            <span id="price-number">₫ 0</span>
                         </div>
                         <button id="buy-btn">Mua hàng</button>
                     </div>

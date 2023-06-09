@@ -16,6 +16,10 @@ html {
     display: none !important;
 }
 
+.show {
+    display: block !important;
+}
+
 .container-cst {
     margin: 0;
     padding-left: 40px;
@@ -269,10 +273,71 @@ img.slider__product__item {
     align-items: center;
 }
 
+#message-wrapper {
+    display: none;
+}
+
+.message-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+.message-wrapper .overlay {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(23, 22, 24, 0.4);
+}
+
+.message-wrapper .overlay .message-box {
+    background-color: #fff;
+    width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px #fff;
+    animation: scale-in 0.3s ease-in;
+}
+
+.message-wrapper .message-box .check-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.message-wrapper .check-container i {
+    font-size: 3rem;
+    color: #1eff00;
+}
+
+.message-wrapper .message-box .message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    padding: 0 24px;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
 @keyframes width-out {
     from {
         
     } to {
         width: 0;
+    }
+}
+
+@keyframes scale-in {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
     }
 }

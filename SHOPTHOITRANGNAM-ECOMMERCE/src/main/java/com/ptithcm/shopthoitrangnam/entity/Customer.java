@@ -1,14 +1,11 @@
 package com.ptithcm.shopthoitrangnam.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.ptithcm.shopthoitrangnam.converter.GenderConverter;
-import com.ptithcm.shopthoitrangnam.enumeration.Gender;
-
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -34,17 +31,16 @@ public class Customer {
 	@Column(name = "NGAYSINH")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private String dateOfBirth;
-	
-	@Column(name = "GIOITINH")
-	@Convert(converter = GenderConverter.class)
-	private Gender gender;
+	private Date dateOfBirth;
 	
 	@Column(name = "SDT")
 	private String phoneNumber;
 	
 	@Column(name = "EMAIL")
 	private String email;
+	
+	@Column(name = "HINHANH")
+	private String image;
 	
 	@OneToOne
 	@JoinColumn(name = "TENDANGNHAP")
@@ -84,20 +80,12 @@ public class Customer {
 		this.lastName = lastName;
 	}
 
-	public String getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(String dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
-	}
-
-	public Gender getGender() {
-		return gender;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
 	}
 
 	public String getPhoneNumber() {
@@ -146,5 +134,13 @@ public class Customer {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

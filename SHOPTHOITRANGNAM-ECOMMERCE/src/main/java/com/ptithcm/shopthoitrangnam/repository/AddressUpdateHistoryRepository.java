@@ -7,5 +7,5 @@ import com.ptithcm.shopthoitrangnam.entity.AddressUpdateHistory;
 
 @Repository
 public interface AddressUpdateHistoryRepository extends JpaRepository<AddressUpdateHistory, Integer> {
-
+	public AddressUpdateHistory save(AddressUpdateHistory addressUpdateHistory);
 }
